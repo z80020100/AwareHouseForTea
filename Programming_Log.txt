@@ -1,0 +1,134 @@
+# Program Log
+
+# 5/16 --------
+
+	1. 	整合建議：Navbar應另外獨立一個頁面，統一讀取，或者用Function產出
+		目前 report.html 的 navbar 和其他的不同
+		
+	
+	2.	edit_menu.php --> 加入 not_admin_redirect() 跟 後台 navbar
+
+	
+	3. 	更改菜單／報告
+		edit_menu.php 的刪除是否要變成 "封存"
+		待研究:
+			Stored procedure 
+
+	
+	
+# 5/12 --------
+
+	1. listorder_process.js 中倒數的機制問題已解
+		狀況：
+				刷掉兩個以上的單子之後（封存或是取消），上面的倒數計時就會出現問題
+		原因：　
+				settimeout被重複呼叫
+		解決：
+				刷單子時，先使用clearTimeout，把之前設定的先拿掉
+				
+	2. 修改方向: 僅有店內能下單
+		方法：
+				index.php修改為需要登入才能下單 						---> done
+				register.php應要能夠關閉(或者只有Admin登入才能用?)		---> only admin could "create user"
+				
+				general_functions.php 內新增兩個function 偵測是否為admin, user並進行redirect
+					not_admin_redirect()
+					not_login_redirect()
+				
+
+	3. 為適應多家店，將註冊時輸入職業拿掉
+	
+			register.php, register.html, general_functions.php (create_user function)
+			
+			Admin 已登入時 --> register.php 為創造帳號，改為用密碼
+			
+					待做：應檢查password是否為空
+					
+	4. 修改個人資訊的頁面 
+	
+	
+	5. (禮拜二) 記帳功能 (x3)
+		
+		下單後直接封裝 
+			
+1. 團隊名字
+
+
+
+2. 
+
+3. 	六月前 4~5 家，
+	
+	
+	
+	1. Code 
+		1) 單純記帳
+		2) 早餐店 --> 遠端下單!
+		
+		先用標準品 --> 之後看狀況
+		
+	
+	2. Sales team / RD team
+		3000 --> 10% ~ 15% (300 ~ 450) x 12 
+	
+	3. 成立公司
+		s			
+
+			
+			
+			
+			
+			
+# 5/5  --------
+
+	1. 	customer_listorder.php  (暫用短期解法)
+		狀況：
+				無法及時更新後台的狀況變動 (可以更新到點餐)
+		原因：
+				目前更新頁面是判斷最新單子下單的"日期時間"，若有比較新的就讀取新的單子
+				然而舊的單子於後台更新狀態時並不會在日期時間上進行改動
+				
+		短期解法：
+				customer_listorder 每10秒自動重新整理頁面				
+
+		長期解法：
+				後台需要設計資料庫欄位以標示更新
+				前台要用ajax抓取資料，判斷目前顯示的單子是否需要更新
+
+
+	2. 	index.php / listorder.php / customer_listorder.php  
+		狀況：
+				尚未包含外部點單的處理 (外帶訂餐?)
+				
+		原因：
+				原本之設計只包含桌號及人數
+				
+		長期解法：
+				針對外帶之類的顯示以及訂餐都要再設計，譬如說：
+					index.php : 
+						要能夠不填桌號，明確表示為外帶
+					後台： 
+						要記錄是誰訂餐的（目前僅記錄桌號跟人數）
+					listorder.php/customer_listorder.php：
+						要能夠顯示訂餐的人 (customer_listorder必須隱藏特定資訊)
+						
+		
+	
+	3.	使用customized jquery mobile功能會出現錯誤 
+		
+		狀況：
+			於主控台可看到　"TypeError: e.mobile.page is undefined"
+			經過調查也有人有此錯誤訊息
+			但目前不影響我們功能
+			
+		短期解法：
+				擱置
+			
+		長期解法：
+				(1) 找出原因修正
+				(2) 不使用 Customized jquery mobile (找方法替代jquery mobile swipe功能)
+		
+
+# --------------
+
+

@@ -1,0 +1,153 @@
+
+    
+
+<script src="./templates/customer_menu.js"></script>
+
+
+    <div id="add_success" class="w3-center"> 成功加入購物車 
+    </div>
+
+    <div class="w3-form w3-container w3-card-4" style="height: 80%;">
+
+        {% for series in all_series %}
+        <div id="s{{series.s_id}}" class="w3-group w3-row w3-padding-left w3-card-4 w3-half" style="z-index:20">
+                <h3 id="series_name_class" class="w3-padding">{{series.name}}</h3>
+            {% for main in series.main %}
+                
+                <div id="m{{main.m_id}}_ro_at_id" style="display:none"></div>
+                <button id="m{{main.m_id}}" class="w3-btn w3-margin-bottom w3-round" data-at_id="{{main.at_id}}" value="{{main.price}}">{{main.name}} </button>
+                <script>
+                    
+                    $("#m{{main.m_id}}").data({ "ro_at_id" : [ 
+                       
+                    {% for ro in main.ro %}
+                       
+                       {{ro.at_id}}, 
+                    {% endfor %}
+                        -1] })
+                </script>
+
+
+            {% endfor %}
+        </div>
+
+        {% endfor %}
+        
+
+        <div class="w3-half w3-card-4 w3-group">
+                <h3 class="w3-padding">購物清單</h3>
+
+
+                <div class="w3-row w3-center">
+                    <div>
+                        <p>
+                        </p>
+                    </div>
+                    <div class="w3-row-padding">
+                        <table id="orderList" class="w3-table w3-hoverable w3-bordered w3-border w3-padding" >
+                            <thead>
+                            <tr>
+                                <td style="width:38%"> 品項 </td>
+                                <td style="width:17%"> 數量 </td>
+                                <td style="width:20%"> 金額 </td>
+                                <td style="width:25%"> 備註 </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                            
+
+                        </table>
+                    </div>
+                    <div>
+                        <p>
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="w3-container">
+
+                <div class="w3-col s2 w3-padding-8">
+                    <h5>總共</h5>
+                </div>
+                <div class="w3-col s3 w3-padding-16">
+                    <input id="tprice" class="w3-input w3-sand" type="text" value="0" readonly>
+                </div>
+                <div class="w3-col s1 w3-padding">
+                    <h4>元</h4>
+                </div>
+
+                <div class="w3-col s4 w3-right w3-padding-16">
+                    <button id="send_order" class="w3-btn w3-right w3-input w3-round-xlarge" >下單
+                    </button>
+                </div>
+
+                </div>
+
+
+        </div>
+    </div>
+
+    <div id="confirm_item" class="w3-modal w3-padding-top">
+        <div class="w3-modal-content w3-card-4">
+            <header class="w3-container">
+                <span id="close_confirm" class="w3-closebtn w3-xlarge">&times;</span>
+                <h3>你已經點選取下列品項</h3>
+            </header>
+
+            <div class="w3-row w3-container">
+                <div class="w3-col s5  w3-padding-8">
+                    <h3 id="item_name" ></h3>
+                    <input id="m_price" type="hidden" value="-1">
+                </div>
+
+                <div>
+                    <div class="w3-col s2 w3-padding-16">
+                        <h5>數量</h5>
+                    </div>
+                    <div class="w3-padding-8 w3-col s2">
+                        
+                        <select class="w3-margin " id="amountButton" size="1">
+                            <option selected="selected">1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+            <div class="w3-row w3-container" id="materialblock">
+
+            </div>
+            <div class="w3-row w3-container w3-padding-8">
+                <input id="addition_info" type="text" placeholder="備註欄位" maxlength="5">
+            </div>
+
+            <footer class="w3-container">
+                <div class="w3-container w3-col s4 w3-padding">
+                    <input id="item_price" class="w3-input w3-sand" type="text" value="0" readonly>
+                    <input id="m_id" type="hidden">
+                </div>
+                <div class="w3-container w3-col s4 w3-padding-24">
+                    元
+                </div>
+
+                <div class="w3-container w3-col s2 w3-right w3-padding-top">
+                    <button id="add_cart" class="w3-btn w3-right w3-round">加入購物車</button>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
+

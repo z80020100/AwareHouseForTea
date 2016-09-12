@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Breakfast Menu：驗證碼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<!-----------------------------------------------------------------------------------------
+
+	Unified JS & CSS Block 
+
+------------------------------------------------------------------------------------------>
+
+<!--- w3 css template --->
+<link rel="stylesheet" href="./templates/w3.css">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-colors-vivid.css">
+
+
+<!--- alertify --->
+<script src="./includes/alertify/alertify.js"></script>
+<link rel="stylesheet" href="./includes/alertify/alertify.core.css" />
+<link rel="stylesheet" href="./includes/alertify/alertify.default.css" />
+
+
+<!--- jQuery --->
+<script src="./includes/jquery/jquery-1.11.3.min.js"></script>
+<script src="jquery.mobile.custom.min.js"></script>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link href="./includes/jquery/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet">
+<script src="./includes/jquery/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+<script src="./includes/jquery/moment.min.js"></script>
+
+
+	<!--- in report <script src="./includes/jquery/mobile/jquery.mobile-1.4.5.min.js"></script> --->
+
+	<!---- START: Why is this in template?	----->
+<script src="./templates/jquery.comiseo.daterangepicker.js"></script>
+<link href="./templates/jquery.comiseo.daterangepicker.css" rel="stylesheet">
+	<!---- END: Why is this in template?  ----->
+	
+
+<!--- d3 --->
+<script src="./includes/d3/d3.min.js"></script>
+
+<!--- Sortable --->
+<script src="includes/Sortable-1.4.0/Sortable.min.js"></script>
+
+<!-----------------------------------------------------------------------------------------
+
+	Unified JS & CSS Block 
+
+------------------------------------------------------------------------------------------>
+
+<body class="w3-container">
+
+
+<div id="main">
+
+    <header class="w3-container w3-teal">
+        <h1><center>填驗證碼 </center></h1>
+    </header>
+
+	<center>
+	<div>{{REGISTER_MESSAGE}}</div>
+	{% if VERIFICATION_SUCCESS == false %}
+	<form action="register.php" method="POST">
+		<p id="username"> 使用者：{{USERNAME}}  </p> 
+		<p id="uphone"> 手機：<input type="text" name="phone" id="phone" value="{{USERPHONE}}">  </p> 
+		<p id="uverification"> 驗證碼：<input type="text" name="verification"> </p>
+		
+		<p> <input type="submit" name="submit" value="確認"> 沒收到? <a href="#" id="sendVerification">再送一次</a></p>
+	</form>
+	{% endif %}
+
+	</center>
+	
+
+        <footer class="w3-container w3-teal"> &nbsp;        </footer>
+	
+	
+</div>
+<script src="templates/register_verification.js"></script>
+	
+</body></html>

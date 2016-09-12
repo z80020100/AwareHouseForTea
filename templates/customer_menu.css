@@ -1,0 +1,63 @@
+
+
+
+h1,h3{
+    text-align: center;
+}
+
+#div_of_table_num{
+    text-align: center;
+    margin: 0 auto;
+    margin-right: auto; 
+    margin-left: auto; 
+    width: 800px; 
+}
+
+button[id^='m']
+{
+    background-color:#ffc952;
+    color:#ff7473;
+    height:50px;
+    width:125px;
+
+}
+
+
+#series_name_class{
+    color:#47b8e0;
+}
+
+#add_success{
+    background-color:#FF0000; 
+    color:black; 
+    opacity:0.7; 
+    z-index:5; 
+    position:fixed; 
+    visibility:hidden;
+}
+
+#open_cart{
+    background-color:#ef5285;
+}
+#cart_list{
+    z-index:2;
+}
+
+header{
+    background-color:#ffc952; 
+    color:#ff7473;
+}
+footer{
+    background-color:#ffc952; 
+    color:#ff7473;
+}
+#send_order{
+
+    background-color:#34314c;
+}
+#confirm_item{
+    z-index:2;
+}
+#add_cart{
+    background-color:#34314c;
+}

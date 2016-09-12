@@ -1,0 +1,30 @@
+<div id="a0" class="w3-container">
+    <br>
+
+	<center>
+	<div>{{REGISTER_MESSAGE}}</div>
+	<form action="register.php" method="POST">
+		<p id="p_uname"> 帳號：<input type="text" name="username"> </p>
+		<p id="p_uphone"> 手機：<input type="text" name="phone" id="phone"> </p>
+		<p id="p_uenablepass">使用密碼登入? <input type="checkbox" name="enablepass" id="enablepass" checked></p>
+		<p id="p_upass"> 密碼：<input type="password" name="userpass"> </p>
+		
+		{% if REGISTER_ADMIN == true %}
+		<p id="p_utype"> 使用者類型： 
+			<select name="utype">
+				{% for utype in all_utype %}
+				<option value="{{utype.id}}">{{utype.desc}}</option>
+				{% endfor %}
+			</select>
+		</p>
+		{% else %}
+		<!-- <p id="uverification"> 驗證碼：<input type="text" name="verification"> </p> -->
+		{% endif %}
+
+		<p> <input type="submit" name="submit" value="{{REGISTER_TITLE}}"> </p>
+	</form>
+	</center>
+	
+</div>
+<script src="templates/register.js"></script>
+	

@@ -1,0 +1,100 @@
+
+
+
+    <!-- THIS IS PANEL -->
+    <!-- <div data-role="panel" id="admin_panel" class="w3-sidenav w3-white w3-card-2" data-position="left" data-display="push" data-theme="a" style="display:none">
+      <a onclick="$('#admin_panel').hide(); $('#header').css('margin-left', '0px'); $('#content').css('margin-left', '0px');"
+      class="w3-xlarge w3-center">&times;</a>
+      <br/>
+				<a href="listorder.php" class="w3-center">即時訂單資訊</a>
+			  <br>
+			  <a href="index.php" rel="external" class="w3-center">前台下單</a>
+			  <br>
+			  <a href="edit_menu.php" rel="external" class="w3-center">菜單更新</a>
+			  <br>
+			  <a href="report.php" rel="external" class="w3-center">報表產生</a>
+			  <br>
+			  <a href="register.php" rel="external" class="w3-center">創造帳號</a>
+			  <br>
+			  <a href="login.php" rel="external" class="w3-center">登出</a>
+    </div> -->
+
+
+    <!-- THIS IS CUSTOMED THEME -->
+    <!-- <div data-role="header" id="header"> -->
+
+      <!-- <header class="theme"> -->
+      <!-- <header class="w3-container w3-teal">
+        <div><span onclick="$('#admin_panel').show(); $('#header').css('margin-left', '200px'); $('#content').css('margin-left', '200px');" class="w3-xlarge" style="position: fixed; left:16px; top:8px;"><a href="#" style="text-decoration: none;">&#9776;</a></span><center style="font-size: 2.5em;">早餐店報表</center></div>
+      </header>
+
+    </div> -->
+
+    <div data-role="content" id="content">
+      <!-- <div id="a0" class="w3-container">
+        <h3><center>即時報表</center></h3>
+        <div class="dateRangePicker">
+          <input id="datepicker1" name="datepicker1">
+          <input type="submit" class="submit" id="submitSales" value="送出" data-type="sales">
+        </div>
+        <div id="total_sales_report">
+          <div id="report1" class="report"></div>
+          <div id="report2" class="report"></div>
+          <div id="report3"></div>
+          <div id="graph">
+            <form id="g_form">
+              <label><input type="radio" name="mode" value="quantity"> 數量</label>
+              <label><input type="radio" name="mode" value="price" checked> 價錢</label>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div>&nbsp;</div> -->
+
+      <div id="a0" class="w3-container">
+        <h3>訂單圓餅圖<p id="yee"></p></h3>
+        <div class="dateRangePicker">
+          <input id="datepicker2" name="datepicker2">
+          <input type="submit" class="submit" id="submitOrders" value="送出" data-type="orders">
+        </div>
+        <div id="total_orders_report" style="width: 100%">
+          <div id="orders_report" class="orders_report">
+          </div>
+          <div id="orders_timestamp" class="orders_report">
+          </div>
+          <div id="piechart">
+            <form id="p_form">
+              <label><input type="radio" name="mode" value="quantity"> 數量</label>
+              <label><input type="radio" name="mode" value="price"> 價錢</label>
+              <input type="button" class="back" name="back" value="回到上一層">
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div>&nbsp;</div>
+
+      <div id="a0" class="w3-container">
+        <h3>總量與銷售額</h3>
+        <div class="dateRangePicker">
+          <input id="datepicker3" name="datepicker3">
+          <input type="submit" class="submit" id="submitMenu" value="送出" data-type="menu">
+        </div>
+        <div id="total_menu_report" class="menu_report">
+        </div>
+      </div>
+    </div>
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+<!--    <div data-role="footer">
+      <footer class="w3-container w3-teal">
+        <p> &nbsp; </p>
+      </footer>
+    </div>
+  </div>
+</body> -->
+
+
+<script type="text/javascript" src="templates/report_handle.js" async></script>
+<!-- </html> -->

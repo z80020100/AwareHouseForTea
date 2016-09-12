@@ -1,0 +1,146 @@
+body {
+  font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+  margin: auto;
+  position: relative;
+}
+
+input,button,select,textarea{outline:none}
+ *:focus { outline: none; }
+
+#p_form {
+  position: relative;
+  top: 5px;
+  left: 48%;
+  width: 250px;
+}
+
+path {
+  stroke: #fff;
+  fill-rule: evenodd;
+}
+
+.theme {
+  background-color: #A0E4F1;
+}
+
+svg {
+  position: relative;
+  left:50%;
+  margin-top: 20px;
+}
+
+#graph svg {
+  margin-left: -360px;
+}
+
+.dateRangePicker {
+  position: relative;
+  width: 400px;
+  left: 50%;
+  margin-left: -200px;
+  color: #3F72AF;
+}
+
+.submit {
+  width: 90px;
+  background-color: #ffffff;
+  border: 1px #3F72AF solid;
+  border-radius: 20px;
+}
+
+.report {
+  display: inline-block;
+  width: 50%;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  padding-left: 150px;
+  float: left;
+}
+
+.vacant {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.chart {
+  border-radius: 5px;
+}
+
+.orders_report {
+  position: relative;
+  top: 10px;
+  margin: 0 auto;
+}
+
+.bar {
+  display: inline-block;
+  margin-left: 2px;
+  margin-right: 3px;
+  width: 45px;
+  background-color: red;
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.bar_name {
+  display: inline-block;
+  margin-left: 2px;
+  margin-right: 3px;
+  width: 45px;
+  text-align: center;
+}
+
+.back {
+  width: 120px;
+  background-color: #ffffff;
+  border: 1px #3F72AF solid;
+  border-radius: 20px;
+  display: none;
+}
+
+#piechart svg {
+  margin-left: -300px;
+}
+
+.menu_row {
+  position: relative;
+  width: 450px;
+  height: 30px;
+  margin: 0px auto;
+}
+
+.menu_item {
+  position: relative;
+  width: 150px;
+  height: 30px;
+  display: inline-block;
+  margin: 0px auto;
+  vertical-align: top;
+  text-align: center;
+}
+
+/*#piechart {
+  height: 360px;
+  position: relative;
+  width: 360px;
+}*/
+.tooltip {                                                        /* NEW */
+  background: #eee;                                               /* NEW */
+  box-shadow: 0 0 5px #999999;                                    /* NEW */
+  color: #333;                                                    /* NEW */
+  display: none;                                                  /* NEW */
+  width: 80px;                                                    /* NEW */
+  position: absolute;                                             /* NEW */
+  top: 140px;                                                      /* NEW */
+  left: 140px;                                                    /* NEW */
+  padding: 10px;                                                  /* NEW */
+  font-size: 12px;                                                /* NEW */
+  text-align: center;                                             /* NEW */
+  z-index: 10;                                                    /* NEW */
+}                                                                 /* NEW */
+.legend {
+  font-size: 12px;
+}
+rect {
+  stroke-width: 2;
+}
