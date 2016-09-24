@@ -33,12 +33,12 @@ switch($reqType){
 	//1900-01-01 00:00:00
 	//
 	//echo $sql . "\nyoooo\n";
-
+	
 	if($_REQUEST['request']['fresh'] == 'true'){
-		$sql = "SELECT * FROM `orders` WHERE `o_utime` > '".$refresh_time."' AND `status` != '".$GLOBALS['STATUS'][0]."' AND `status` != '".$GLOBALS['STATUS'][(sizeof($GLOBALS['STATUS'])-1)]."' ";
+		$sql = "SELECT * FROM `orders` WHERE `o_utime` > '".$refresh_time."' AND `status` != '".$GLOBALS['STATUS'][0]."' AND `status` != '".$GLOBALS['STATUS'][(sizeof($GLOBALS['STATUS'])-1)]."' AND `shop_id` = '".$_shopID."'";
 	}
 	else
-		$sql = "SELECT * FROM `orders` WHERE `o_utime` > '".$refresh_time."' ";
+		$sql = "SELECT * FROM `orders` WHERE `o_utime` > '".$refresh_time."' AND `shop_id` = '".$_shopID."'";
 
 	$result = $db->query($sql);
 	$order_info = array();

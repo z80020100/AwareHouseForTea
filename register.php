@@ -18,6 +18,13 @@ if(isset($_SESSION['u_name'])){
 	}
 }
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+if($_shopID == NULL) // not logined and didn't set shop_id
+	header("location:index.php");
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 if($page_verify == true){
 	$template = $twig->loadTemplate('register_verification.html');
 	$message = "";
@@ -58,7 +65,7 @@ if(isset($_POST['submit'])){
 			$userRegInfo['utype'] = IDGUEST; 
 		}
 		
-		$uc_return = user_create($_POST['username'] , $_POST['userpass'], $userRegInfo);
+		$uc_return = user_create($_POST['username'] , $_POST['userpass'], $userRegInfo, $_shopID);
 		if( $uc_return != -1 && is_admin() ){
 			$message = "帳號創立成功";
 			if($userRegInfo['utype'] == IDGUEST)

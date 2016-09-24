@@ -38,9 +38,9 @@ $request = $_REQUEST['req'];
 if( $request == "confirm_sum" ){
 
 	if($_AWMode == "ACCOUNTING")
-		$sql = "INSERT INTO `orders` (`o_id`, `u_id` , `o_time`, `o_estimate_time`, `table_num`, `people_num`, `status`) VALUES (NULL, '".$_SESSION['u_id']."' ,  NOW(), NULL, '".$order_info['table_num']."', '".$order_info['people_num']."', '".$GLOBALS['STATUS'][sizeof($GLOBALS['STATUS'])-1]."');";
+		$sql = "INSERT INTO `orders` (`o_id`, `u_id` , `o_time`, `o_estimate_time`, `table_num`, `people_num`, `status`, `shop_id`) VALUES (NULL, '".$_SESSION['u_id']."' ,  NOW(), NULL, '".$order_info['table_num']."', '".$order_info['people_num']."', '".$GLOBALS['STATUS'][sizeof($GLOBALS['STATUS'])-1]."', '".$_shopID."');";
 	else if($_AWMode == "BUSINESS")
-		$sql = "INSERT INTO `orders` (`o_id`, `u_id`, `o_time`, `o_estimate_time`, `table_num`, `people_num`, `status`) VALUES (NULL, '".$_SESSION['u_id']."', NOW(), NULL, '".$order_info['table_num']."', '".$order_info['people_num']."', '".$GLOBALS['STATUS'][1]."');";
+		$sql = "INSERT INTO `orders` (`o_id`, `u_id`, `o_time`, `o_estimate_time`, `table_num`, `people_num`, `status`, `shop_id`) VALUES (NULL, '".$_SESSION['u_id']."', NOW(), NULL, '".$order_info['table_num']."', '".$order_info['people_num']."', '".$GLOBALS['STATUS'][1]."', '".$_shopID."');";
 	
 	$db->query($sql);
 	$o_id = $db->insert_id();

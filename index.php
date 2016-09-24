@@ -11,8 +11,10 @@ if(!checkAuth(AUCUSTOMER|AUSTAFF|AUADMIN)){
 		die();
 }
 
+
 // List Series by order_num
-$sql = "SELECT * FROM `series` ORDER BY `series`.`order_num` ASC ";
+$sql = "SELECT * FROM `series` WHERE `shop_id` = '".$_shopID."' ORDER BY `series`.`order_num` ASC ";
+
 $result = $db->query($sql);
 $num = $db->numrow($result);
 $all_series = array();

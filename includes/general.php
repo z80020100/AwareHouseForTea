@@ -25,11 +25,19 @@ header("Content-Type:text/html; charset=utf-8");
 if(!isset($_SESSION['u_auth']))
 	$_SESSION['u_auth'] = AUGUEST;
 
+
+if(isset($_GET['shop_id']))
+	$_shopID = $_GET['shop_id'];
+else if($_SESSION['u_auth'] != AUGUEST){
+	$_shopID = $_SESSION['shop_id'] ;
+}
+else
+	$_shopID = NULL;
 // 未來要獨立成為設定檔的部分 -----------------------
 // 可能會變成資料庫存取
 
 
-$db = new Db("localhost", "root" , "", "bfproj");
+$db = new Db("localhost", "root" , "", "happytea");
 
 // 開放訂餐的時間 從 4點 ~ 14點  (13-14是一個時段)
 $shift_start =0;

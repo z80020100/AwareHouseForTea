@@ -22,8 +22,12 @@ if(isset($_POST['submit'])){
 	
 
 	if(  user_login($_POST['username'] , $_POST['password'], $_POST['phone']) ){
-		if($_SESSION['admin'] == 1){
-			$message = "登入成功, 兩秒後自動老闆控制台";
+		if($_SESSION['admin'] == 1 && $_SESSION['shop_id'] == -1 ){
+			$message = "成功登入總店, 兩秒後自動進入總店控制台";
+			header("refresh:2;url=admin_index.php");
+		}
+		else if($_SESSION['admin'] == 1){
+			$message = "登入成功, 兩秒後自動進入老闆控制台";
 			header("refresh:2;url=listorder.php");
 		}
 		else{		
@@ -50,35 +54,5 @@ else{
 }
 
 require_once('includes/footer.php');
-/*
-session_start();
 
-$login_error = false;
-if(isset($_SESSION['user_name'])){
-	session_destroy();
-}
-
-if(isset($_POST['submit'])){	
-
-	if($_POST['username'] == "test" && $_POST['password'] == "1234"){
-		$_SESSION['user_name'] = "test";
-		header("location: index.php");
-	}
-	else{
-		$login_error = true;
-	}
-}
-
-
-<html><head><title>Login</title></head><body>
-
-<?php  if($login_error) echo "Wrong account or password";  ?>
-<form action="login.php" method="POST">
-<input type="text" name="username">
-<input type="password" name="password">
-<input type="submit" name="submit" value="login">
-</form>
-
-</body></html>
-*/
 ?>

@@ -42,6 +42,11 @@ $_Identity[IDCUSTOMER] = array('id' => IDCUSTOMER,'desc' => '顧客', 'name' => 
 $_Identity[IDSTAFF] = array('id' => IDSTAFF,'desc' => '職員', 'name' => 'staff');
 $_Identity[IDADMIN] = array('id' => IDADMIN,'desc' => '老闆', 'name' => 'admin');
 
+define("DIRECT", 1);
+define("JOIN", 2);
+define("DEMO", 3);
+
+
 function statusUp( $cStatus){
 	$kIndex = array_search( $cStatus, $GLOBALS['STATUS']);
 	if($kIndex == sizeof($GLOBALS['STATUS'])-1)
@@ -69,7 +74,7 @@ function statusDown( $cStatus){
 
 */
 
-function user_create($username, $userpass, $userRegInfo){
+function user_create($username, $userpass, $userRegInfo, $shop_id){
 	global $db;
 
 	if(!is_admin()){
@@ -91,7 +96,7 @@ function user_create($username, $userpass, $userRegInfo){
 	}
 
 	// hash("sha256", "test1234");
-	$sql = "INSERT INTO `user` (`u_id`, `u_name`, `u_pass`, `u_type`) VALUES (NULL, '".$username."', '".hash("sha256",$userpass)."', '".$userRegInfo['utype']."');";
+	$sql = "INSERT INTO `user` (`u_id`, `u_name`, `u_pass`, `u_type`, `shop_id`) VALUES (NULL, '".$username."', '".hash("sha256",$userpass)."', '".$userRegInfo['utype']."', '".$shop_id."');";
 	if( !$result = $db->query($sql) ){
 
 		die('error gf_uc_1<br>');
@@ -203,6 +208,7 @@ function user_login($username, $password, $phone_info){
 				$_SESSION['admin'] = ($Quser['u_type'] == IDADMIN);
 				$_SESSION['u_type'] = $Quser['u_type'];
 				$_SESSION['u_auth'] = 1 << $Quser['u_type'];
+				$_SESSION['shop_id'] = $Quser['shop_id'];
 				$_SESSION['ui_phone'] = $Quser_info['ui_phone'];
 				return true;
 			}
@@ -220,6 +226,7 @@ function user_login($username, $password, $phone_info){
 				$_SESSION['admin'] = ($Quser['u_type'] == IDADMIN);
 				$_SESSION['u_type'] = $Quser['u_type'];
 				$_SESSION['u_auth'] = 1 << $Quser['u_type'];
+				$_SESSION['shop_id'] = $Quser['shop_id'];
 				$_SESSION['ui_phone'] = $Quser_info['ui_phone'];
 				return true;
 			}
