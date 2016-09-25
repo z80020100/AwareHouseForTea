@@ -744,6 +744,7 @@ function getData() {
     }
     else if (type == "orders") {
       getOrdersReport(ret, t2);
+      getMenuReport(ret[ret.length-1], t2);
     }
     else if (type == "menu") {
       getMenuReport(ret, t3);

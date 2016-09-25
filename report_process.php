@@ -7,7 +7,7 @@ function getOrderInfo($db, $start_time, $end_time) {
     $result = $db->query($sql);
     $order_info = array();
     while($order = $db->fetch_array($result)){
-		$order_corrupted = false;
+        $order_corrupted = false;
         $sql = "SELECT * FROM `share` WHERE `o_id` = ".$order['o_id'] ;
         $s_result = $db->query($sql);
         $share_info = array();
@@ -22,60 +22,60 @@ function getOrderInfo($db, $start_time, $end_time) {
                 $sql = "SELECT * FROM `main` WHERE `m_id` = ".$item['m_id'];
                 $m_result = $db->query($sql);
                 $main = $db->fetch_array($m_result);
-				if($main == false)
-				{
-					$order_corrupted = true;
-				}
-				else{
-					// Requirement Option
-					$sql = "SELECT * FROM `sh-i_ai` WHERE `sh-i_id` = ".$item['sh-i_id']." AND `is_ro` = 1 ";
-					$sh_i_ai_result = $db->query($sql);
-					$ro_info = array();
-					while($sh_i_ai = $db->fetch_array($sh_i_ai_result)){
-						$sql = "SELECT * FROM `additional_item` WHERE `ai_id` = ".$sh_i_ai['ai_id'];
-						$ro_result = $db->query($sql);
-						$ro = $db->fetch_array($ro_result);
+                if($main == false)
+                {
+                    $order_corrupted = true;
+                }
+                else{
+                    // Requirement Option
+                    $sql = "SELECT * FROM `sh-i_ai` WHERE `sh-i_id` = ".$item['sh-i_id']." AND `is_ro` = 1 ";
+                    $sh_i_ai_result = $db->query($sql);
+                    $ro_info = array();
+                    while($sh_i_ai = $db->fetch_array($sh_i_ai_result)){
+                        $sql = "SELECT * FROM `additional_item` WHERE `ai_id` = ".$sh_i_ai['ai_id'];
+                        $ro_result = $db->query($sql);
+                        $ro = $db->fetch_array($ro_result);
 
-						$outRo = array();
-						$outRo['name'] = $ro['name'];
-						$outRo['price'] = $ro['price'];
+                        $outRo = array();
+                        $outRo['name'] = $ro['name'];
+                        $outRo['price'] = $ro['price'];
 
-						// Counting price
-						$counting_total += $ro['price'];
-						array_push($ro_info, $outRo);
-					}
-					// Additional Option
-					$sql = "SELECT * FROM `sh-i_ai` WHERE `sh-i_id` = ".$item['sh-i_id']." AND `is_ro` = 0 ";
-					$sh_i_ai_result = $db->query($sql);
-					$ai_info = array();
-					while($sh_i_ai = $db->fetch_array($sh_i_ai_result)){
-						$sql = "SELECT * FROM `additional_item` WHERE `ai_id` = ".$sh_i_ai['ai_id'];
-						$ai_result = $db->query($sql);
-						$ai = $db->fetch_array($ai_result);
+                        // Counting price
+                        $counting_total += $ro['price'];
+                        array_push($ro_info, $outRo);
+                    }
+                    // Additional Option
+                    $sql = "SELECT * FROM `sh-i_ai` WHERE `sh-i_id` = ".$item['sh-i_id']." AND `is_ro` = 0 ";
+                    $sh_i_ai_result = $db->query($sql);
+                    $ai_info = array();
+                    while($sh_i_ai = $db->fetch_array($sh_i_ai_result)){
+                        $sql = "SELECT * FROM `additional_item` WHERE `ai_id` = ".$sh_i_ai['ai_id'];
+                        $ai_result = $db->query($sql);
+                        $ai = $db->fetch_array($ai_result);
 
-						$outAi = array();
-						$outAi['name'] = $ai['name'];
-						$outAi['price'] = $ai['price'];
-						// Counting price
-						$counting_total += $ai['price'];
-						array_push($ai_info, $outAi);
-					}
-					$counting_total += $main['price'];
-					$counting_total = $counting_total * $item['quantity'];
+                        $outAi = array();
+                        $outAi['name'] = $ai['name'];
+                        $outAi['price'] = $ai['price'];
+                        // Counting price
+                        $counting_total += $ai['price'];
+                        array_push($ai_info, $outAi);
+                    }
+                    $counting_total += $main['price'];
+                    $counting_total = $counting_total * $item['quantity'];
 
-					$outItem = array();
-					$outItem['name']        =   $main['name'];
-					$outItem['main_price']  =   $main['price'];
-					$outItem['m_id']        =   $main['m_id'];
-					$outItem['s_id']        =   $main['s_id'];
-					$outItem['quantity']        =   $item['quantity'];
-					$outItem['comment']         =   $item['comment'];
-					$outItem['RO_array']    =   $ro_info;
-					$outItem['AI_array']        =   $ai_info;
+                    $outItem = array();
+                    $outItem['name']        =   $main['name'];
+                    $outItem['main_price']  =   $main['price'];
+                    $outItem['m_id']        =   $main['m_id'];
+                    $outItem['s_id']        =   $main['s_id'];
+                    $outItem['quantity']        =   $item['quantity'];
+                    $outItem['comment']         =   $item['comment'];
+                    $outItem['RO_array']    =   $ro_info;
+                    $outItem['AI_array']        =   $ai_info;
 
-					array_push($item_info, $outItem);
+                    array_push($item_info, $outItem);
 
-				}
+                }
             }
             $outShare = array();
             $outShare['total'] = $counting_total;
@@ -87,8 +87,8 @@ function getOrderInfo($db, $start_time, $end_time) {
         $outOrder['share_array'] = $share_info;
         $outOrder['summary_array'] = makeSummary($share_info);
         $outOrder['total'] = $order_total ;
-		if($order_corrupted == false)
-			array_push( $order_info, $outOrder );
+        if($order_corrupted == false)
+            array_push( $order_info, $outOrder );
     }
 
     return $order_info;
@@ -257,6 +257,32 @@ switch ($type) {
     array_push($ret, $time);
     $log = getLogInfo($db, $start_time, $end_time);
     $ret[3] = getAllDataArray($log);
+
+    /////////////////////////////////
+    // Add Menu Report operation here
+    /////////////////////////////////
+    $menu = getMenu($db);
+    // $log = getLogInfo($db, $start_time, $end_time);
+    // $AllDataArray = getAllDataArray($log);
+    $AllDataArray = $ret[3];
+    $log_size = count($log);
+    $total = 0;
+    $menu_ret = array();
+    foreach ($AllDataArray as $series => $main_array) {
+        foreach ($main_array as $main => $value) {
+            if (!array_key_exists($main, $menu)) unset($main);
+            else $total += intval($value["price"]);
+        }
+    }
+
+    array_push($menu_ret, $total);
+    array_push($menu_ret, $AllDataArray);
+    //////////////////////////////
+    // End Menu Report Return Here
+    //////////////////////////////
+
+    array_push($ret, $menu_ret);
+
     echo json_encode($ret, JSON_UNESCAPED_UNICODE);
     break;
 
