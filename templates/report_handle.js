@@ -414,6 +414,7 @@ function getOrdersReport(ret, t2) {
 
   if (AllDataArray_size == 0) {
     alert("查無資料");
+    $('#piechart *').remove();
     return 0;
   }
 
