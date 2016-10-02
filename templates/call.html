@@ -2,129 +2,28 @@
 
 
 <script type="text/javascript" src="./includes/jquery.tablesorter.js"></script>
-<script type="text/javascript" src="./templates/sms_promote.js"></script>
+<script type="text/javascript" src="./templates/call.js"></script>
 
-<div class="w3-padding w3-margin-top" style="width:100%;background-color:grey">
-篩選
+<div class="w3-padding w3-margin-top" style="width:500px; height: 50px; margin: 10px auto">
 
 
-<select class="w3-select w3-border" style="width:10%;" name="option">
-    <option value="" disabled selected>訂餐時間</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
+<select class="w3-border" style="display: inline-block; width: 100px" name="item">
+    <option value="" disabled selected>缺貨物料</option>
+    <option value="1">綠茶</option>
+    <option value="2">紅茶</option>
+    <option value="3">吐司麵包</option>
+    <option value="4">吸管</option>
+    <option value="5">杯蓋</option>
+    <option value="-1">+新增</option>
 </select>
-
-<select class="w3-select w3-border" style="width:10%;" name="option1">
-    <option value="" disabled selected>訂餐次數</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
-</select>
-
-<select class="w3-select w3-border" style="width:10%;" name="option2">
-    <option value="" disabled selected>訂餐內容</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
-</select>
-
-<select class="w3-select w3-border" style="width:15%;" name="option3">
-    <option value="" disabled selected>推播簡訊次數</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
-</select>
-
-<button id="search_button" class="w3-btn w3-margin-bottom w3-round w3-right" style="background-color:#FFBB00">搜尋</button>
-
-<hr>
-<h6>
-篩選條件:訂單次數-<span id="order_num">2</span>
-/訂單時段-<span id="order_time">2015/01/02</span>
-/已推播簡訊次數-<span id="sms_num">5</span>
-</h6>
-<h6>
-搜尋結果:共<span>3</span>筆
-<button id="sms_button" class="w3-btn w3-margin-bottom w3-round w3-right" style="background-color:#FFBB00">簡訊推播</button>
-</h6>
+<input type="text" name="item" placeholder="品項" style="display: none">
+<input type="text" name="number" placeholder="數量">
+<input type="submit" name="submit" value="送出">
 
 
 </div>
 
-
-
-<table  id="promote_table" class="w3-table-all w3-centered">
-<thead>
-    <tr>
-        <td rowspan="2">選擇<input class="w3-check sms_checkbox" type="checkbox" id="select_all"></td>
-        <td rowspan="2">號碼</td>
-        <td colspan="4">訂餐紀錄</td>
-        <td rowspan="2">已推播簡訊</td>
-        <td rowspan="2">內容</td>
-    </tr>
-    <tr>
-        <td>時間</td>
-        <td>次數</td>
-        <td>金額</td>
-        <td>內容</td>
-    </tr>
-
-</thead>
-<tbody>
-    <tr>
-    <td><input class="w3-check sms_checkbox" type="checkbox"></td>
-    <td>0981665365</td>
-    <td>2016/01/03</td>
-    <td>5</td>
-    <td>300</td>
-    <td>abc</td>
-    <td>4</td>
-    </tr>
-
-    <tr>
-    <td><input class="w3-check sms_checkbox" type="checkbox"></td>
-    <td>0981251365</td>
-    <td>2015/02/04</td>
-    <td>2</td>
-    <td>200</td>
-    <td>aec</td>
-    <td>2</td>
-    </tr>
-
-    <tr>
-    <td><input class="w3-check sms_checkbox" type="checkbox"></td>
-    <td>0981111165</td>
-    <td>2016/10/03</td>
-    <td>7</td>
-    <td>500</td>
-    <td>adsfbc</td>
-    <td>8</td>
-    </tr>
-</tbody>
-
-
-</table>
 
 <br>
 
-
-<div id="sms_content" class="w3-modal">
-    <div class="w3-modal-content w3-card-4">
-        <header class="w3-container">
-            <span class="w3-closebtn" id="close_sms_content">&times;</span>
-            <h3>輸入簡訊內容</h3>
-        </header>
-
-        <div class="w3-container w3-center w3-margin" >
-            <textarea style="width:90%;">
-            </textarea>
-            <br>
-            <br>
-            <button id="save_sms_content" class="w3-border-right w3-btn w3-margin-bottom w3-round w3-right">儲存內容</button>
-            <button id="sms_send" class="w3-btn w3-margin-bottom w3-round w3-right">傳送</button>
-        </div>
-
-    </div>
-</div>
 
