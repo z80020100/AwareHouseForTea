@@ -4,24 +4,63 @@
 <script type="text/javascript" src="./includes/jquery.tablesorter.js"></script>
 <script type="text/javascript" src="./templates/call.js"></script>
 
-<div class="w3-padding w3-margin-top" style="width:500px; height: 50px; margin: 10px auto">
 
+<table class="w3-table-all w3-centered" style="width: 70%; margin: 10px auto">
+<thead>
+    <tr>
+        <th width="30%">補料品項</th>
+        <th width="30%">補料數量</th>
+        <th width="20%">選取</th>
+        <th></th>
+    </tr>
 
-<select class="w3-border" style="display: inline-block; width: 100px" name="item">
-    <option value="" disabled selected>缺貨物料</option>
-    <option value="1">綠茶</option>
-    <option value="2">紅茶</option>
-    <option value="3">吐司麵包</option>
-    <option value="4">吸管</option>
-    <option value="5">杯蓋</option>
-    <option value="-1">+新增</option>
-</select>
-<input type="text" name="item" placeholder="品項" style="display: none">
-<input type="text" name="number" placeholder="數量">
-<input type="submit" name="submit" value="送出">
+</thead>
 
+<tbody>
+    <tr>
+        <td>綠茶</td>
+        <td><input type="number" data-name="green_tea" style="width: 100px" min="0">公升</td>
+        <td><input type="checkbox" name="item"></td>
+        <td></td>
+    </tr>
 
-</div>
+    <tr>
+        <td>紅茶</td>
+        <td><input type="number" data-name="red_tea" style="width: 100px" min="0">公升</td>
+        <td><input type="checkbox" name="item"></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>吸管</td>
+        <td><input type="number" data-name="straw" style="width: 100px" min="0">支</td>
+        <td><input type="checkbox" name="item"></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>杯蓋</td>
+        <td><input type="number" data-name="lid" style="width: 100px" min="0">片</td>
+        <td><input type="checkbox" name="item"></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>吐司</td>
+        <td><input type="number" data-name="toast" style="width: 100px" min="0">袋</td>
+        <td><input type="checkbox" name="item"></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><button id="submit" class="w3-small-btn w3-small w3-white w3-border w3-border-blue w3-text-blue w3-round-xlarge">總店叫料</button></td>
+    </tr>
+
+</tbody>
+</table>
 
 
 <br>
