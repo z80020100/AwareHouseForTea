@@ -126,7 +126,7 @@ function add_series() {
 			.done(function(msg){
 				//alert(msg);
 				alertify.success("新增系列：" + new_series);
-				$("#series_table").load("edit_menu.php #series_table > div");
+				$("#series_table").load("edit_menu_old_ui.php #series_table > div");
 				//window.location.reload();
 				series_table_bind();
 				read_series_for_pre();
@@ -601,7 +601,7 @@ function add_item(){
 			})
 			.done(function(){
 				$("#close_new_main_win").trigger('click');
-				$("#series_table").load("edit_menu.php #series_table > div");
+				$("#series_table").load("edit_menu_old_ui.php #series_table > div");
 				alertify.success("新增品項成功！");
 				series_table_bind();
 			})
@@ -634,7 +634,7 @@ function add_item(){
 					async:false
 				})
 				.done(function(){
-					$("#multi_choice").load("edit_menu.php #multi_choice > input + label", function(){
+					$("#multi_choice").load("edit_menu_old_ui.php #multi_choice > input + label", function(){
 						unbind_new_main_win();
 						if($("#new_main_win_h3").text() == '編輯加點項目'){ // 修改編輯加點視窗畫面
 							$("#edit_additional").trigger('click');
@@ -677,7 +677,7 @@ function add_item(){
 					async:false
 				})
 				.done(function(){
-					$("#add_single_choice").load("edit_menu.php #add_single_choice", function(){
+					$("#add_single_choice").load("edit_menu_old_ui.php #add_single_choice", function(){
 						unbind_new_main_win();
 						if($("#new_main_win_h3").text() == '編輯加點項目'){ // 修改編輯加點視窗畫面
 							$("#edit_additional").trigger('click');
@@ -796,7 +796,7 @@ function edit_item(){
 			})
 			.done(function(){
 				$("#close_new_main_win").trigger('click');
-				$("#series_table").load("edit_menu.php #series_table > div");
+				$("#series_table").load("edit_menu_old_ui.php #series_table > div");
 				alertify.success("編輯品項成功！");
 				series_table_bind();
 			})
@@ -825,7 +825,7 @@ function edit_item(){
 				})
 				.done(function(){
 					$("#close_new_main_win").trigger('click');
-					$("#series_table").load("edit_menu.php #series_table > div");
+					$("#series_table").load("edit_menu_old_ui.php #series_table > div");
 					alertify.success("刪除品項成功！");
 					series_table_bind();
 				})
@@ -883,7 +883,7 @@ function del_series(){
 			})
 			.done(function(main_data_array){
 				console.log(main_data_array);
-				$("#series_table").load("edit_menu.php #series_table > div");
+				$("#series_table").load("edit_menu_old_ui.php #series_table > div");
 				alertify.success("刪除系列成功！");
 				series_table_bind();
 				read_series_for_pre();
@@ -934,7 +934,7 @@ function main_sortable(){
 						error_flag = true;
 					});
 				}
-				$("#series_table").load("edit_menu.php #series_table > div");
+				$("#series_table").load("edit_menu_old_ui.php #series_table > div");
 				if(error_flag)
 					alertify.error("品項排序更新失敗...");
 				else
@@ -996,7 +996,7 @@ function series_sortable(){
 				});
 			}
 			series_sortable_destroy();
-			$("#series_table").load("edit_menu.php #series_table > div");
+			$("#series_table").load("edit_menu_old_ui.php #series_table > div");
 			if(error_flag)
 				alertify.error("系列排序更新失敗...！！");
 			else
