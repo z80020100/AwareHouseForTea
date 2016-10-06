@@ -1,0 +1,80 @@
+<hr>
+<div class="w3-container">
+<div class="w3-border">
+<ul class="w3-navbar w3-light-grey">
+  <li><a class="w3-btn testbtn" onclick="openTab(event, 'employer')">創造一個加盟店店主的帳號</a></li>
+  <li><a class="w3-btn testbtn" onclick="openTab(event, 'employee')">創造一個總店店員的帳號</a></li>
+</ul>
+
+<div id="employer" class="w3-container theTab w3-animate-opacity">
+  <form class="w3-container w3-card-4">
+  <div class="w3-group">
+    <input class="w3-input" type="text" required>
+    <label class="w3-label w3-validate">加盟店 店名</label>
+  </div>
+  <div class="w3-group">
+    <input class="w3-input" type="text" required>
+    <label class="w3-label w3-validate">加盟主 姓名</label>
+  </div>
+  <div class="w3-group">
+    <input class="w3-input" type="text" required>
+    <label class="w3-label w3-validate">加盟店 電話</label>
+  </div>
+  <div class="w3-group">
+    <input class="w3-input" type="text" required>
+    <label class="w3-label w3-validate">加盟店 地址</label>
+  </div>
+  <div class="w3-group">
+    <input class="w3-input" type="text" required>
+    <label class="w3-label w3-validate">加盟主 電話</label>
+  </div>
+  <div class="w3-group">
+    <input class="w3-input" type="text" required>
+    <label class="w3-label w3-validate">FB連結</label>
+  </div>
+  <div class="w3-group">
+    <input class="w3-input" type="text" required>
+    <label class="w3-label w3-validate">加盟店 可以產生幾個員工帳號</label>
+  </div>
+  </div>
+  <div class="w3-center">
+	<a class="w3-btn w3-theme">創造帳號</a>
+  </div>
+</div>
+
+<div id="employee" class="w3-container theTab w3-animate-opacity">
+<form class="w3-container w3-card-4">
+  <div class="w3-group">
+    <input class="w3-input" type="text" required>
+    <label class="w3-label w3-validate">店員 姓名</label>
+  </div>
+  <div class="w3-group">
+    <input class="w3-input" type="text" required>
+    <label class="w3-label w3-validate">店員 電話</label>
+  </div>
+  <div class="w3-center">
+	<a class="w3-btn w3-theme">創造帳號</a>
+  </div>
+</div>
+
+<hr>
+<!-- </html> -->
+<script>
+// Tabs
+function openTab(evt, cityName) {
+  var i;
+  var x = document.getElementsByClassName("theTab");
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  var activebtn = document.getElementsByClassName("testbtn");
+  for (i = 0; i < x.length; i++) {
+      activebtn[i].className = activebtn[i].className.replace(" w3-dark-grey", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " w3-dark-grey";
+}
+
+var mybtn = document.getElementsByClassName("testbtn")[0];
+mybtn.click();
+</script>
