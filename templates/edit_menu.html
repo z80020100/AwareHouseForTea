@@ -1,105 +1,273 @@
-<script src="templates/edit_menu.js"></script>
+﻿<script src="templates/edit_menu_new_ui.js"></script>
 
-<link href="./templates/edit_menu.css" rel="stylesheet">
+<style type="text/css">
+#container{
+    border:1px #666 solid;
+    width:100%;
+	height:100%;
+    margin:0 auto;
+}
 
-<div id="button" style="text-align:center;">
-	<br>
-    <button id="add_series" class="w3-btn w3-round-xlarge" style="background: #ffc952; color: #ff7473;">新增系列</button>
-	<button id="edit_additional" class="w3-btn w3-round-xlarge" style="background: #ffc952; color: #ff7473;">編輯加點項目</button>
-	<button id="add_main" class="w3-btn w3-round-xlarge" style="background: #ffc952; color: #ff7473;">新增品項</button>
-	<select id="batch_main_series" style="background: #ffc952  0px 0px; color: #ff7473; font-size: 14px; border: #009688 1px solid; padding: 5px;">
-		<option value="s_0">預先選取新增系列</option>
-	</select>
+#body_left{
+    width:9%;
+    height:576px;
+    border:1px #666 solid;
+    margin-left:5px;
+    margin-top:5px;
+    margin-bottom:5px;
+    float:left;
+}
+
+#body_right{
+    width:34%;
+    height:576px;
+    border:1px #666 solid;
+    margin-right:5px;
+    margin-top:5px;
+    margin-bottom:5px;
+    float:right;
+}
+
+#body_cenetr{
+    width:54%;
+    height:576px;
+    border:1px #666 solid;
+    margin-left:0px;
+    margin-top:5px;
+    margin-bottom:5px;
+    float:left;
+}
+
+#addition_left{
+    width:33%;
+    height:300px;
+    //border:1px #666 solid;
+    border-right:1px #666 solid;
+    margin-left:5px;
+    margin-top:5px;
+    margin-bottom:5px;
+    float:left;
+}
+
+#addition_right{
+    width:66%;
+    height:300px;
+    //border:1px #666 solid;
+    margin-left:0px;
+    margin-top:5px;
+    margin-bottom:5px;
+    float:left;
+}
+
+.clear{
+    clear:both;
+}
+
+.series{
+    width:100%;
+    //height:60px;
+    border:1px #666 solid;
+	text-align:center;
+}
+
+.addition_type{
+    width:80%;
+    //height:60px;
+    margin-left:10%;
+     margin-top:10px;
+    border:1px #666 solid;
+	text-align:center;
+}
+
+.main{
+	width:23%;
+	height:40px;
+	margin-left:1%;
+	margin-top:1%;
+	border:1px #666 solid;
+	text-align:center;
+	float: left;
+}
+.main_name{
+	text-align:left;
+	padding-left:10%;
+}
+.main_price{
+	text-align:right;
+	padding-right:10%;
+}
+
+.detail_title{
+	margin-left:5%;
+}
+.detail_price{
+	margin-left:10%;
+}
+.detail_price_input{
+	margin-left:40%;
+}
+.detail_single{
+	margin-left:5%;
+}
+.detail_multi{
+	margin-left:5%;
+}
+.detail_item{
+	border:1px #666 solid;
+	width:40%;
+	text-align:center;
+	float: left;
+	margin-left:1%;
+	margin-top:1%;
+}
+.detail_button{
+	border:1px #666 solid;
+	width:25%;
+	margin-left:5%;
+	text-align:center;
+	float: left;
+}
+.edit_add_type{
+	border:1px #666 solid;
+	width:25%;
+	margin-left:70%;
+	text-align:center;
+	float: left;
+}
+
+.addition_item{
+	border:1px #666 solid;
+	width:40%;
+	text-align:center;
+	float: left;
+	margin-left:10%;
+	margin-top:8px;
+}
+
+.addition_item_price{
+	//border:1px #666 solid;
+	width:40%;
+	text-align:center;
+	float: left;
+	margin-left:5%;
+	margin-top:8px;
+}
+
+</style>
+
+<div id="container">
+
+    <div id="body_left">
+	{% for series in all_series %}
+		<div class="series" id="series_s_id_{{series.s_id}}" data-series_s_id="{{series.s_id}}">{{series.name}}</div>
+	{% endfor %}
+		<!--div class="series">漢堡</div>
+		<div class="series">蛋餅</div>
+		<div class="series">三明治</div-->
+		<div class="series" id="add_series">+新增</div>
+	</div>
+
+	<div id="body_cenetr" style="display: none;">
+		<div class="main">
+			<div class="main_name">鮪魚漢堡</div>
+			<div class="main_price">45元</div>
+		</div>
+		<div class="main">
+			<div class="main_name">豬肉漢堡</div>
+			<div class="main_price">45元</div>
+		</div>
+		<div class="main">
+			<div class="main_name">OO漢堡</div>
+			<div class="main_price">45元</div>
+		</div>
+		<div class="main">
+			<div class="main_name">XX漢堡</div>
+			<div class="main_price">45元</div>
+		</div>
+		<div class="main">
+			<div class="main_name">漢堡</div>
+			<div class="main_price">45元</div>
+		</div>
+		<div class="main">
+			+新增
+		</div>
+	</div>
+
+	<div id="body_right" style="display: none;">
+		<div class="detail_title">
+			<div>新增餐點名稱</div>
+            <div><input type="text" id="main_name"></div>
+			<HR width="100%">
+		</div>
+		<div class="detail_price">
+			金額
+			<input type="text" class="detail_price_input" id="main_price">
+			元
+		</div>
+		<br><br>
+		<div class="detail_single" id="single_choice_by_user">
+			<!--div>單選項目</div>
+			<hr width="100%">
+			<div class="detail_item">飲料份量</div>
+			<div class="detail_item">麵包種類</div>
+			<div class="detail_item">麵條種類</div-->
+		</div>
+		<div class="clear"></div>
+        <br><br>
+		<div class="detail_multi" id="multi_choice_by_user">
+			<!--div>多選附加項目</div>
+			<hr width="100%">
+			<div class="detail_item">蛋類加點</div>
+			<div class="detail_item">漢堡類加點</div>
+			<div class="detail_item">調味加點</div-->
+		</div>
+		<div class="clear"></div>
+		<div style="margin-left:5%;"><hr width="100%"></div>
+        <div class="detail_button" id="button_cancel">取消</div>
+		<div class="detail_button" id="button_delete">刪除</div>
+		<div class="detail_button" id="button_submit">確定</div>
+	</div>
+    <div class="clear"></div>
+
 </div>
 
-<div id="series_table">
-    {% for series in all_series %}
-    <!--div id="s{{series.s_id}}" class="w3-group w3-row w3-padding-left"-->
-	<div id="s{{series.s_id}}" class="series_div w3-group w3-row w3-padding-left w3-card-4">
-
-				<h3 style="text-align:center;">
-					<input id="es_{{series.s_id}}" type="text" value="{{series.name}}"><br>
-					<a class="icon" id="del_s_{{series.s_id}}" href="javascript:void(0)"><img src="icon/del_at_icon.png" alt="del_at_icon"></a>
-				</h3>
-
-
-        {% for main in series.main %}
-            <div id="m{{main.m_id}}" class="w3-btn w3-margin-bottom w3-round" data-at_id={{main.at_id}} value="{{main.price}}"> {{main.name}} </div>
-            <script>
-                
-                $("#m{{main.m_id}}").data({ "ro_at_id" : [ 
-                   
-                {% for ro in main.ro %}
-                   
-                   {{ro.at_id}}, 
-                {% endfor %}
-                    -1] })
-            </script>
-        {% endfor %}
-    </div>
-    {% endfor %}
-</div>
-<br>
-
-<div id="new_main_set" class="w3-modal w3-padding-top" style="z-index:2">
+<div id="edit_addition_window" class="w3-modal w3-padding-top" style="z-index:2; display:none;">
     <div class="w3-modal-content w3-card-4">
         <header class="w3-container">
-            <span id="close_new_main_win" class="w3-closebtn w3-xlarge">&times;</span>
-            <h3 id="new_main_win_h3">新增品項</h3>
+            <div id="button_close" class="w3-closebtn w3-xlarge">&times;</div>
+            <h3 id="edit_addition_window_title">編輯細項抬頭</h3>
+            <div id="edit_addition_window_text" style="float:right;">編輯細項說明</div>
         </header>
-		
-		<div id="detail_title" style= "padding:10px;">
-			<div style="height:10px;"></div>
-			<div>
-				<span style="padding:5px">所屬系列：
-					<select id="new_main_series" style="width: 100%;">
-						<option value="s_0">請選擇所屬系列</option>
-					</select>
-				</span>
-				<br>
-				<span style="padding:5px">品項名稱：<input id="new_main_name" type="text" value="" placeholder="請輸入品項名稱" style="width: 100%;" /></span>
-				<br>
-				<span style="padding:5px">基底價格：<input id="new_main_price" type="number" value="0" min="0" style="width: 100%;" /></span>
-				<br>
-				<span style="padding:5px; text-align:center;">（總價=<span id="warning" style="font-weight: bold; color:red;">基底價格+細項價格</span>）</span>
-			</div>
-			<div style="height:10px;"></div>
-		</div>
-		
-		<div>
-			<div style="width: 50%; width: 50%; padding:10px; float:left; word-break: break-all; border:0px solid #9bdf70;background:#f0fbeb">
-				主餐細項(多選)
-				<a href='javascript:void(0)' id="add_multi_choice"><img src="icon/add_at_icon.png" alt="add_at_icon"></a>
-				<div class="multi_choice" id="multi_choice">
-					<input type="checkbox" name="single" value="single_0" id="single_0">
-					<label for="single_0">漢堡種類</label>
-					
-					<input type="checkbox" name="single" value="single_1" id="single_1">
-					<label for="single_1">吐司種類</label>
-				</div>				
-			</div>
-			<div style="width: 50%; padding:10px; float:right; word-break: break-all; border:0px solid #a9c9e2;background:#e8f5fe">
-				加點細項(單選)
-				<a href='javascript:void(0)' id="add_single_choice"><img src="icon/add_at_icon.png" alt="add_at_icon" ></a>
-				<div class="single_choice" id="single_choice">
-					<input type="radio" name="mul" value="mul_0" id="mul_0" checked>
-					<label for="mul_0">
-						<a href='javascript:void(0)' id="edit_at_icon_0" onclick="alert('編輯加點細項');"><img src="icon/edit_at_icon.png" alt="edit_at_icon"></a>
-						無加點
-						<a href='javascript:void(0)' id="del_at_icon_0" onclick="alert('刪除加點類別');"><img src="icon/del_at_icon.png" alt="del_at_icon"></a>
-						</label>
-				</div>
-			</div>
-			<div style="clear: both;"></div> <!--清除float效果-->
-			<div id="edit_add" style="padding:10px; word-break: break-all; border:0px solid #e3e197;background:#ffffdd">
-				<span>細項編輯<a href="javascript:void(0)" id="add_additional_item"><img src="icon/add_at_icon.png" alt="add_at_icon"></a></span>
-				<div id="edit_add_detail"></div>
-			</div>
+
+		<div style= "padding:10px;">
+            <div id="addition_left">
+                <div class="addition_type">飲料份量</div>
+                <div class="addition_type">麵包種類</div>
+                <div class="addition_type">+新增</div>
+            </div>
+
+            <div id="addition_right">
+                <div id="addition_name" style="margin-left:40px; margin-top:10px;">飲料份量</div>
+                <hr width="90%" style="margin-left:5%">
+                <div>
+                    <div class="addition_item">大</div>
+                    <div class="addition_item_price"><input type="text"> 元</div>
+                </div>
+                <div>
+                    <div class="addition_item">中</div>
+                    <div class="addition_item_price"><input type="text"> 元</div>
+                </div>
+                <div>
+                    <div class="addition_item">+新增細項名稱</div>
+                    <div class="addition_item_price"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
 		</div>
 
         <footer class="w3-container">
-            <div class="w3-container w3-col s2 w3-right w3-padding-top">
-                <button id="add_item_finish" class="w3-btn w3-right w3-round">確定</button>
+            <div>
+                <div id="button_finish" class="w3-btn w3-right w3-round" style="margin-bottom:10px; margin-top:10px;">完成</div>
             </div>
         </footer>
     </div>

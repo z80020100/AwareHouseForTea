@@ -3,11 +3,9 @@ require_once('includes/general.php');
 
 header("Content-Type:text/html; charset=utf-8");
 
-not_admin_redirect();
+$action = $_REQUEST["action"]; // 接收傳遞過來的動作
 
-$action = $_REQUEST["action"]; // 接受傳遞過來的動作
-
- if($action == "add_series")
+if($action == "add_series")
 {
 	$new_series = $_REQUEST["new_series"];
 	//$order_number = $_REQUEST["order_number"];
@@ -265,6 +263,17 @@ else if($action == "series_sort"){
 	$result = $db->query($write_sql);
 
 	echo json_encode($result, JSON_UNESCAPED_UNICODE);
+}
+
+else if($action == "road_main_by_s_id"){
+    $series_s_id = $_REQUEST["series_s_id"];
+    $main_data_array = array();
+    $read_sql = "SELECT * FROM `main` WHERE `s_id` = $series_s_id";
+    $result = $db->query($read_sql);
+    while($data = $db->fetch_array($result)){
+        array_push($main_data_array, $data);
+	}
+    echo json_encode($main_data_array, JSON_UNESCAPED_UNICODE);
 }
 
 ?>
