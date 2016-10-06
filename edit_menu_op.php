@@ -10,7 +10,7 @@ if($action == "add_series")
 	$new_series = $_REQUEST["new_series"];
 	//$order_number = $_REQUEST["order_number"];
 
-	$write_sql = "INSERT INTO `series` (`s_id`, `order_num`, `name`) VALUES (NULL, '2147683647', '$new_series')";
+	$write_sql = "INSERT INTO `series` (`s_id`, `order_num`, `name`, `shop_id`) VALUES (NULL, '2147683647', '$new_series', 1)";
 	$result = $db->query($write_sql);
 	
 	echo json_encode($result, JSON_UNESCAPED_UNICODE);
