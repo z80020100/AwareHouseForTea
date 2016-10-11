@@ -22,9 +22,9 @@ if(isset($_POST['submit'])){
 	
 
 	if(  user_login($_POST['username'] , $_POST['password'], $_POST['phone']) ){
-		if($_SESSION['admin'] == 1 && $_SESSION['shop_id'] == -1 ){
+		if($_SESSION['shop_id'] == -1 ){
 			$message = "成功登入總店, 兩秒後自動進入總店控制台";
-			header("refresh:2;url=admin_index.php");
+			header("refresh:2;url=edit_menu.php");
 		}
 		else if($_SESSION['admin'] == 1){
 			$message = "登入成功, 兩秒後自動進入老闆控制台";

@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2016-09-27 16:05:45
--- 伺服器版本: 10.1.13-MariaDB
--- PHP 版本： 5.6.20
+-- 產生時間： 2016-10-11 20:54:00
+-- 伺服器版本: 10.1.16-MariaDB
+-- PHP 版本： 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -1125,7 +1125,10 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`u_id`, `u_name`, `u_pass`, `u_type`, `shop_id`) VALUES
 (1, 'happytea', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 3, 2),
 (2, 'wang', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 3, 1),
-(3, 'test', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 3, 2);
+(4, 'top_boss', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 3, -1),
+(5, 'top_staff', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 2, -1),
+(6, 'bottom_boss', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 3, 3),
+(7, 'bottom_staff', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -1153,7 +1156,11 @@ INSERT INTO `user_info` (`ui_id`, `u_id`, `ui_advsecurity`, `ui_occupation`, `ui
 (18, 23, 0, '', ''),
 (19, 24, 0, '', ''),
 (20, 25, 0, '', ''),
-(21, 3, 1, '', '0912345678');
+(21, 3, 1, '', '0912345678'),
+(22, 4, 1, '', '09123456781'),
+(23, 5, 1, '', '09123456782'),
+(24, 6, 1, '', '09123456783'),
+(25, 7, 1, '', '09123456784');
 
 -- --------------------------------------------------------
 
@@ -1332,12 +1339,12 @@ ALTER TABLE `shop`
 -- 使用資料表 AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- 使用資料表 AUTO_INCREMENT `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `ui_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `ui_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
