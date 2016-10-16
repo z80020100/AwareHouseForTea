@@ -57,11 +57,11 @@ if(isset($_POST['submit'])){
 		);
 
 		if(is_admin()){
-			$userRegInfo['advsecurity'] = $_POST['enablepass'];
+			$userRegInfo['advsecurity'] = $_POST['enablepass'] == 'on' ? 1 : 0;
 			$userRegInfo['utype'] = $_POST['utype'];
 		}
 		else{
-			$userRegInfo['advsecurity'] = $_POST['enablepass'];
+			$userRegInfo['advsecurity'] = $_POST['enablepass'] == 'on' ? 1 : 0;
 			$userRegInfo['utype'] = IDGUEST;
 		}
 
