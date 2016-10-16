@@ -10,7 +10,7 @@ if(isset($_SESSION['u_name'])){
 	if($_SESSION['u_type'] == 0) 	// NOT ACTIVATED
 		$page_verify = true;
 	else if(is_admin()){  			// is the user admin?
-		$_page_verify = false;
+		$page_verify = false;
 	}
 	else{
 		header("location:index.php");
@@ -42,29 +42,29 @@ if(!isset( $_POST['userpass']))
 
 if(!isset( $_POST['verification']))
 	 $_POST['verification'] = '';
- 
+
 if(!isset($_POST['phone']))
 	$_POST['phone'] = '';
 
 if(!isset($_POST['occupation']))
 	$_POST['occupation'] = '';
 
-if(isset($_POST['submit'])){	
+if(isset($_POST['submit'])){
 	if($page_verify == false){
-		
+
 		$userRegInfo = array(
 			'phone' => $_POST['phone'],
 		);
-				
+
 		if(is_admin()){
 			$userRegInfo['advsecurity'] = $_POST['enablepass'];
 			$userRegInfo['utype'] = $_POST['utype'];
 		}
 		else{
 			$userRegInfo['advsecurity'] = $_POST['enablepass'];
-			$userRegInfo['utype'] = IDGUEST; 
+			$userRegInfo['utype'] = IDGUEST;
 		}
-		
+
 		$uc_return = user_create($_POST['username'] , $_POST['userpass'], $userRegInfo, $_shopID);
 		if( $uc_return != -1 && is_admin() ){
 			$message = "帳號創立成功";
@@ -78,7 +78,7 @@ if(isset($_POST['submit'])){
 		}
 		else if( $uc_return != -1 ){
 			$message = "傳送驗證碼中..";
-			
+
 			user_login($_POST['username'] , $_POST['userpass'], $_POST['phone']);
 			$vercode = user_vercode();
 			//echo $vercode['hash'];
@@ -107,7 +107,7 @@ if(isset($_POST['submit'])){
 			else
 				$message = "驗證碼錯誤";
 		}
-		
+
 	}
 }
 
