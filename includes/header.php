@@ -25,7 +25,8 @@ $_HTML .= $template->render(array(
 	'PAGE_TITLE' => $_PAGE_TITLE,
 	'USER_IDENTITY' => $_USER_IDENTITY,
 	'all_series' => $all_series,
-  'TOP_SHOP' => $_SESSION['shop_id'],
+  	// 'TOP_SHOP' => $_SESSION['shop_id'],
+	'TOP_SHOP' => $_shopID
 ));
 
 //echo $_Identity[$_SESSION['u_type']]['name'];

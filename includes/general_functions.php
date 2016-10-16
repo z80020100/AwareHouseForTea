@@ -109,7 +109,7 @@ function user_create($username, $userpass, $userRegInfo, $shop_id){
 
 	$new_user_id = $db->mysqli->insert_id;
 
-	$sql = "INSERT INTO `user_info` (`ui_id`, `u_id`, `ui_advsecurity`, `ui_phone`) VALUES (NULL, '".$db->mysqli->insert_id."', '".$userRegInfo['advsecurity']."', '".$userRegInfo['phone']."')";
+	$sql = "INSERT INTO `user_info` (`ui_id`, `u_id`, `ui_advsecurity`, `ui_occupation`, `ui_phone`) VALUES (NULL, '".$db->mysqli->insert_id."', '".$userRegInfo['advsecurity']."', '', '".$userRegInfo['phone']."')";
 	if( !$result = $db->query($sql) ){
 		//die($sql);
 		echo "<p>Error: " . $db->err . "</p>";
