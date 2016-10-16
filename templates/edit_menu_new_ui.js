@@ -190,22 +190,22 @@ function road_add_type(){
         console.log('--------我是分隔線--------');
 
         // 增加單選新增按鈕
-        $('#addition_left')
-            .append($('<div>').attr({'class':'addition_type', 'id':'edit_add_type_at_id_' + 'add_single'})
-                .append('+新增')
-                .data('add_type', {
-                        'multiple_choice': 0}
-                    )
-            );
+        var edit_add_type_at_id_add_single = $('<div>').attr({'class':'addition_type', 'id':'edit_add_type_at_id_add_single'})
+            .append('+新增')
+            .data('add_type', {
+                    'multiple_choice': 0}
+                )
+        edit_add_type_at_id_add_single.bind('click', {choice_type:'single_choice_by_user'}, add_additional_type); // .bind(event, data, function)
+        $('#addition_left').append(edit_add_type_at_id_add_single);
 
         // 增加多選新增按鈕
-        $('#addition_left')
-            .append($('<div>').attr({'class':'addition_type', 'id':'edit_add_type_at_id_' + 'add_multi'})
-                .append('+新增')
-                .data('add_type', {
-                        'multiple_choice': 1}
-                    )
-            );
+        var edit_add_type_at_id_add_multi = $('<div>').attr({'class':'addition_type', 'id':'edit_add_type_at_id_add_multi'})
+            .append('+新增')
+            .data('add_type', {
+                    'multiple_choice': 1}
+            )
+        edit_add_type_at_id_add_multi.bind('click', {choice_type:'multi_choice_by_user'}, add_additional_type); 
+        $('#addition_left').append(edit_add_type_at_id_add_multi);
 
     })
     .fail(function(){
@@ -399,6 +399,59 @@ function add_series() {
 		else {
 			alertify.error('新增系列操作取消！');
 		} 
+	}, "");
+}
+
+function add_additional_type(event){
+    var new_type_name;
+    var title;
+    var multi_choice;
+    var trigger_target;
+    var success_msg;
+    if(event.data.choice_type == 'single_choice_by_user'){ // 下單時之單選項目
+        console.log("新增使用者單選類別");
+        title = '請輸入新單選類別名稱';
+        multi_choice = '0';
+        trigger_target = '#button_edit_single';
+        success_msg = '新單選類別：';
+    }
+    else if(event.data.choice_type == 'multi_choice_by_user'){ // 下單時之多選項目
+        console.log("新增使用者多選類別");
+        title = '請輸入新多選類別名稱';
+        multi_choice = '1';
+        trigger_target = '#button_edit_multi';
+        success_msg = '新多選類別：';
+    }
+    else{
+        alertify.error('錯誤：未知加點類別！');
+        return;
+    }
+
+    alertify.prompt(title, function(e, new_type_name) {
+        if(e && (new_type_name != "")) {
+            $.ajax({
+                url:"edit_menu_op.php",
+                method: "POST",
+                dataType:"json",
+                data: {
+                    "action": "add_additional_type",
+                    "option_name":new_type_name,
+                    "multiple_choice":multi_choice
+                },
+				async:false
+			})
+			.done(function(){
+                road_add_type();
+                $(trigger_target).trigger('click');
+                alertify.success(success_msg + new_type_name);
+			})
+			.fail(function(){
+                alertify.error("新增品項傳輸錯誤！");
+			});
+		}
+		else {
+            alertify.error('新增多選細項類別取消！');
+		}
 	}, "");
 }
 
