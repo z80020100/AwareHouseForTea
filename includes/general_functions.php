@@ -95,18 +95,25 @@ function user_create($username, $userpass, $userRegInfo, $shop_id){
 		return -1;
 	}
 
+	// $shop_id is not permitted to be empty string
+	if ($shop_id == '')
+		$shop_id = 0;
+
 	// hash("sha256", "test1234");
 	$sql = "INSERT INTO `user` (`u_id`, `u_name`, `u_pass`, `u_type`, `shop_id`) VALUES (NULL, '".$username."', '".hash("sha256",$userpass)."', '".$userRegInfo['utype']."', '".$shop_id."');";
 	if( !$result = $db->query($sql) ){
-
+		echo "<p>Error: " . $db->err . "</p>";
+		echo "<p>Error text: " . $db->errtext . "</p>";
 		die('error gf_uc_1<br>');
 	}
 
 	$new_user_id = $db->mysqli->insert_id;
-	
+
 	$sql = "INSERT INTO `user_info` (`ui_id`, `u_id`, `ui_advsecurity`, `ui_phone`) VALUES (NULL, '".$db->mysqli->insert_id."', '".$userRegInfo['advsecurity']."', '".$userRegInfo['phone']."')";
 	if( !$result = $db->query($sql) ){
 		//die($sql);
+		echo "<p>Error: " . $db->err . "</p>";
+		echo "<p>Error text: " . $db->errtext . "</p>";
 		die('error gf_uc_2');
 	}
 	return $new_user_id;
@@ -118,10 +125,10 @@ function user_vercode( $updateAnyway = false, $u_name = false , $u_id = false){
 
 	if(!$u_name)
 		$u_name = $_SESSION['u_name'];
-	
+
 	if(!$u_id)
 		$u_id = $_SESSION['u_id'];
-	
+
 	$hashme = $u_name.' '.$u_id.' '.time().' '.rand();
 	$new_hash = substr( hash("sha256", $hashme) , 0, 4);
 
@@ -161,7 +168,7 @@ function user_vercode( $updateAnyway = false, $u_name = false , $u_id = false){
 function send_sms($dst, $msg){
 	global $_DontSendSMS;
 	if($_DontSendSMS == false){
-	
+
 		$smsURL = "http://202.39.48.216/kotsmsapi-1.php";
 
 		$post = array(
@@ -256,7 +263,7 @@ function is_login(){
 }
 
 function is_admin(){
-	
+
 	if(checkAuth(AUADMIN))
 		return true;
 	else
@@ -428,7 +435,7 @@ function order_detail($o_id){
 				$item_total = $item_total * $item['quantity'];
 
 				$counting_total += $item_total;
-				
+
 				$outItem = array();
 				$outItem['name'] 		= 	$main['name'];
 				$outItem['main_price'] 	= 	$main['price'];
