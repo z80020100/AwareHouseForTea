@@ -270,8 +270,18 @@ function is_above_customer() {
 	return checkAuth(AUCUSTOMER | AUSTAFF | AUADMIN);
 }
 
-function is_headquarters() {
+function is_headquarters_staff() {
 	return $_SESSION['shop_id'] == -1;
+}
+
+function is_topboss() {
+	return is_headquarters_staff() && is_admin();
+}
+
+function is_same_store() {
+	// check if this page and user is belong the same store
+	global $_shopID;
+	return $_SESSION['shop_id'] == $_shopID;
 }
 
 function get_shopID() {
@@ -299,7 +309,7 @@ function not_staff_redirect() {
 		header("location:login.php?shop_id=" . $_shopID);
 		die('');
 	}
-	if ( !is_staff() ) {
+	if ( !(is_staff() && is_same_store()) ) {
 		header("location:index.php?shop_id=" . $_shopID);
 		die('');
 	}
@@ -311,7 +321,7 @@ function not_admin_redirect() {
 		header("location:login.php?shop_id=" . $_shopID);
 		die('');
 	}
-	if ( !is_admin() ) {
+	if ( !(is_admin() && is_same_store()) ) {
 		header("location:index.php?shop_id=" . $_shopID);
 		die('');
 	}
@@ -323,7 +333,7 @@ function not_topboss_redirect() {
 		header("location:login.php?shop_id=" . $_shopID);
 		die('');
 	}
-	if ( !(is_headquarters() && is_admin()) ) {
+	if ( !is_topboss() ) {
 		header("location:index.php?shop_id=" . $_shopID);
 		die('');
 	}
