@@ -26,13 +26,17 @@ if(!isset($_SESSION['u_auth']))
 	$_SESSION['u_auth'] = AUGUEST;
 
 
-if(isset($_GET['shop_id']))
+if(isset($_GET['shop_id'])) {
+	// TODO injection check
 	$_shopID = $_GET['shop_id'];
-else if($_SESSION['u_auth'] != AUGUEST){
-	$_shopID = $_SESSION['shop_id'] ;
 }
-else
+// else if($_SESSION['u_auth'] != AUGUEST){
+// 	$_shopID = $_SESSION['shop_id'] ;
+// }
+else {
 	$_shopID = NULL;
+	die("Not provide shop id");
+}
 // 未來要獨立成為設定檔的部分 -----------------------
 // 可能會變成資料庫存取
 
