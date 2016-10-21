@@ -275,8 +275,10 @@ function is_headquarters() {
 }
 
 function get_shopID() {
-	if ( isset($_GET['shop_id']) && strlen($_GET['shop_id']) != 0 )
+	if ( isset($_GET['shop_id']) && strlen($_GET['shop_id']) != 0 ) {
+		$_SESSION['GET_shop_id'] = $_GET['shop_id'];
 		return $_GET['shop_id'];
+	}
 	else if (isset($_SESSION['GET_shop_id']))
 		return $_SESSION['GET_shop_id'];
 	else
