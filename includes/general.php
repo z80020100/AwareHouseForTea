@@ -3,6 +3,7 @@
 /* include libraries **********************************************/
 
 require_once ("dbclass.php");
+require_once ("db_config.php");
 require_once ("general_functions.php");
 
 // Mustache template system
@@ -46,8 +47,7 @@ if ($_shopID == NULL)
 // 未來要獨立成為設定檔的部分 -----------------------
 // 可能會變成資料庫存取
 
-
-$db = new Db("localhost", "root" , "", "happytea");
+$db = new Db(DB_ADDRESS, DB_USER, DB_PASSWORD, DB_DATABASE);
 
 // 開放訂餐的時間 從 4點 ~ 14點  (13-14是一個時段)
 $shift_start =0;
