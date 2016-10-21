@@ -9,7 +9,7 @@ $message = "";
 if(isset($_SESSION['u_name'])){
 	session_destroy();
 	$message = "已登出";
-	header("refresh:1;url=index.php?shop_id=" / $_shopID);
+	header("refresh:1;url=index.php?shop_id=" . $_shopID);
 }
 //$message = hash("sha256", "test1234");
 if(isset($_POST['submit'])){
