@@ -274,53 +274,67 @@ function is_headquarters() {
 	return $_SESSION['shop_id'] == -1;
 }
 
+function get_shopID() {
+	if ( isset($_GET['shop_id']) && strlen($_GET['shop_id']) != 0 )
+		return $_GET['shop_id'];
+	else if (isset($_SESSION['GET_shop_id']))
+		return $_SESSION['GET_shop_id'];
+	else
+		return null;
+}
+
 function not_login_redirect() {
+	global $_shopID;
 	if( !is_login() ) {
-		header("location:login.php?shop_id=" . $_GET['shop_id']);
+		header("location:login.php?shop_id=" . $_shopID);
 		die('');
 	}
 }
 
 function not_staff_redirect() {
+	global $_shopID;
 	if ( !is_login() ) {
-		header("location:login.php?shop_id=" . $_GET['shop_id']);
+		header("location:login.php?shop_id=" . $_shopID);
 		die('');
 	}
 	if ( !is_staff() ) {
-		header("location:index.php?shop_id=" . $_GET['shop_id']);
+		header("location:index.php?shop_id=" . $_shopID);
 		die('');
 	}
 }
 
 function not_admin_redirect() {
+	global $_shopID;
 	if ( !is_login() ) {
-		header("location:login.php?shop_id=" . $_GET['shop_id']);
+		header("location:login.php?shop_id=" . $_shopID);
 		die('');
 	}
 	if ( !is_admin() ) {
-		header("location:index.php?shop_id=" . $_GET['shop_id']);
+		header("location:index.php?shop_id=" . $_shopID);
 		die('');
 	}
 }
 
 function not_topboss_redirect() {
+	global $_shopID;
 	if ( !is_login() ) {
-		header("location:login.php?shop_id=" . $_GET['shop_id']);
+		header("location:login.php?shop_id=" . $_shopID);
 		die('');
 	}
 	if ( !(is_headquarters() && is_admin()) ) {
-		header("location:index.php?shop_id=" . $_GET['shop_id']);
+		header("location:index.php?shop_id=" . $_shopID);
 		die('');
 	}
 }
 
 function not_activated_redirect() {
+	global $_shopID;
 	if ( !is_login() ) {
-		header("location:login.php?shop_id=" . $_GET['shop_id']);
+		header("location:login.php?shop_id=" . $_shopID);
 		die('');
 	}
 	if ( !is_above_customer() ) {
-		header("location:register.php?shop_id=" . $_GET['shop_id']);
+		header("location:register.php?shop_id=" . $_shopID);
 		die('');
 	}
 }
