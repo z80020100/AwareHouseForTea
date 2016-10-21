@@ -26,7 +26,7 @@ if(!isset($_SESSION['u_auth']))
 	$_SESSION['u_auth'] = AUGUEST;
 
 
-if(isset($_GET['shop_id'])) {
+if(isset($_GET['shop_id']) && strlen($_GET['shop_id']) != 0) {
 	// TODO injection check
 	$_shopID = $_GET['shop_id'];
 }
