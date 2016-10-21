@@ -3,7 +3,6 @@
 $_PAGE_TITLE = '創造帳號';
 require_once('includes/header.php');
 
-
 $page_verify = false;
 $verification_success = false;
 if(isset($_SESSION['u_name'])){
@@ -13,17 +12,10 @@ if(isset($_SESSION['u_name'])){
 		$page_verify = false;
 	}
 	else{
-		header("location:index.php");
+		header("location:index.php?shop_id=" . $_shopID);
 		die('');
 	}
 }
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-if($_shopID == NULL) // not logined and didn't set shop_id
-	header("location:index.php");
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 if($page_verify == true){
 	$template = $twig->loadTemplate('register_verification.html');
@@ -83,7 +75,7 @@ if(isset($_POST['submit'])){
 			$vercode = user_vercode();
 			//echo $vercode['hash'];
 			send_sms($_POST['phone'], '你的驗證碼是:'.$vercode['hash'] );
-			header("refresh:1;url=register.php");
+			header("refresh:1;url=register.php?shop_id=" . $_shopID);
 		}
 		else
 		{
@@ -99,7 +91,7 @@ if(isset($_POST['submit'])){
 			$verification_success = true;
 			$_SESSION['u_type'] = 1;
 			$_SESSION['u_auth'] = 1 << 1;
-			header("refresh:1;url=index.php");
+			header("refresh:1;url=index.php?shop_id=" . $_shopID);
 		}
 		else{
 			if($vercode['updated'] == true)
