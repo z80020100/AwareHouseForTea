@@ -50,6 +50,7 @@ if(isset($_GET['admin'] )){
 else{
 	$_HTML .= $template->render(array(
 		'LOGIN_MESSAGE' => $message,
+		'SHOP_ID' => $_shopID,
 	));
 }
 

@@ -2,18 +2,15 @@
 	<div id="a0" class="w3-container">
 		<h3>登入／登出</h3>
 		<center>
-		<form action="login.php" method="POST">
+		<form action="login.php?shop_id={{SHOP_ID}}" method="POST">
 			<p>{{LOGIN_MESSAGE}}</p>
 			<p id="uname"> 帳號：<input type="text" name="username"> </p>
 			<p id="p_uenablepass">使用密碼登入? <input type="checkbox" name="enablepass" id="enablepass" checked></p>
 			<p id="upass"> 密碼：<input type="password" name="password" id="login_key"> </p>
 			<p id="uinfo"> 手機：<input type="text" name="phone"> </p>
 			<p> <input type="submit" name="submit"  value="登入"> </p>
-			<p> <a href="register.php">註冊帳號</a></p>
+			<p> <a href="register.php?shop_id={{SHOP_ID}}">註冊帳號</a></p>
 		</form>
 		</center>
 	</div>
 	<script src="templates/login.js"></script>
-
-	
-
