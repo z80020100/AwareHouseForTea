@@ -247,75 +247,69 @@ function user_login($username, $password, $phone_info){
 		return false;
 }
 
-function checkAuth($page_auth){
-	if( ($_SESSION['u_auth'] & $page_auth) != 0 )
-		return true;
-	else
-		return false;
+function checkAuth($page_auth) {
+	return ($_SESSION['u_auth'] & $page_auth) != 0;
 }
 
-function is_login(){
-	if( !isset($_SESSION['u_name'])){
-		return false;
-	}
-	else
-		return true;
+function is_login() {
+	// $_SESSION variable was set after user loginned
+	return isset($_SESSION['u_name']);
 }
 
-function is_admin(){
-
-	if(checkAuth(AUADMIN))
-		return true;
-	else
-		return false;
-/*	if(isset($_SESSION['admin'])){
-		if( $_SESSION['admin'] == true)
-			return true;
-		else
-			return false;
-	}
-	else
-		return false;*/
+function is_admin() {
+	return checkAuth(AUADMIN);
 }
 
-function is_staff(){ // boss (admin) is included in staff
+function is_staff() {
+	// boss (admin) is included in staff
 	return checkAuth(AUSTAFF | AUADMIN);
 }
 
-function is_above_customer(){
+function is_above_customer() {
+	// check registered and activated user
 	return checkAuth(AUCUSTOMER | AUSTAFF | AUADMIN);
 }
 
-function not_staff_redirect(){
-	if(!is_staff()){
-		if(is_login()){
-			header("location:index.php");
-			die('');
-		}
-		else{
-			header("location:login.php");
-			die('');
-		}
-	}
+function is_headquarters() {
+	return $_SESSION['shop_id'] == -1;
 }
 
-
-function not_admin_redirect(){
-	if(!is_admin()){
-		if(is_login()){
-			header("location:index.php");
-			die('');
-		}
-		else{
-			header("location:login.php");
-			die('');
-		}
-	}
-}
-
-function not_login_redirect(){
-	if( !isset($_SESSION['u_name'])){
+function not_login_redirect() {
+	if( !is_login() ) {
 		header("location:login.php");
+		die('');
+	}
+}
+
+function not_staff_redirect() {
+	if ( !is_login() ) {
+		header("location:login.php");
+		die('');
+	}
+	if ( !is_staff() ) {
+		header("location:index.php");
+		die('');
+	}
+}
+
+function not_admin_redirect() {
+	if ( !is_login() ) {
+		header("location:login.php");
+		die('');
+	}
+	if ( !is_admin() ) {
+		header("location:index.php");
+		die('');
+	}
+}
+
+function not_topboss_redirect() {
+	if ( !is_login() ) {
+		header("location:login.php");
+		die('');
+	}
+	if ( !(is_headquarters() && is_admin()) ) {
+		header("location:index.php");
 		die('');
 	}
 }
