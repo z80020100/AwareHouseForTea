@@ -25,18 +25,24 @@ header("Content-Type:text/html; charset=utf-8");
 if(!isset($_SESSION['u_auth']))
 	$_SESSION['u_auth'] = AUGUEST;
 
+$_shopID = get_shopID();
+if ($_shopID == NULL)
+	die("Not provide shop_id");
+// TODO injection check
 
-if(isset($_GET['shop_id'])) {
-	// TODO injection check
-	$_shopID = $_GET['shop_id'];
-}
-// else if($_SESSION['u_auth'] != AUGUEST){
-// 	$_shopID = $_SESSION['shop_id'] ;
+// if (isset($_GET['shop_id']) && strlen($_GET['shop_id']) != 0) {
+// 	$_shopID = $_GET['shop_id'];
+// 	$_SESSION['GET_shop_id'] = $_shopID;
 // }
-else {
-	$_shopID = NULL;
-	die("Not provide shop id");
-}
+// // else if($_SESSION['u_auth'] != AUGUEST){
+// // 	$_shopID = $_SESSION['shop_id'] ;
+// // }
+// else {
+// 	if (isset($_SESSION['GET_shop_id']))
+// 		$_shopID = $_SESSION['GET_shop_id'];
+// 	else
+// 		die("Not provide shop id");
+// }
 // 未來要獨立成為設定檔的部分 -----------------------
 // 可能會變成資料庫存取
 
