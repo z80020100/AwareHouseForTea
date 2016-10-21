@@ -29,8 +29,8 @@ if(!isset($_SESSION['u_auth']))
 $_shopID = get_shopID();
 if ($_shopID == NULL)
 	die("Not provide shop_id");
-// TODO injection check
-
+if (!preg_match("/(^-1$)|(^0$)|(^[1-9][0-9]*$)/", $_shopID))
+	die("Unvalid shop_id " . $_shopID);
 
 // 未來要獨立成為設定檔的部分 -----------------------
 // 可能會變成資料庫存取
