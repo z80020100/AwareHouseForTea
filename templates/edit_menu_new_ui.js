@@ -6,6 +6,7 @@ var g_button_submit_bind_state = false;
 var g_button_cancel_bind_state = false;
 var g_click_series_s_id;
 var g_click_main_m_id;
+var g_click_add_type_at_id;
 
 function road_main_by_s_id(){
     //console.log("Enter: road_main_by_s_id");
@@ -88,6 +89,20 @@ function open_edit_addition_windows(){
     $('#edit_addition_window').css({"display":"block"});
 }
 
+function load_add_item_by_at_id(){
+    // 取得附加選項內的細項名稱及加點價格
+    console.log('Enter: load_add_item_by_at_id');
+    g_click_add_type_at_id = $(this).data('add_type').at_id;
+    console.log('g_click_add_type_at_id = ' + g_click_add_type_at_id);
+    $('#addition_right').empty();
+    $('#addition_right').append(
+        $('<div>')
+            .append(
+                $('<div>').attr({'class':'addition_item', 'id':'edit_add_item_ai_id_add_item'}).append('+新增細項名稱')
+            )
+    );
+}
+
 function road_add_type(){
     // 取得所有附加選項名稱
     $.ajax({
@@ -166,16 +181,15 @@ function road_add_type(){
                         )
                     )
                 );
-
-            $('#addition_left')
-                .append($('<div>').attr({'class':'addition_type', 'id':'edit_add_type_at_id_' + add_type_at_id})
-                    .append(add_type_option_name)
-                    .data('add_type', {
-                            'at_id':add_type_at_id,
-                            'option_name':add_type_option_name,
-                            'multiple_choice': add_type_multiple_choice}
-                        )
+            var edit_add_type_at_id_ = $('<div>').attr({'class':'addition_type', 'id':'edit_add_type_at_id_' + add_type_at_id})
+                .append(add_type_option_name)
+                .data('add_type', {
+                    'at_id':add_type_at_id,
+                    'option_name':add_type_option_name,
+                    'multiple_choice': add_type_multiple_choice}
                 );
+            edit_add_type_at_id_.bind('click', load_add_item_by_at_id);
+            $('#addition_left').append(edit_add_type_at_id_);
 
             console.log("add_type_at_id: " + $("#" + 'add_type_at_id_' + add_type_at_id).data('add_type').at_id);
             console.log("add_type_option_name: " + $("#" + 'add_type_at_id_' + add_type_at_id).data('add_type').option_name);
@@ -194,7 +208,7 @@ function road_add_type(){
             .append('+新增')
             .data('add_type', {
                     'multiple_choice': 0}
-                )
+            );
         edit_add_type_at_id_add_single.bind('click', {choice_type:'single_choice_by_user'}, add_additional_type); // .bind(event, data, function)
         $('#addition_left').append(edit_add_type_at_id_add_single);
 
@@ -203,7 +217,7 @@ function road_add_type(){
             .append('+新增')
             .data('add_type', {
                     'multiple_choice': 1}
-            )
+            );
         edit_add_type_at_id_add_multi.bind('click', {choice_type:'multi_choice_by_user'}, add_additional_type); 
         $('#addition_left').append(edit_add_type_at_id_add_multi);
 
