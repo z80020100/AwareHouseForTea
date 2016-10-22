@@ -1,0 +1,51 @@
+.login_input{
+    background-color: #D0D5A4;
+    border:none;
+    color:#FFFFFF;
+    border-radius:20px;
+    font-size:40px;
+    width:500px;
+    height:100px;
+    padding-left:40px;
+}
+
+a{
+    text-decoration:none;
+}
+
+.login_bottom{
+    font-size:20px;
+}
+
+.login_happyttea{
+    font-size:30px;
+}
+
+input[type=submit]{
+    background-color: #98A221;
+    border:none;
+    color:#FFFFFF;
+    border-radius:20px;
+    font-size:40px;
+    width:500px;
+    height:100px;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:#FFFFFF;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:#FFFFFF;
+   opacity:1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:#FFFFFF;
+   opacity:1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:#FFFFFF;
+}
+
+body{
+  background-image: url('../images/login/bg.gif');
+}
