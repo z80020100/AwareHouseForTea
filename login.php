@@ -1,7 +1,9 @@
 <?php
 
+$empty_header = True;
+$empty_footer = True;
 
-$_PAGE_TITLE = '早餐店點餐系統';
+$_PAGE_TITLE = 'HappyTTea樂台茶 線上點餐系統';
 require_once('includes/header.php');
 
 $template = $twig->loadTemplate('login.html');
