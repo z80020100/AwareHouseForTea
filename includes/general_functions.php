@@ -213,6 +213,7 @@ function user_login($username, $password, $phone_info){
 				$_SESSION['u_name'] = $Quser['u_name'];
 				$_SESSION['u_id'] = $Quser['u_id'];
 				$_SESSION['admin'] = ($Quser['u_type'] == IDADMIN);
+				$_SESSION['staff'] = ($Quser['u_type'] == IDSTAFF);
 				$_SESSION['u_type'] = $Quser['u_type'];
 				$_SESSION['u_auth'] = 1 << $Quser['u_type'];
 				$_SESSION['shop_id'] = $Quser['shop_id'];
@@ -231,6 +232,7 @@ function user_login($username, $password, $phone_info){
 				$_SESSION['u_name'] = $Quser['u_name'];
 				$_SESSION['u_id'] = $Quser['u_id'];
 				$_SESSION['admin'] = ($Quser['u_type'] == IDADMIN);
+				$_SESSION['staff'] = ($Quser['u_type'] == IDSTAFF);
 				$_SESSION['u_type'] = $Quser['u_type'];
 				$_SESSION['u_auth'] = 1 << $Quser['u_type'];
 				$_SESSION['shop_id'] = $Quser['shop_id'];
