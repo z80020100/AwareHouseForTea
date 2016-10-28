@@ -24,11 +24,15 @@ if(isset($_POST['submit'])){
 	if(  user_login($_POST['username'] , $_POST['password'], $_POST['phone']) ){
 		if($_SESSION['shop_id'] == -1 ){
 			$message = "成功登入總店, 兩秒後自動進入總店控制台";
-			header("refresh:2;url=edit_menu.php?shop_id=" . $_shopID);
+			header("refresh:2;url=edit_menu.php?shop_id=" . $_SESSION['shop_id']);
 		}
 		else if($_SESSION['admin'] == 1){
 			$message = "登入成功, 兩秒後自動進入老闆控制台";
-			header("refresh:2;url=listorder.php?shop_id=" . $_shopID);
+			header("refresh:2;url=listorder.php?shop_id=" . $_SESSION['shop_id']);
+		}
+		else if ($_SESSION['staff'] == 1) {
+			$message = "登入成功, 兩秒後自動回到首頁";
+			header("refresh:2;url=index.php?shop_id=" . $_SESSION['shop_id']);
 		}
 		else{
 			$message = "登入成功, 兩秒後自動回到首頁";
