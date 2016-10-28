@@ -26,16 +26,17 @@ header("Content-Type:text/html; charset=utf-8");
 if(!isset($_SESSION['u_auth']))
 	$_SESSION['u_auth'] = AUGUEST;
 
-$_shopID = get_shopID();
-if ($_shopID == NULL)
-	die("Not provide shop_id");
-if (!preg_match("/(^-1$)|(^0$)|(^[1-9][0-9]*$)/", $_shopID))
-	die("Unvalid shop_id " . $_shopID);
+$db = new Db(DB_ADDRESS, DB_USER, DB_PASSWORD, DB_DATABASE);
+
+if (set_shopID()) {
+	$_shopID = $_SESSION['GET_shop_id'];
+} else {
+	die($_SESSION['error_message']);
+}
 
 // 未來要獨立成為設定檔的部分 -----------------------
 // 可能會變成資料庫存取
 
-$db = new Db(DB_ADDRESS, DB_USER, DB_PASSWORD, DB_DATABASE);
 
 // 開放訂餐的時間 從 4點 ~ 14點  (13-14是一個時段)
 $shift_start =0;
