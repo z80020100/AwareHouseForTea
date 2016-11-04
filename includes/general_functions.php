@@ -506,25 +506,24 @@ function order_detail($o_id){
 }
 
 function log_order($o_id){
-	global $db;
+    global $db;
 	$sql = "SELECT * from `orders` WHERE `o_id` = ".$o_id;
 	if(! $o_result = $db->query($sql))
 		die('order sql failure');
 	$order = $db->fetch_array($o_result);
 
 	$sql = "SELECT * FROM `share` WHERE `o_id` = ".$o_id ;
-	//echo $sql . "\nyoooo\n";
 	$s_result = $db->query($sql);
 	$share_info = array();
 	$order_total = 0;
+
 	while($share = $db->fetch_array($s_result)){
 		$sql = "SELECT * FROM `share_item` WHERE `sh_id` = ".$share['sh_id'];
-		//echo $sql . "\nyoooo\n";
-		$sh_i_result = $db->query($sql);
+        $sh_i_result = $db->query($sql);
 		$item_info = array();
 		$counting_total = 0;
-		while($item = $db->fetch_array($sh_i_result)){
 
+		while($item = $db->fetch_array($sh_i_result)){
 			$sql = "SELECT * FROM `main` WHERE `m_id` = ".$item['m_id'];
 			$m_result = $db->query($sql);
 			$main = $db->fetch_array($m_result);
@@ -586,13 +585,10 @@ function log_order($o_id){
 			$outItem['RO_array'] 	= 	$ro_info;
 			$outItem['AI_array'] 		= 	$ai_info;
 
-
 			// Writing into log without merging with makeSummary
 
-			$sql = "INSERT INTO `log` (`log_id`, `u_id`, `o_id`, `time`, `s_text`, `m_text`, `quantity`, `price`) VALUES (NULL, '".$order['u_id']."', '".$o_id."', '".$order['o_time']."', '".$outItem['s_text']."', '".$outItem['m_text']."', '".$outItem['quantity']."', '".$outItem['item_price']."');";
-
+			$sql = "INSERT INTO `log` (`u_id`, `o_id`, `time`, `s_text`, `m_text`, `quantity`, `price`, `shop_id`) VALUES (".$order['u_id'].", ".$o_id.", '".$order['o_time']."', '".$outItem['s_text']."', '".$outItem['m_text']."', ".$outItem['quantity'].", ".$outItem['item_price'].", ".$_SESSION['GET_shop_id'].");";
 			$db->query($sql);
-
 			//array_push($item_info, $outItem);
 		}
 		//$outShare = array();
@@ -613,6 +609,5 @@ function unlog_order($o_id){
 	$sql = "DELETE FROM `log` WHERE `o_id` = '".$o_id."'";
 	$db->query($sql);
 }
-
 
 ?>

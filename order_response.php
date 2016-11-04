@@ -35,6 +35,10 @@ $request = $_REQUEST['req'];
 	confirm_sum
 *********************/
 
+// people_num doesn't exist in BUSINESS mode
+if ($_AWMode == 'BUSINESS')
+    $order_info['people_num'] = 1;
+
 if( $request == "confirm_sum" ){
 
 	if($_AWMode == "ACCOUNTING")
