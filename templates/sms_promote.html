@@ -4,8 +4,8 @@
 <style>
   .tab {
     display: inline-block;
-    margin: 10px 10px 0px 10px;
-    padding: 5px;
+    margin: 10px 0px 0px 5px;
+    padding: 5px 10px;
     cursor: pointer;
   }
   .tab.active {
@@ -55,13 +55,13 @@
   <hr>
   
   <h6>
-    篩選條件:訂單次數 - <span id="order_num">2</span>
-    / 訂單時段 - <span id="order_time">2015/01/02</span>
-    / 已推播簡訊次數 - <span id="sms_num">5</span>
+    篩選條件:訂單次數 - <span id="order_num">未設定</span>
+    / 訂單時段 - <span id="order_time">未設定</span>
+    / 已推播簡訊次數 - <span id="sms_num">未設定</span>
   </h6>
   
   <h6>
-    搜尋結果:共 <span>0</span> 筆
+    搜尋結果:共 <span id="num_results">0</span> 筆
     <button id="sms_button" class="w3-btn w3-margin-bottom w3-round w3-right" style="background-color:#FFBB00">簡訊推播</button>
   </h6>
 

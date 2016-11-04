@@ -1,8 +1,8 @@
 $(document).ready(function(){
     $("#promote_table").tablesorter();
     $("#promote_table").tablesorter({ sortList: [[0,0], [1,0]] });
-    // add_customer_row("0912123123","11","10000","12");
-
+    
+    // send sms button
     $("#sms_button").click(function(){
        $("#sms_content").css({"display":"block"});
     });
@@ -10,14 +10,15 @@ $(document).ready(function(){
        $("#sms_content").css({"display":"none"});
     });
 
-    // mode selector
+    // sms_mode selector tab
     $(".tab").on("click", function() {
         $(this).addClass('active');
         $(this).siblings('div.tab').removeClass('active');
+        $('#num_results').text('0');
         $('#promote_table').empty().append('<tbody><tr><td colspan="5">請點選搜尋</td></tr></tbody>');
     });
 
-    // search results
+    // query results
     $("#search_button").on("click", function() {
         $.ajax({
             url:"sms_promote.php",
@@ -28,6 +29,7 @@ $(document).ready(function(){
         })
         .done(function(msg) {
             handle_query(msg);
+            $('#num_results').text(msg.length);
         })
         .fail(function() {
             alert('query failed!');
