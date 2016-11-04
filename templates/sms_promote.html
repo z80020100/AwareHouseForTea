@@ -40,7 +40,7 @@
   </h6>
   
   <h6>
-    搜尋結果:共<span>3</span>筆
+    搜尋結果:共 <span>{{ num_info }}</span> 筆
     <button id="sms_button" class="w3-btn w3-margin-bottom w3-round w3-right" style="background-color:#FFBB00">簡訊推播</button>
   </h6>
 
@@ -50,50 +50,27 @@
   
   <thead>
     <tr>
-        <td rowspan="2">選擇<input class="w3-check sms_checkbox" type="checkbox" id="select_all"></td>
+        <td rowspan="2">全選 <input class="w3-check sms_checkbox" type="checkbox" id="select_all"></td>
         <td rowspan="2">號碼</td>
-        <td colspan="4">訂餐紀錄</td>
+        <td colspan="2">統計報表</td>
         <td rowspan="2">已推播簡訊</td>
-        <td rowspan="2">內容</td>
     </tr>
     <tr>
-        <td>時間</td>
-        <td>次數</td>
-        <td>金額</td>
-        <td>內容</td>
+        <td>消費次數</td>
+        <td>累計消費金額</td>
     </tr>
   </thead>
 
   <tbody>
+    {% for each in info %}
     <tr>
-    <td><input class="w3-check sms_checkbox" type="checkbox"></td>
-    <td>0981665365</td>
-    <td>2016/01/03</td>
-    <td>5</td>
-    <td>300</td>
-    <td>abc</td>
-    <td>4</td>
+      <td><input class="w3-check sms_checkbox" type="checkbox"></td>
+      <td>{{ each.ui_phone }}</td>
+      <td>{{ each.times }}</td>
+      <td>{{ each.price }}</td>
+      <td>4</td>
     </tr>
-
-    <tr>
-    <td><input class="w3-check sms_checkbox" type="checkbox"></td>
-    <td>0981251365</td>
-    <td>2015/02/04</td>
-    <td>2</td>
-    <td>200</td>
-    <td>aec</td>
-    <td>2</td>
-    </tr>
-
-    <tr>
-    <td><input class="w3-check sms_checkbox" type="checkbox"></td>
-    <td>0981111165</td>
-    <td>2016/10/03</td>
-    <td>7</td>
-    <td>500</td>
-    <td>adsfbc</td>
-    <td>8</td>
-    </tr>
+    {% endfor %}
   </tbody>
 
 </table>

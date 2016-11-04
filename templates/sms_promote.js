@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $("#promote_table").tablesorter();
     $("#promote_table").tablesorter({ sortList: [[0,0], [1,0]] });
-    add_table_row("0912123123","2016/07/04","11","10000","abcedd","12");
+    // add_table_row("0912123123","2016/07/04","11","10000","abcedd","12");
 
     $("#sms_button").click(function(){
        $("#sms_content").css({"display":"block"});
