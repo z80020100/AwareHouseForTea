@@ -1,32 +1,53 @@
 <script type="text/javascript" src="./includes/jquery.tablesorter.js"></script>
 <script type="text/javascript" src="./templates/sms_promote.js"></script>
 
+<style>
+  .tab {
+    display: inline-block;
+    margin: 10px 10px 0px 10px;
+    padding: 5px;
+    cursor: pointer;
+  }
+  .tab.active {
+    background-color: #39e;
+  }
+</style>
+
+<div style="w3-padding w3-margin-top" style="width:100%;">
+  <div class="tab active" sms-mode=0>
+    顧客推播
+  </div>
+  <div class="tab" sms-mode=1>
+    分店推播
+  </div>
+</div>
+
 <div class="w3-padding w3-margin-top" style="width:100%;background-color:grey">
   
   篩選
   <select class="w3-select w3-border" style="width:10%;" name="option">
-      <option value="" disabled selected>訂餐時間</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
+    <option value="" disabled selected>訂餐時間</option>
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
   </select>
   <select class="w3-select w3-border" style="width:10%;" name="option1">
-      <option value="" disabled selected>訂餐次數</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
+    <option value="" disabled selected>訂餐次數</option>
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
   </select>
   <select class="w3-select w3-border" style="width:10%;" name="option2">
-      <option value="" disabled selected>訂餐內容</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
+    <option value="" disabled selected>訂餐內容</option>
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
   </select>
   <select class="w3-select w3-border" style="width:15%;" name="option3">
-      <option value="" disabled selected>推播簡訊次數</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
+    <option value="" disabled selected>推播簡訊次數</option>
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
   </select>
   
   <button id="search_button" class="w3-btn w3-margin-bottom w3-round w3-right" style="background-color:#FFBB00">搜尋</button>
@@ -34,45 +55,22 @@
   <hr>
   
   <h6>
-  篩選條件:訂單次數-<span id="order_num">2</span>
-  /訂單時段-<span id="order_time">2015/01/02</span>
-  /已推播簡訊次數-<span id="sms_num">5</span>
+    篩選條件:訂單次數 - <span id="order_num">2</span>
+    / 訂單時段 - <span id="order_time">2015/01/02</span>
+    / 已推播簡訊次數 - <span id="sms_num">5</span>
   </h6>
   
   <h6>
-    搜尋結果:共 <span>{{ num_info }}</span> 筆
+    搜尋結果:共 <span>0</span> 筆
     <button id="sms_button" class="w3-btn w3-margin-bottom w3-round w3-right" style="background-color:#FFBB00">簡訊推播</button>
   </h6>
 
 </div>
 
-<table  id="promote_table" class="w3-table-all w3-centered">
-  
-  <thead>
-    <tr>
-        <td rowspan="2">全選 <input class="w3-check sms_checkbox" type="checkbox" id="select_all"></td>
-        <td rowspan="2">號碼</td>
-        <td colspan="2">統計報表</td>
-        <td rowspan="2">已推播簡訊</td>
-    </tr>
-    <tr>
-        <td>消費次數</td>
-        <td>累計消費金額</td>
-    </tr>
-  </thead>
-
+<table id="promote_table" class="w3-table-all w3-centered">
   <tbody>
-    {% for each in info %}
-    <tr>
-      <td><input class="w3-check sms_checkbox" type="checkbox"></td>
-      <td>{{ each.ui_phone }}</td>
-      <td>{{ each.times }}</td>
-      <td>{{ each.price }}</td>
-      <td>4</td>
-    </tr>
-    {% endfor %}
+    <tr><td colspan="5">請點選搜尋</td></tr>
   </tbody>
-
 </table>
 
 <br>
