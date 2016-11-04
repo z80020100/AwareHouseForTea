@@ -61,90 +61,86 @@
 
 </head>
 <body class="w3-container">
-
-{% if TOP_SHOP == -1%}
+{% if USER_IDENTITY == 'admin' %}
 	<nav id="nav_bar" class="w3-sidenav w3-white w3-card-2">
 		<a id="nav_cross" href="javascript:void(0)" class="w3-closenav w3-xxlarge w3-center" style="z-index:2">&times;</a>
 		<hr>
-		<a href="empty.php" rel="external" class="w3-center">分店資訊</a>
-		<br>
-		<a href="edit_menu.php" rel="external" class="w3-center">菜單編輯</a>
-		<br>
-		<a href="sms_promote.php" rel="external" class="w3-center">簡訊推播</a>
-		<br>
-		<a href="edit_menu.php" rel="external" class="w3-center">菜單編輯</a>
-		<br>
-		{% if USER_IDENTITY == 'admin' %}
+		{% if TOP_SHOP == '-1' %}
+			<a href="edit_menu.php" rel="external" class="w3-center">菜單編輯</a>
+			<br>
+			<a href="sms_promote.php" rel="external" class="w3-center">簡訊推播</a>
+			<br>
 			<a href="top_report.php" rel="external" class="w3-center">總營運報表</a>
 			<br>
-      <a href="inventory.php" rel="external" class="w3-center">物料管理</a>
-      <br>
-      <a href="call.php" rel="external" class="w3-center">上游叫料</a>
-      <br>
+			<a href="empty.php" rel="external" class="w3-center">分店資訊</a>
+			<br>
+			<a href="inventory.php" rel="external" class="w3-center">物料管理</a>
+			<br>
+			<a href="register.php" rel="external" class="w3-center">帳號新增</a>
+			<br>
+		{% else %}
+			<a href="edit_menu.php" rel="external" class="w3-center">菜單編輯</a>
+			<br>
+			<a href="sms_promote.php" rel="external" class="w3-center">簡訊推播</a>
+			<br>
+			<a href="report.php" rel="external" class="w3-center">營運報表</a>
+			<br>
+			<a href="call.php" rel="external" class="w3-center">上游叫料</a>
+			<br>
 			<a href="top_register.php" rel="external" class="w3-center">帳號新增</a>
 			<br>
 		{% endif %}
 		<a href="login.php" rel="external" class="w3-center">登出&nbsp;{{username}}</a>
-        <hr>
+    <hr>
 		{% for series in all_series %}
-        <a href="#s{{series.s_id}}" class="w3-center" >{{series.name}}</a>
-        <br>
-        {% endfor %}
-  </nav>
-{% elseif TOP_SHOP != -1 %}
+  		<a href="#s{{series.s_id}}" class="w3-center" >{{series.name}}</a>
+      <br>
+		{% endfor %}
+	</nav>
+{% elseif USER_IDENTITY == 'staff' %}
 	<nav id="nav_bar" class="w3-sidenav w3-white w3-card-2">
-	<a id="nav_cross" href="javascript:void(0)" class="w3-closenav w3-xxlarge w3-center" style="z-index:2">&times;</a>
-	<hr>
-		{% if USER_IDENTITY == 'admin' %}
-			<a href="report.php" rel="external" class="w3-center">營運報表</a>
+		<a id="nav_cross" href="javascript:void(0)" class="w3-closenav w3-xxlarge w3-center" style="z-index:2">&times;</a>
+		<hr>
+		{% if TOP_SHOP == -1 %}
+			<a href="listorder.php" rel="external" class="w3-center">即時訂單</a>
 			<br>
-			<a href="sms_promote.php" rel="external" class="w3-center">簡訊推播</a>
+			<a href="top_register.php" rel="external" class="w3-center">帳號新增</a>
 			<br>
-			<a href="call.php" rel="external" class="w3-center">上游叫料</a>
-			<br>
-			<a href="register.php" rel="external" class="w3-center">帳號新增</a>
-			<br>
-		{% elseif USER_IDENTITY == 'staff' %}
-			<a href="index.php" rel="external" class="w3-center">點餐頁面</a>
-			<br>
+		{% else %}
 			<a href="listorder.php" rel="external" class="w3-center">即時訂單</a>
 			<br>
 		{% endif %}
-		<a href="index.php" rel="external" class="w3-center">點餐</a>
-    <br>
 		<a href="login.php" rel="external" class="w3-center">登出&nbsp;{{username}}</a>
-        <hr>
+    <hr>
 		{% for series in all_series %}
-        <a href="#s{{series.s_id}}" class="w3-center" >{{series.name}}</a>
-        <br>
-        {% endfor %}
+  		<a href="#s{{series.s_id}}" class="w3-center" >{{series.name}}</a>
+      <br>
+		{% endfor %}
 	</nav>
-
 {% elseif USER_IDENTITY == 'customer' %}
-    <nav id="nav_bar" class="w3-sidenav w3-white w3-card-2">
-        <a id="nav_cross" href="javascript:void(0)" class="w3-closenav w3-xxlarge w3-center" style="z-index:2">&times;</a>
+	<nav id="nav_bar" class="w3-sidenav w3-white w3-card-2">
+		<a id="nav_cross" href="javascript:void(0)" class="w3-closenav w3-xxlarge w3-center" style="z-index:2">&times;</a>
 		<hr>
 		<a href="customer_listorder.php" class="w3-center" >出餐進度</a>
 		<br>
-        {% for series in all_series %}
-        <a href="#s{{series.s_id}}" class="w3-center" >{{series.name}}</a>
-        <br>
-        {% endfor %}
-		<hr>
-		<a href="index.php" class="w3-center" >點餐</a>
+		<a href="index.php" class="w3-center" >點餐頁面</a>
 		<br>
-		<a href="login.php" class="w3-center" >登出&nbsp;{{username}}</a>
+		<a href="login.php" rel="external" class="w3-center">登出&nbsp;{{username}}</a>
 		<hr>
-    </nav>
+		{% for series in all_series %}
+			<a href="#s{{series.s_id}}" class="w3-center" >{{series.name}}</a>
+			<br>
+		{% endfor %}
+	</nav>
 {% else %}
-    <nav id="nav_bar" class="w3-sidenav w3-white w3-card-2">
-        <a id="nav_cross" href="javascript:void(0)" class="w3-closenav w3-xxlarge w3-center" style="z-index:2">&times;</a>
+	<nav id="nav_bar" class="w3-sidenav w3-white w3-card-2">
+		<a id="nav_cross" href="javascript:void(0)" class="w3-closenav w3-xxlarge w3-center" style="z-index:2">&times;</a>
 		<hr>
 		<a href="login.php" class="w3-center" >登入</a>
 		<br>
 		<a href="register.php" class="w3-center" >註冊</a>
 		<hr>
-    </nav>
+	</nav>
 {% endif %}
 
 <div data-role="page"  id="main" >
