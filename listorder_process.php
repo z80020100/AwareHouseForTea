@@ -94,16 +94,11 @@ switch($reqType){
 			//$sql = "SELECT * FROM `orders` WHERE `o_id` = '".$_REQUEST['request']['oid']."' ";
 			//$result = $db->query($sql);
 			//$order = $db->fetch_array($result)
-
-
-			
 		}
 		else if($_REQUEST['request']['current_status'] == 'ARCHIVE' && $nextStatus != 'ARCHIVE')
 		{
 			unlog_order($_REQUEST['request']['oid']);
 		}
-		
-
 		echo  json_encode($nextStatus, JSON_UNESCAPED_UNICODE);
 	break;
 
