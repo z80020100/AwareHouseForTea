@@ -1,0 +1,26 @@
+body{
+    width: 540px;
+    height: 960px;
+}
+
+.customer_register{
+    text-align: center;
+    margin:0% 5% 0% 5%;
+}
+
+hr{
+    margin: 0px;
+}
+
+div{
+    margin:0% 0% 1% 0%;
+}
+
+.annotation{
+    text-align: right;
+}
+
+.menu_input{
+    border:none;
+    width:80%;
+}
