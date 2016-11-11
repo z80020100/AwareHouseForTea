@@ -13,7 +13,7 @@
   }
 </style>
 
-<div style="w3-padding w3-margin-top" style="width:100%;">
+<div class="w3-padding w3-margin-top" style="width:100%;">
   <div class="tab active" sms-mode=0>
     顧客推播
   </div>
@@ -25,29 +25,13 @@
 <div class="w3-padding w3-margin-top" style="width:100%;background-color:grey">
   
   篩選
-  <select class="w3-select w3-border" style="width:10%;" name="option">
-    <option value="" disabled selected>訂餐時間</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
-  </select>
-  <select class="w3-select w3-border" style="width:10%;" name="option1">
-    <option value="" disabled selected>訂餐次數</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
-  </select>
-  <select class="w3-select w3-border" style="width:10%;" name="option2">
-    <option value="" disabled selected>訂餐內容</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
-  </select>
-  <select class="w3-select w3-border" style="width:15%;" name="option3">
-    <option value="" disabled selected>推播簡訊次數</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
+  <input type="text" class="w3-border" style="width:10%;" name="filter1" placeholder="訂單起始時間">
+  <input type="text" class="w3-border" style="width:10%;" name="filter2" placeholder="訂單結束時間">
+  <select class="w3-select w3-border" style="width:10%;" name="filter3">
+    <option value="" disabled selected>累計消費金額</option>
+    <option value="0">NT$0 以上</option>
+    <option value="100">NT$100 以上</option>
+    <option value="500">NT$500 以上</option>
   </select>
   
   <button id="search_button" class="w3-btn w3-margin-bottom w3-round w3-right" style="background-color:#FFBB00">搜尋</button>
@@ -55,9 +39,8 @@
   <hr>
   
   <h6>
-    篩選條件:訂單次數 - <span id="order_num">未設定</span>
-    / 訂單時段 - <span id="order_time">未設定</span>
-    / 已推播簡訊次數 - <span id="sms_num">未設定</span>
+    篩選條件:訂單時段 - <span id="filter_starttime">未設定</span>~<span id="filter_endtime">未設定</span>
+    / 累計消費金額 - <span id="filter_dollar">未設定</span>
   </h6>
   
   <h6>
