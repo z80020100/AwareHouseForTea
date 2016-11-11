@@ -17,6 +17,7 @@ if(isset($_SESSION['u_name'])){
 	}
 }
 
+// to load verification page or register page
 if($page_verify == true){
 	$template = $twig->loadTemplate('register_verification.html');
 	$message = "";
@@ -25,9 +26,6 @@ else{
 	$template = $twig->loadTemplate('register.html');
 	$message = "";
 }
-
-
-//not_admin_redirect();
 
 if(!isset( $_POST['userpass']))
 	 $_POST['userpass'] = '';
@@ -66,14 +64,12 @@ if(isset($_POST['submit'])){
 				$message .= "，傳送驗證碼到".$_POST['phone'];
 				send_sms($_POST['phone'], '你的驗證碼是:'.$vercode['hash'] );
 			}
-			//header("refresh:1;url=register.php");
 		}
 		else if( $uc_return != -1 ){
 			$message = "傳送驗證碼中..";
 
 			user_login($_POST['username'] , $_POST['userpass'], $_POST['phone']);
 			$vercode = user_vercode();
-			//echo $vercode['hash'];
 			send_sms($_POST['phone'], '你的驗證碼是:'.$vercode['hash'] );
 			header("refresh:1;url=register.php?shop_id=" . $_shopID);
 		}
@@ -99,11 +95,8 @@ if(isset($_POST['submit'])){
 			else
 				$message = "驗證碼錯誤";
 		}
-
 	}
 }
-
-
 
 if(is_admin()){
 	$register_title = "創造帳號";
@@ -120,7 +113,7 @@ $_HTML .=  $template->render(array(
 	'REGISTER_TITLE' => $register_title,
 	'REGISTER_MESSAGE' => $message,
 	'REGISTER_ADMIN' => $register_admin,
-	'all_utype' => $_Identity,
+	'all_utype' => array($_Identity[IDCUSTOMER], $_Identity[IDSTAFF]),
 	'VERIFICATION_SUCCESS' => $verification_success,
 ));
 

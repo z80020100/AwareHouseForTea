@@ -68,30 +68,26 @@
 		{% if TOP_SHOP == '-1' %}
 			<a href="listorder.php" rel="external" class="w3-center">即時訂單</a>
 			<br>
-			<a href="edit_menu.php" rel="external" class="w3-center">菜單編輯</a>
-			<br>
-			<a href="sms_promote.php" rel="external" class="w3-center">簡訊推播</a>
-			<br>
-			<a href="top_report.php" rel="external" class="w3-center">總營運報表</a>
-			<br>
 			<a href="empty.php" rel="external" class="w3-center">分店資訊</a>
 			<br>
 			<a href="inventory.php" rel="external" class="w3-center">物料管理</a>
 			<br>
-			<a href="register.php" rel="external" class="w3-center">帳號新增</a>
-			<br>
-		{% else %}
-			<a href="listorder.php" rel="external" class="w3-center">即時訂單</a>
+			<a href="sms_promote.php" rel="external" class="w3-center">簡訊推播</a>
 			<br>
 			<a href="edit_menu.php" rel="external" class="w3-center">菜單編輯</a>
 			<br>
-			<a href="sms_promote.php" rel="external" class="w3-center">簡訊推播</a>
+			<a href="top_report.php" rel="external" class="w3-center">總營運報表</a>
 			<br>
+			<a href="top_register.php" rel="external" class="w3-center">帳號新增</a>
+			<br>
+		{% else %}
 			<a href="report.php" rel="external" class="w3-center">營運報表</a>
+			<br>
+			<a href="sms_promote.php" rel="external" class="w3-center">簡訊推播</a>
 			<br>
 			<a href="call.php" rel="external" class="w3-center">上游叫料</a>
 			<br>
-			<a href="top_register.php" rel="external" class="w3-center">帳號新增</a>
+			<a href="register.php" rel="external" class="w3-center">帳號新增</a>
 			<br>
 		{% endif %}
 		<a href="login.php" rel="external" class="w3-center">登出&nbsp;{{username}}</a>
@@ -106,11 +102,17 @@
 		<a id="nav_cross" href="javascript:void(0)" class="w3-closenav w3-xxlarge w3-center" style="z-index:2">&times;</a>
 		<hr>
 		{% if TOP_SHOP == -1 %}
+			<a href="empty.php" rel="external" class="w3-center">分店資訊</a>
+			<br>
 			<a href="listorder.php" rel="external" class="w3-center">即時訂單</a>
 			<br>
-			<a href="top_register.php" rel="external" class="w3-center">帳號新增</a>
+			<a href="sms_promote.php" rel="external" class="w3-center">簡訊推播</a>
+			<br>
+			<a href="edit_menu.php" rel="external" class="w3-center">菜單編輯</a>
 			<br>
 		{% else %}
+			<a href="index.php" class="w3-center" >點餐頁面</a>
+			<br>
 			<a href="listorder.php" rel="external" class="w3-center">即時訂單</a>
 			<br>
 		{% endif %}
