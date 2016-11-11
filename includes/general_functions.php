@@ -74,20 +74,27 @@ function statusDown( $cStatus){
 
 */
 
-function user_create($username, $userpass, $userRegInfo, $shop_id){
+function shop_create($shopname, $shopaddress, $shoptel) {
 	global $db;
 
-	if(!is_admin()){
-		/*$sql = "SELECT * FROM `config` WHERE `name` = 'verification'";
-		$Qver = $db->query_select_one($sql);
-
-		if($verification != $Qver['value']){
-			return false;
-		}*/
-
-		//$sql = "SELECT * FROM `user_register` WHERE `u_id` = 'code'"
-
+	$sql = "SELECT * FROM `shop` WHERE `shop_name` = '" . $shopname . "' ";
+	$Qshop = $db->query_select_one($sql);
+	if ($Qshop) {
+		return -1;
 	}
+
+	$sql = "INSERT INTO `shop` (`shop_id`, `shop_name`, `shop_address`, `shop_tel`, `shop_owner`, `shop_account`, `shop_type`) VALUES (NULL, '" . $shopname . "', '" . $shopaddress . "', '" . $shoptel . "', 1, 1, 1)";
+	if (!$result = $db->query($sql)) {
+		echo "<p>Error: " . $db->err . "</p>";
+		echo "<p>Error text: " . $db->errtext . "</p>";
+		die('error gf_uc_1<br>');
+	}
+
+	return $db->mysqli->insert_id;
+}
+
+function user_create($username, $userpass, $userRegInfo, $shop_id){
+	global $db;
 
 	$sql = "SELECT * FROM `user` WHERE `u_name` = '".$username."' ";
 	$Quser = $db->query_select_one($sql);
@@ -99,7 +106,6 @@ function user_create($username, $userpass, $userRegInfo, $shop_id){
 	if ($shop_id == '')
 		$shop_id = 0;
 
-	// hash("sha256", "test1234");
 	$sql = "INSERT INTO `user` (`u_id`, `u_name`, `u_pass`, `u_type`, `shop_id`) VALUES (NULL, '".$username."', '".hash("sha256",$userpass)."', '".$userRegInfo['utype']."', '".$shop_id."');";
 	if( !$result = $db->query($sql) ){
 		echo "<p>Error: " . $db->err . "</p>";
@@ -116,8 +122,8 @@ function user_create($username, $userpass, $userRegInfo, $shop_id){
 		echo "<p>Error text: " . $db->errtext . "</p>";
 		die('error gf_uc_2');
 	}
-	return $new_user_id;
 
+	return $new_user_id;
 }
 
 function user_vercode( $updateAnyway = false, $u_name = false , $u_id = false){
