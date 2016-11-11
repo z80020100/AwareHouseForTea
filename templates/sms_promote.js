@@ -10,12 +10,43 @@ $(document).ready(function(){
        $("#sms_content").css({"display":"none"});
     });
 
+    // send sms
+    $('#sms_send').click(function() {
+        console.log("send to:");
+        $('input[type=checkbox]').each(function(){
+            if ($(this).attr('id') != 'select_all' && $(this).prop('checked')) {
+                var phonenumber = $(this).parent().next('td').text();
+                console.log('  ' + phonenumber);
+            }
+        });
+        console.log("sms content = " + $('#sms_content_text').val());
+    });
+
     // sms_mode selector tab
     $(".tab").on("click", function() {
         $(this).addClass('active');
         $(this).siblings('div.tab').removeClass('active');
         $('#num_results').text('0');
         $('#promote_table').empty().append('<tbody><tr><td colspan="5">請點選搜尋</td></tr></tbody>');
+
+        if ($('.tab.active').attr('sms-mode') == 1) {
+            $.ajax({
+                url:"sms_promote.php",
+                method: "POST",
+                dataType: "json",
+                data: {
+                    "sms_mode": $('.tab.active').attr('sms-mode')
+                },
+                async: false
+            })
+            .done(function(msg) {
+                handle_query(msg);
+                $('#num_results').text(msg.length);
+            })
+            .fail(function() {
+                alert('query failed!');
+            });
+        }
     });
 
     // query results
