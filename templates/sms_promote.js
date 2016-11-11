@@ -12,14 +12,31 @@ $(document).ready(function(){
 
     // send sms
     $('#sms_send').click(function() {
-        console.log("send to:");
+        var phonenumbers = [];
         $('input[type=checkbox]').each(function(){
             if ($(this).attr('id') != 'select_all' && $(this).prop('checked')) {
                 var phonenumber = $(this).parent().next('td').text();
-                console.log('  ' + phonenumber);
+                phonenumbers.push(phonenumber);
             }
         });
-        console.log("sms content = " + $('#sms_content_text').val());
+        var sms_text = $('#sms_content_text').val();
+
+        $.ajax({
+            url:"sms_promote.php",
+            method: "POST",
+            dataType: "text",
+            data: {
+                "phonenumbers": phonenumbers,
+                "sms_text": sms_text
+            },
+            async: false
+        })
+        .done(function(msg) {
+            console.log(msg);
+        })
+        .fail(function() {
+            alert('query failed!');
+        });
     });
 
     // sms_mode selector tab
