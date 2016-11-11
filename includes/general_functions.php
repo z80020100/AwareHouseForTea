@@ -192,7 +192,7 @@ function send_sms($dst, $msg){
 		curl_close($ch);
 	}
 	else{
-		echo $msg;
+		echo "Send-to:$dst, Content:$msg\n";
 	}
 }
 

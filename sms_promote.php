@@ -62,6 +62,14 @@ if (isset($_POST['sms_mode'])) {
     exit();
 }
 
+if (isset($_POST['phonenumbers']) && isset($_POST['sms_text'])) {
+    $sms_text = $_POST['sms_text'];
+    foreach ($_POST['phonenumbers'] as $phonenumber) {
+        send_sms($phonenumber, $sms_text);
+    }
+    exit();
+}
+
 $template = $twig->loadTemplate('sms_promote.html');
 
 $_HTML .= $template->render(array());
