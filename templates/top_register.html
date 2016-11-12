@@ -9,32 +9,32 @@
 <div id="employer" class="w3-container theTab w3-animate-opacity">
 <form class="w3-container w3-card-4" action="top_register.php" method="POST">
   <div class="w3-group">
-    <input class="w3-input" type="text" name="shopname" required>
-    <label class="w3-label w3-validate">加盟店 店名</label>
-  </div>
-  <div class="w3-group">
     <input class="w3-input" type="text" name="username" required>
+    <label class="w3-label w3-validate">加盟主 帳號</label>
+  </div>
+  <div class="w3-group">
+    <input class="w3-input" type="password" name="userpass" required>
+    <label class="w3-label w3-validate">加盟主 密碼</label>
+  </div>
+  <div class="w3-group">
+    <input class="w3-input" type="text" name="ownername" required>
     <label class="w3-label w3-validate">加盟主 姓名</label>
-  </div>
-  <div class="w3-group">
-    <input class="w3-input" type="text" name="shoptel" required>
-    <label class="w3-label w3-validate">加盟店 電話</label>
-  </div>
-  <div class="w3-group">
-    <input class="w3-input" type="text" name="shopaddress" required>
-    <label class="w3-label w3-validate">加盟店 地址</label>
   </div>
   <div class="w3-group">
     <input class="w3-input" type="text" name="phone" required>
     <label class="w3-label w3-validate">加盟主 電話</label>
   </div>
   <div class="w3-group">
-    <input class="w3-input" type="text" required>
-    <label class="w3-label w3-validate">FB連結</label>
+    <input class="w3-input" type="text" name="shopname" required>
+    <label class="w3-label w3-validate">加盟店 店名</label>
   </div>
   <div class="w3-group">
-    <input class="w3-input" type="text" required>
-    <label class="w3-label w3-validate">加盟店 可以產生幾個員工帳號</label>
+    <input class="w3-input" type="text" name="shopaddress" required>
+    <label class="w3-label w3-validate">加盟店 地址</label>
+  </div>
+  <div class="w3-group">
+    <input class="w3-input" type="text" name="shoptel" required>
+    <label class="w3-label w3-validate">加盟店 電話</label>
   </div>
   <div class="w3-center">
     <input class="w3-btn w3-theme" type="submit" name="employer" value="創造帳號">
@@ -46,7 +46,11 @@
 <form class="w3-container w3-card-4" action="top_register.php" method="POST">
   <div class="w3-group">
     <input class="w3-input" type="text" name="username" required>
-    <label class="w3-label w3-validate">店員 姓名</label>
+    <label class="w3-label w3-validate">店員 帳號</label>
+  </div>
+  <div class="w3-group">
+    <input class="w3-input" type="password" name="userpass" required>
+    <label class="w3-label w3-validate">店員 密碼</label>
   </div>
   <div class="w3-group">
     <input class="w3-input" type="text" name="phone" required>
