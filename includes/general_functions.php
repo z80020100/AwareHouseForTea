@@ -74,7 +74,7 @@ function statusDown( $cStatus){
 
 */
 
-function shop_create($shopname, $shopaddress, $shoptel) {
+function shop_create($shopname, $shopaddress, $shoptel, $ownername) {
 	global $db;
 
 	$sql = "SELECT * FROM `shop` WHERE `shop_name` = '" . $shopname . "' ";
@@ -83,7 +83,7 @@ function shop_create($shopname, $shopaddress, $shoptel) {
 		return -1;
 	}
 
-	$sql = "INSERT INTO `shop` (`shop_id`, `shop_name`, `shop_address`, `shop_tel`, `shop_owner`, `shop_account`, `shop_type`) VALUES (NULL, '" . $shopname . "', '" . $shopaddress . "', '" . $shoptel . "', 1, 1, 1)";
+	$sql = "INSERT INTO `shop` (`shop_id`, `shop_name`, `shop_address`, `shop_tel`, `shop_owner`, `shop_account`, `shop_type`) VALUES (NULL, '" . $shopname . "', '" . $shopaddress . "', '" . $shoptel . "', '" . $ownername . "', NULL, 1)";
 	if (!$result = $db->query($sql)) {
 		echo "<p>Error: " . $db->err . "</p>";
 		echo "<p>Error text: " . $db->errtext . "</p>";
@@ -91,6 +91,17 @@ function shop_create($shopname, $shopaddress, $shoptel) {
 	}
 
 	return $db->mysqli->insert_id;
+}
+
+function shop_update_owner($s_id, $u_id) {
+	global $db;
+
+	$sql = "UPDATE `shop` SET `shop_account` = '" . $u_id . "' WHERE `shop_id` = '" . $s_id . "' ";
+	if (!$result = $db->query($sql)) {
+		echo "<p>Error: " . $db->err . "</p>";
+		echo "<p>Error text: " . $db->errtext . "</p>";
+		die('error gf_uc_1<br>');
+	}
 }
 
 function user_create($username, $userpass, $userRegInfo, $shop_id){
