@@ -1,0 +1,15 @@
+
+	<div id="a0" class="w3-container">
+		<h3>登入／登出</h3>
+		<center>
+		<form action="staff_login.php" method="POST">
+			<p>{{LOGIN_MESSAGE}}</p>
+			<p id="uname"> 帳號：<input type="text" name="username"> </p>
+			<p id="p_uenablepass">使用密碼登入? <input type="checkbox" name="enablepass" id="enablepass" checked></p>
+			<p id="upass"> 密碼：<input type="password" name="password" id="login_key"> </p>
+			<p id="uinfo"> 手機：<input type="text" name="phone"> </p>
+			<p> <input type="submit" name="submit"  value="登入"> </p>
+		</form>
+		</center>
+	</div>
+	<script src="templates/staff_login.js"></script>
