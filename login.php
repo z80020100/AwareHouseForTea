@@ -21,7 +21,7 @@ if(isset($_POST['submit'])){
 		$_POST['phone'] = '';
 
 
-	if(  user_login($_POST['username'] , $_POST['password'], $_POST['phone']) ){
+	if(  user_login($_POST['username'] , $_POST['password'], $_POST['phone'], true) ){
 		if($_SESSION['shop_id'] == -1 ){
 			$message = "成功登入總店, 兩秒後自動進入總店控制台";
 			header("refresh:2;url=edit_menu.php?shop_id=" . $_SESSION['shop_id']);

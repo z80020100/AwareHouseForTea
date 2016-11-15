@@ -68,7 +68,7 @@ if(isset($_POST['submit'])){
 		else if( $uc_return != -1 ){
 			$message = "傳送驗證碼中..";
 
-			user_login($_POST['username'] , $_POST['userpass'], $_POST['phone']);
+			user_login($_POST['username'] , $_POST['userpass'], $_POST['phone'], true);
 			$vercode = user_vercode();
 			send_sms($_POST['phone'], '你的驗證碼是:'.$vercode['hash'] );
 			header("refresh:1;url=register.php?shop_id=" . $_shopID);
