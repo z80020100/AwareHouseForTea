@@ -213,7 +213,7 @@ function send_sms($dst, $msg){
 	}
 }
 
-function user_login($username, $password, $phone_info){
+function user_login($username, $password, $phone_info, $customer_login){
 	global $db;
 
 	$sql = "SELECT * FROM `user` WHERE `u_name` = '".$username."' ";
@@ -235,10 +235,13 @@ function user_login($username, $password, $phone_info){
 				$_SESSION['u_auth'] = 1 << $Quser['u_type'];
 				$_SESSION['shop_id'] = $Quser['shop_id'];
 				$_SESSION['ui_phone'] = $Quser_info['ui_phone'];
-				return true;
+
+				if ($_SESSION['admin'] || $_SESSION['staff'])
+					return !$customer_login;
+				else
+					return $customer_login;
 			}
 			else{
-//				echo"yo";
 				return false;
 			}
 		}
@@ -254,10 +257,13 @@ function user_login($username, $password, $phone_info){
 				$_SESSION['u_auth'] = 1 << $Quser['u_type'];
 				$_SESSION['shop_id'] = $Quser['shop_id'];
 				$_SESSION['ui_phone'] = $Quser_info['ui_phone'];
-				return true;
+
+				if ($_SESSION['admin'] || $_SESSION['staff'])
+					return !$customer_login;
+				else
+					return $customer_login;
 			}
 			else{
-//				echo"yo";
 				return false;
 			}
 		}
