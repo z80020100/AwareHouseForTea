@@ -90,7 +90,7 @@
 			<a href="register.php" rel="external" class="w3-center">帳號新增</a>
 			<br>
 		{% endif %}
-		<a href="login.php" rel="external" class="w3-center">登出&nbsp;{{username}}</a>
+		<a href="staff_login.php" rel="external" class="w3-center">登出&nbsp;{{username}}</a>
     <hr>
 		{% for series in all_series %}
   		<a href="#s{{series.s_id}}" class="w3-center" >{{series.name}}</a>
@@ -116,7 +116,7 @@
 			<a href="listorder.php" rel="external" class="w3-center">即時訂單</a>
 			<br>
 		{% endif %}
-		<a href="login.php" rel="external" class="w3-center">登出&nbsp;{{username}}</a>
+		<a href="staff_login.php" rel="external" class="w3-center">登出&nbsp;{{username}}</a>
     <hr>
 		{% for series in all_series %}
   		<a href="#s{{series.s_id}}" class="w3-center" >{{series.name}}</a>
