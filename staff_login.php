@@ -1,6 +1,5 @@
 <?php
 
-
 $_PAGE_TITLE = '早餐店點餐系統';
 require_once('includes/header.php');
 
