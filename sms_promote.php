@@ -4,8 +4,11 @@
 $_PAGE_TITLE = '簡訊推播';
 require_once('includes/header.php');
 
-not_admin_redirect();
+// this page is for topshop staff and shop admins
+if ( !(is_headquarters_staff() || is_admin()) )
+    not_login_redirect();
 
+// query list
 if (isset($_POST['sms_mode'])) {
     
     $info = array();
@@ -48,8 +51,9 @@ if (isset($_POST['sms_mode'])) {
                 $info[] = $row;
         }
     }
-    else if ($smsmode == 1) {
+    else if ($smsmode == 1 && is_headquarters_staff()) {
         // only query shop
+        // this part can only be used by headquarters staff
         // query shop owner's phone number
         $sql = "SELECT `shop`.`shop_id`, `shop`.`shop_name`, `shop`.`shop_owner`, `shop`.`shop_account`, `user_info`.`ui_phone` FROM `shop`, `user_info` WHERE `shop`.`shop_account` = `user_info`.`u_id`";
         
@@ -62,6 +66,7 @@ if (isset($_POST['sms_mode'])) {
     exit();
 }
 
+// send sms
 if (isset($_POST['phonenumbers']) && isset($_POST['sms_text'])) {
     $sms_text = $_POST['sms_text'];
     foreach ($_POST['phonenumbers'] as $phonenumber) {
@@ -70,9 +75,12 @@ if (isset($_POST['phonenumbers']) && isset($_POST['sms_text'])) {
     exit();
 }
 
+// rendering page
 $template = $twig->loadTemplate('sms_promote.html');
 
-$_HTML .= $template->render(array());
+$_HTML .= $template->render(array(
+    'is_headquarters_staff' => is_headquarters_staff()
+));
 
 require_once('includes/footer.php');
 
