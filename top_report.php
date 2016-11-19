@@ -3,7 +3,7 @@
 $_PAGE_TITLE = '總營運報表';
 require_once('includes/header.php');
 
-not_admin_redirect();
+not_topboss_redirect();
 
 $template = $twig->loadTemplate('top_report.html');
 
