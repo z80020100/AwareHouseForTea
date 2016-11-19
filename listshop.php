@@ -3,6 +3,8 @@
 $_PAGE_TITLE = '店家列表';
 require_once('includes/header.php');
 
+not_login_redirect();
+
 $template = $twig->loadTemplate('listshop.html');
 
 $sql = "SELECT * FROM `shop`";
