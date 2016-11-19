@@ -17,9 +17,11 @@
   <div class="tab active" sms-mode=0>
     顧客推播
   </div>
+  {% if is_headquarters_staff %}
   <div class="tab" sms-mode=1>
     分店推播
   </div>
+  {% endif %}
 </div>
 
 <div class="w3-padding w3-margin-top" style="width:100%;background-color:grey">
