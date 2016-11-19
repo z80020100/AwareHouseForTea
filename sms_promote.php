@@ -1,5 +1,4 @@
 <?php
-//header("Content-Type:text/html; charset=utf-8");
 
 $_PAGE_TITLE = '簡訊推播';
 require_once('includes/header.php');
