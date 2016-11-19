@@ -4,8 +4,10 @@ $_PAGE_TITLE = '簡訊推播';
 require_once('includes/header.php');
 
 // this page is for topshop staff and shop admins
-if ( !(is_headquarters_staff() || is_admin()) )
-    not_login_redirect();
+if ( !(is_headquarters_staff() || is_admin()) ) {
+    header("location:login.php?shop_id=" . $_shopID);
+    die('');
+}
 
 // query list
 if (isset($_POST['sms_mode'])) {
