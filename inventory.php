@@ -3,11 +3,11 @@
 $_PAGE_TITLE = '物料管理';
 require_once('includes/header.php');
 
-not_topboss_redirect();
+not_admin_redirect();
 
-// read data from ingredient table 
+// read data from ingredient table
 $sql = "SELECT `shop_id`, `ingredient`, `num`, `unit`, `call_time`
-		FROM `ingredient` 
+		FROM `ingredient`
 		WHERE `handled` = 0
 		ORDER BY `call_time`";
 
