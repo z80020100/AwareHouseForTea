@@ -1,119 +1,170 @@
-
-    
-
+<HEAD>
+  <script language="JavaScript" type="text/javascript">
+  <!--
+  self.moveTo(40,120)  //指定預開啟位置的寬度與高度
+  self.resizeTo(screen.availWidth-100,screen.availHeight-300)  //指定預開啟視窗的寬度與高度
+  -->
+  </script>
+</HEAD>
 <script src="./templates/customer_menu.js"></script>
-
-
-    <div id="add_success" class="w3-center">
-            成功加入購物車 
-    </div>
-
-
-    <div  class="w3-form w3-container w3-card-4">
+    <div id="add_success" class="w3-center"> 成功加入購物車  </div>
+<!--
+    <div  class="w3-form w3-container w3-card-4 w3-group">
       <div id="div_of_table" class="w3-input-group w3-half" >
           <label class="w3-label" ></label>
           <input id="table_num" class="w3-input w3-border"  type="text" style="width:50%" placeholder="末三碼/桌號">
       </div>
-
           <br>
           <br>
           <br>
     </div>
+-->
+    <!-- 菜單畫面 -->
+    <div class="w3-twothird w3-container w3-group " id="allMenu">
+        <ul class="w3-navbar w3-black ">
+            <div>
+              {% for series in all_series %}
+              <li><a href="javascript:void(0)" onclick="openMenu('s{{series.s_id}}')"> {{series.name}} </a></li>
+              {% endfor %}
+            </div>
+        </ul>
 
-
-    {% for series in all_series %}
-    <div id="s{{series.s_id}}" class="w3-group w3-row w3-padding-left w3-card-4">
-            <h3 id="series_name_class" class="w3-padding"> {{series.name}} </h3>
-        {% for main in series.main %}
-            
-            <div id="m{{main.m_id}}_ro_at_id" style="display:none"></div>
-            <button id="m{{main.m_id}}" class="w3-btn w3-margin-bottom w3-round" data-at_id="{{main.at_id}}" value="{{main.price}}">{{main.name}} </button>
-            <script>
-                
-                $("#m{{main.m_id}}").data({ "ro_at_id" : [ 
-                   
-                {% for ro in main.ro %}
-                   
-                   {{ro.at_id}}, 
-                {% endfor %}
-                    -1] })
-            </script>
-
-
+        {% for series in all_series %}
+        <div id="s{{series.s_id}}" class="w3-group w3-row w3-padding-left w3-card-4 menu">
+            <!--<h3 id="series_name_class" class="w3-padding"> {{series.name}} </h3> -->
+            {% for main in series.main %}
+                <div id="m{{main.m_id}}_ro_at_id" style="display:none"></div>
+                <button id="m{{main.m_id}}" class="w3-btn w3-margin-bottom w3-round" data-at_id="{{main.at_id}}" value="{{main.price}}">{{main.name}} </button>
+                <script>
+                    $("#m{{main.m_id}}").data({ "ro_at_id" : [
+                    {% for ro in main.ro %}
+                       {{ro.at_id}},
+                    {% endfor %}
+                        -1] })
+                </script>
+            {% endfor %}
+        </div>
         {% endfor %}
     </div>
 
-    {% endfor %}
-    
-    <div>
-        <button id="open_cart" class="w3-btn-floating-large">
-            <img src="./includes/images/shopping-cart.svg" alt="shopping-cart" style="width:50%; height:50%;">
-        </button>
-    </div>
+    <!-- 即時訂單, 登出 -->
+    <ul class="w3-navbar w3-black ">
+      <div>
+        <!-- <li><a href="index.php" rel="external" class="w3-center">點餐</a> -->
+        <li><a href="listorder.php" rel="external" class="w3-center">即時訂單</a></li>
+        <li><a href="login.php" rel="external" class="w3-center">登出&nbsp;{{username}}</a></li>
+      </div>
+    </ul>
+    <!-- 購物清單 -->
+    <div class="w3-third w3-container w3-group" id="cart">
+        <div id="cart_list" class="w3-table " >
+            <div class="w3-container">
+                <header class="w3-container">
+                    <!--  <h3>購物清單</h3> -->
+                </header>
 
-    <div id="cart_list" class="w3-modal" >
-
-        <div class="w3-modal-content w3-card-4">
-            <header class="w3-container">
-                <span id="close_cart" class="w3-closebtn w3-xlarge">&times;</span>
-                <h3>你的購物清單</h3>
-            </header>
-
-            <div class="w3-row w3-center">
-                <div>
-                    <p>
-                    </p>
-                </div>
-                <div class="w3-row-padding">
-                    <table id="orderList" class="w3-table w3-hoverable w3-bordered w3-border w3-padding" >
-                        <thead>
-                        <tr>
-                            <td style="width:38%"> 品項 </td>
-                            <td style="width:17%"> 數量 </td>
-                            <td style="width:20%"> 金額 </td>
-                            <td style="width:25%"> 備註 </td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                        <tfoot>
-                        </tfoot>
-                        
-
-                    </table>
-                </div>
-                <div>
-                    <p>
-                    </p>
+                <div class="w3-row w3-center">
+                    <div>
+                        <p></p>
+                    </div>
+                    <div class="w3-row-padding">
+                        <table id="orderList" class="w3-table w3-hoverable w3-bordered w3-border w3-padding" >
+                            <thead>
+                            <tr>
+                                <td style="width:38%"> 品項 </td>
+                                <td style="width:17%"> 數量 </td>
+                                <td style="width:20%"> 金額 </td>
+                                <td style="width:25%"> 備註 </td>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                    <div>
+                        <p></p>
+                    </div>
                 </div>
 
-            </div>
+                <footer class="w3-container">
 
-            <footer class="w3-container">
-
-            <div class="w3-col s2 w3-padding-8">
-                <h5>總共</h5>
+                <div class="w3-col s2 w3-padding-8">
+                    <h5>總共</h5>
+                </div>
+                <div class="w3-col s3 w3-padding-16">
+                    <input id="tprice" class="w3-input w3-sand" type="text" value="0" readonly>
+                </div>
+                <div class="w3-col s1 w3-padding">
+                    <h4>元</h4>
+                </div>
+                <div class="w3-col s4 w3-right w3-padding-16">
+                    <button id="send_order" class="w3-btn w3-right w3-input w3-round-xlarge" >下單 </button>
+                </div>
+                </footer>
             </div>
-            <div class="w3-col s3 w3-padding-16">
-                <input id="tprice" class="w3-input w3-sand" type="text" value="0" readonly>
-            </div>
-            <div class="w3-col s1 w3-padding">
-                <h4>元</h4>
-            </div>
-
-            <div class="w3-col s4 w3-right w3-padding-16">
-                <button id="send_order" class="w3-btn w3-right w3-input w3-round-xlarge" >下單
-                </button>
-            </div>
-
-            </footer>
-
         </div>
-
     </div>
 
+    <div style="clear:both;"></div> <!-- clear not into footer -->
 
+    <!-- 結帳畫面 -->
+    <div id="check_out" class="w3-modal w3-large"> <!-- check_out -->
+      <div class="w3-modal-content w3-card-4">
+          <header class="w3-container">
+              <span id="check_out_close_confirm" class="w3-closebtn w3-xxlarge">&times;</span>
+              <h3>結帳</h3>
+          </header>
 
+          <div class="w3-row w3-container">
+              <div class="w3-col s5  w3-padding-8">
+                  <h3>合計</h3>
+                  <div class="w3-col s3 w3-padding-16">
+                      <input id="check_out_price" class="w3-input w3-sand" type="text" value="0" readonly>
+                  </div>
+                  <div class="w3-col s1 w3-padding">
+                      <h4>元</h4>
+                  </div>
+                  <input id="check_out_m_price" type="hidden" value="-1">
+              </div>
+
+              <div> <!-- 付款金額 -->
+                  <div class="w3-col s2 w3-padding-16">
+                      <h5>付款金額</h5>
+                  </div>
+                  <div class=" w3-col s3">
+                      <h3 id="check_out_amountResult">0</h3>
+                      <button class="cal_button" id="1">1 </button
+                      ><button class="cal_button" id="2">2</button
+                      ><button class="cal_button" id="3">3</button
+                      ><button class="cal_button" id="4">4 </button
+                      ><button class="cal_button" id="5">5</button
+                      ><button class="cal_button" id="6">6</button
+                      ><button class="cal_button" id="7">7 </button
+                      ><button class="cal_button" id="8">8</button
+                      ><button class="cal_button" id="9">9</button
+                      ><button class="cal_button" id="C">C</button
+                      ><button class="cal_button" id="0">0</button
+                      ><button class="cal_button" id="-1">&larr;</button>
+                  </div>
+              </div>
+          </div>
+
+          <footer class="w3-container">
+            <div class="w3-container w3-col s4 w3-padding-24"> 找零</div>
+              <div class="w3-container w3-col s4 w3-padding">
+                  <input id="the_change" class="w3-input w3-sand" type="text" value="0" readonly>
+                  <input id="check_out_m_id" type="hidden">
+              </div>
+              <div class="w3-container w3-col s4 w3-padding-24"> 元</div>
+
+              <div class="w3-container w3-col s2 w3-right w3-padding-top">
+                  <button id="check_out_button" class="w3-btn w3-right w3-round">結帳</button>
+              </div>
+          </footer>
+
+      </div>
+    </div>
+    <!-- 確認品項畫面 -->
     <div id="confirm_item" class="w3-modal w3-large">
         <div class="w3-modal-content w3-card-4">
             <header class="w3-container">
@@ -124,37 +175,42 @@
             <div class="w3-row w3-container">
                 <div class="w3-col s5  w3-padding-8">
                     <h3 id="item_name"></h3>
-                    <input id="m_price" type="hidden" value="-1">
+                    <!-- <input id="m_price"  type="hidden" value="-1"> -->
+                    <h3>價錢
+                      <input id="m_price"  value="-1">
+                    </h3>
+                    <!-- 加料區 -->
+                    <div class="w3-row w3-container" id="materialblock">  </div>
                 </div>
 
                 <div>
                     <div class="w3-col s2 w3-padding-16">
-                        <h5>數量</h5>
+                        <h3>數量</h3>
+                        <h3 id="amountResult">0</h3>
                     </div>
-                    <div class="w3-padding-8 w3-col s2">
-                        
-                        <select class="w3-margin " id="amountButton" size="1">
-                            <option selected="selected">1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                        </select>
 
+                    <div class=" w3-col s3">
+                        <br><br>
+                        <button class="cal_button" id="1">1 </button
+                        ><button class="cal_button" id="2">2</button
+                        ><button class="cal_button" id="3">3</button
+                        ><button class="cal_button" id="4">4 </button
+                        ><button class="cal_button" id="5">5</button
+                        ><button class="cal_button" id="6">6</button
+                        ><button class="cal_button" id="7">7 </button
+                        ><button class="cal_button" id="8">8</button
+                        ><button class="cal_button" id="9">9</button
+                        ><button class="cal_button" id="C">C</button
+                        ><button class="cal_button" id="0">0</button
+                        ><button class="cal_button" id="-1">&larr;</button>
                     </div>
                 </div>
-            </div>
-            <div class="w3-row w3-container" id="materialblock">
 
             </div>
-            <div class="w3-row w3-container w3-padding-8">
+
+            <!-- <div class="w3-row w3-container w3-padding-8">
                 <input id="addition_info" type="text" placeholder="備註欄位" maxlength="5">
-            </div>
+            </div> -->
 
             <footer class="w3-container">
                 <div class="w3-container w3-col s4 w3-padding">
@@ -172,5 +228,3 @@
 
         </div>
     </div>
-
-
