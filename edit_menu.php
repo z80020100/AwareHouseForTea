@@ -3,7 +3,7 @@
 $_PAGE_TITLE = '菜單編輯';
 require_once('includes/header.php');
 
-not_admin_redirect();
+not_top_redirect();
 
 $template = $twig->loadTemplate('edit_menu.html');
 
@@ -53,7 +53,7 @@ while($series_data = $db->fetch_array($result)){
 		}
 		$all_main[$mnum]['ro'] = $all_ro;
 
-	}	
+	}
 	$all_series[$snum]['main'] = $all_main;
 }
 
