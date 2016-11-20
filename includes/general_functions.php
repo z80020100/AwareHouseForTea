@@ -74,20 +74,38 @@ function statusDown( $cStatus){
 
 */
 
-function user_create($username, $userpass, $userRegInfo, $shop_id){
+function shop_create($shopname, $shopaddress, $shoptel, $ownername) {
 	global $db;
 
-	if(!is_admin()){
-		/*$sql = "SELECT * FROM `config` WHERE `name` = 'verification'";
-		$Qver = $db->query_select_one($sql);
-
-		if($verification != $Qver['value']){
-			return false;
-		}*/
-
-		//$sql = "SELECT * FROM `user_register` WHERE `u_id` = 'code'"
-
+	$sql = "SELECT * FROM `shop` WHERE `shop_name` = '" . $shopname . "' ";
+	$Qshop = $db->query_select_one($sql);
+	if ($Qshop) {
+		return -1;
 	}
+
+	$sql = "INSERT INTO `shop` (`shop_id`, `shop_name`, `shop_address`, `shop_tel`, `shop_owner`, `shop_account`, `shop_type`) VALUES (NULL, '" . $shopname . "', '" . $shopaddress . "', '" . $shoptel . "', '" . $ownername . "', NULL, 1)";
+	if (!$result = $db->query($sql)) {
+		echo "<p>Error: " . $db->err . "</p>";
+		echo "<p>Error text: " . $db->errtext . "</p>";
+		die('error gf_uc_1<br>');
+	}
+
+	return $db->mysqli->insert_id;
+}
+
+function shop_update_owner($s_id, $u_id) {
+	global $db;
+
+	$sql = "UPDATE `shop` SET `shop_account` = '" . $u_id . "' WHERE `shop_id` = '" . $s_id . "' ";
+	if (!$result = $db->query($sql)) {
+		echo "<p>Error: " . $db->err . "</p>";
+		echo "<p>Error text: " . $db->errtext . "</p>";
+		die('error gf_uc_1<br>');
+	}
+}
+
+function user_create($username, $userpass, $userRegInfo, $shop_id){
+	global $db;
 
 	$sql = "SELECT * FROM `user` WHERE `u_name` = '".$username."' ";
 	$Quser = $db->query_select_one($sql);
@@ -95,22 +113,28 @@ function user_create($username, $userpass, $userRegInfo, $shop_id){
 		return -1;
 	}
 
-	// hash("sha256", "test1234");
+	// $shop_id is not permitted to be empty string
+	if ($shop_id == '')
+		$shop_id = 0;
+
 	$sql = "INSERT INTO `user` (`u_id`, `u_name`, `u_pass`, `u_type`, `shop_id`) VALUES (NULL, '".$username."', '".hash("sha256",$userpass)."', '".$userRegInfo['utype']."', '".$shop_id."');";
 	if( !$result = $db->query($sql) ){
-
+		echo "<p>Error: " . $db->err . "</p>";
+		echo "<p>Error text: " . $db->errtext . "</p>";
 		die('error gf_uc_1<br>');
 	}
 
 	$new_user_id = $db->mysqli->insert_id;
-	
-	$sql = "INSERT INTO `user_info` (`ui_id`, `u_id`, `ui_advsecurity`, `ui_phone`) VALUES (NULL, '".$db->mysqli->insert_id."', '".$userRegInfo['advsecurity']."', '".$userRegInfo['phone']."')";
+
+	$sql = "INSERT INTO `user_info` (`ui_id`, `u_id`, `ui_advsecurity`, `ui_occupation`, `ui_phone`) VALUES (NULL, '".$db->mysqli->insert_id."', '".$userRegInfo['advsecurity']."', '', '".$userRegInfo['phone']."')";
 	if( !$result = $db->query($sql) ){
 		//die($sql);
+		echo "<p>Error: " . $db->err . "</p>";
+		echo "<p>Error text: " . $db->errtext . "</p>";
 		die('error gf_uc_2');
 	}
-	return $new_user_id;
 
+	return $new_user_id;
 }
 
 function user_vercode( $updateAnyway = false, $u_name = false , $u_id = false){
@@ -118,10 +142,10 @@ function user_vercode( $updateAnyway = false, $u_name = false , $u_id = false){
 
 	if(!$u_name)
 		$u_name = $_SESSION['u_name'];
-	
+
 	if(!$u_id)
 		$u_id = $_SESSION['u_id'];
-	
+
 	$hashme = $u_name.' '.$u_id.' '.time().' '.rand();
 	$new_hash = substr( hash("sha256", $hashme) , 0, 4);
 
@@ -161,7 +185,7 @@ function user_vercode( $updateAnyway = false, $u_name = false , $u_id = false){
 function send_sms($dst, $msg){
 	global $_DontSendSMS;
 	if($_DontSendSMS == false){
-	
+
 		$smsURL = "http://202.39.48.216/kotsmsapi-1.php";
 
 		$post = array(
@@ -185,11 +209,11 @@ function send_sms($dst, $msg){
 		curl_close($ch);
 	}
 	else{
-		echo $msg;
+		echo "Send-to:$dst, Content:$msg\n";
 	}
 }
 
-function user_login($username, $password, $phone_info){
+function user_login($username, $password, $phone_info, $customer_login){
 	global $db;
 
 	$sql = "SELECT * FROM `user` WHERE `u_name` = '".$username."' ";
@@ -206,14 +230,18 @@ function user_login($username, $password, $phone_info){
 				$_SESSION['u_name'] = $Quser['u_name'];
 				$_SESSION['u_id'] = $Quser['u_id'];
 				$_SESSION['admin'] = ($Quser['u_type'] == IDADMIN);
+				$_SESSION['staff'] = ($Quser['u_type'] == IDSTAFF);
 				$_SESSION['u_type'] = $Quser['u_type'];
 				$_SESSION['u_auth'] = 1 << $Quser['u_type'];
 				$_SESSION['shop_id'] = $Quser['shop_id'];
 				$_SESSION['ui_phone'] = $Quser_info['ui_phone'];
-				return true;
+
+				if ($_SESSION['admin'] || $_SESSION['staff'])
+					return !$customer_login;
+				else
+					return $customer_login;
 			}
 			else{
-//				echo"yo";
 				return false;
 			}
 		}
@@ -224,14 +252,18 @@ function user_login($username, $password, $phone_info){
 				$_SESSION['u_name'] = $Quser['u_name'];
 				$_SESSION['u_id'] = $Quser['u_id'];
 				$_SESSION['admin'] = ($Quser['u_type'] == IDADMIN);
+				$_SESSION['staff'] = ($Quser['u_type'] == IDSTAFF);
 				$_SESSION['u_type'] = $Quser['u_type'];
 				$_SESSION['u_auth'] = 1 << $Quser['u_type'];
 				$_SESSION['shop_id'] = $Quser['shop_id'];
 				$_SESSION['ui_phone'] = $Quser_info['ui_phone'];
-				return true;
+
+				if ($_SESSION['admin'] || $_SESSION['staff'])
+					return !$customer_login;
+				else
+					return $customer_login;
 			}
 			else{
-//				echo"yo";
 				return false;
 			}
 		}
@@ -240,75 +272,117 @@ function user_login($username, $password, $phone_info){
 		return false;
 }
 
-function checkAuth($page_auth){
-	if( ($_SESSION['u_auth'] & $page_auth) != 0 )
-		return true;
-	else
-		return false;
+function checkAuth($page_auth) {
+	return ($_SESSION['u_auth'] & $page_auth) != 0;
 }
 
-function is_login(){
-	if( !isset($_SESSION['u_name'])){
-		return false;
-	}
-	else
-		return true;
+function is_login() {
+	// $_SESSION variable was set after user loginned
+	return isset($_SESSION['u_name']);
 }
 
-function is_admin(){
-	
-	if(checkAuth(AUADMIN))
-		return true;
-	else
-		return false;
-/*	if(isset($_SESSION['admin'])){
-		if( $_SESSION['admin'] == true)
-			return true;
-		else
-			return false;
-	}
-	else
-		return false;*/
+function is_admin() {
+	return checkAuth(AUADMIN);
 }
 
-function is_staff(){ // boss (admin) is included in staff
+function is_staff() {
+	// boss (admin) is included in staff
 	return checkAuth(AUSTAFF | AUADMIN);
 }
 
-function is_above_customer(){
+function is_above_customer() {
+	// check registered and activated user
 	return checkAuth(AUCUSTOMER | AUSTAFF | AUADMIN);
 }
 
-function not_staff_redirect(){
-	if(!is_staff()){
-		if(is_login()){
-			header("location:index.php");
-			die('');
+function is_headquarters_staff() {
+	return is_staff() && $_SESSION['shop_id'] == -1;
+}
+
+function is_topboss() {
+	return is_headquarters_staff() && is_admin();
+}
+
+function is_same_store() {
+	// check if this page and user is belong the same store
+	global $_shopID;
+	return $_SESSION['shop_id'] == $_shopID;
+}
+
+function set_shopID() {
+	if ( isset($_GET['shop_id']) && strlen($_GET['shop_id']) != 0 ) {
+		if (!preg_match("/(^-1$)|(^0$)|(^[1-9][0-9]*$)/", $_GET['shop_id'])) {
+			$_SESSION['error_message'] = "Unvalid shop_id.";
+			return false;
 		}
-		else{
-			header("location:login.php");
-			die('');
+
+		if (isset($_SESSION['GET_shop_id']) && $_SESSION['GET_shop_id'] == $_GET['shop_id']) {
+			return true;
+		} else {
+			global $db;
+			$sql = "SELECT * FROM `shop` WHERE `shop_id` = " . $_GET['shop_id'];
+			$Quser = $db->query_select_one($sql);
+
+			if ($Quser) {
+				$_SESSION['GET_shop_id'] = $_GET['shop_id'];
+				$_SESSION['shop_name'] = $Quser['shop_name'];
+				return true;
+			} else {
+				$_SESSION['error_message'] = "No such shop_id.";
+				return false;
+			}
+		}
+	}
+	else {
+		if (isset($_SESSION['GET_shop_id']))
+			return true;
+		else {
+			$_SESSION['error_message'] = "Not provide shop_id.";
+			return false;
 		}
 	}
 }
 
-
-function not_admin_redirect(){
-	if(!is_admin()){
-		if(is_login()){
-			header("location:index.php");
-			die('');
-		}
-		else{
-			header("location:login.php");
-			die('');
-		}
+function not_login_redirect() {
+	global $_shopID;
+	if( !is_login() ) {
+		header("location:login.php?shop_id=" . $_shopID);
+		die('');
 	}
 }
 
-function not_login_redirect(){
-	if( !isset($_SESSION['u_name'])){
-		header("location:login.php");
+function not_staff_redirect() {
+	not_login_redirect();
+	global $_shopID;
+	if ( !(is_staff() && is_same_store()) ) {
+		header("location:index.php?shop_id=" . $_shopID);
+		die('');
+	}
+}
+
+function not_admin_redirect() {
+	not_login_redirect();
+	global $_shopID;
+	if ( !(is_admin() && is_same_store()) ) {
+		header("location:index.php?shop_id=" . $_shopID);
+		die('');
+	}
+}
+
+function not_topboss_redirect() {
+	not_login_redirect();
+	global $_shopID;
+	if ( !is_topboss() ) {
+		header("location:index.php?shop_id=" . $_shopID);
+		die('');
+	}
+}
+
+function not_activated_redirect() {
+	not_login_redirect();
+	global $_shopID;
+	if ( !is_above_customer() ) {
+		header("location:register.php?shop_id=" . $_shopID);
 		die('');
 	}
 }
@@ -428,7 +502,7 @@ function order_detail($o_id){
 				$item_total = $item_total * $item['quantity'];
 
 				$counting_total += $item_total;
-				
+
 				$outItem = array();
 				$outItem['name'] 		= 	$main['name'];
 				$outItem['main_price'] 	= 	$main['price'];
@@ -455,106 +529,100 @@ function order_detail($o_id){
 }
 
 function log_order($o_id){
-	global $db;
-		$sql = "SELECT * from `orders` WHERE `o_id` = ".$o_id;
-		if(! $o_result = $db->query($sql))
-			die('order sql failure');
-		$order = $db->fetch_array($o_result);
+    global $db;
+	$sql = "SELECT * from `orders` WHERE `o_id` = ".$o_id;
+	if(! $o_result = $db->query($sql))
+		die('order sql failure');
+	$order = $db->fetch_array($o_result);
 
+	$sql = "SELECT * FROM `share` WHERE `o_id` = ".$o_id ;
+	$s_result = $db->query($sql);
+	$share_info = array();
+	$order_total = 0;
 
-		$sql = "SELECT * FROM `share` WHERE `o_id` = ".$o_id ;
-		//echo $sql . "\nyoooo\n";
-		$s_result = $db->query($sql);
-		$share_info = array();
-		$order_total = 0;
-		while($share = $db->fetch_array($s_result)){
-			$sql = "SELECT * FROM `share_item` WHERE `sh_id` = ".$share['sh_id'];
-			//echo $sql . "\nyoooo\n";
-			$sh_i_result = $db->query($sql);
-			$item_info = array();
-			$counting_total = 0;
-			while($item = $db->fetch_array($sh_i_result)){
+	while($share = $db->fetch_array($s_result)){
+		$sql = "SELECT * FROM `share_item` WHERE `sh_id` = ".$share['sh_id'];
+        $sh_i_result = $db->query($sql);
+		$item_info = array();
+		$counting_total = 0;
 
-				$sql = "SELECT * FROM `main` WHERE `m_id` = ".$item['m_id'];
-				$m_result = $db->query($sql);
-				$main = $db->fetch_array($m_result);
-				$item_price = $main['price'];
+		while($item = $db->fetch_array($sh_i_result)){
+			$sql = "SELECT * FROM `main` WHERE `m_id` = ".$item['m_id'];
+			$m_result = $db->query($sql);
+			$main = $db->fetch_array($m_result);
+			$item_price = $main['price'];
 
-				$sql = "SELECT * FROM `series` WHERE `s_id` = ".$main['s_id'];
-				$se_result = $db->query($sql);
-				$series = $db->fetch_array($se_result);
+			$sql = "SELECT * FROM `series` WHERE `s_id` = ".$main['s_id'];
+			$se_result = $db->query($sql);
+			$series = $db->fetch_array($se_result);
 
-				// Requirement Option
-				$sql = "SELECT * FROM `sh-i_ai` WHERE `sh-i_id` = ".$item['sh-i_id']." AND `is_ro` = 1 ";
-				$sh_i_ai_result = $db->query($sql);
-				$ro_info = array();
-				while($sh_i_ai = $db->fetch_array($sh_i_ai_result)){
-					$sql = "SELECT * FROM `additional_item` WHERE `ai_id` = ".$sh_i_ai['ai_id'];
-					$ro_result = $db->query($sql);
-					$ro = $db->fetch_array($ro_result);
+			// Requirement Option
+			$sql = "SELECT * FROM `sh-i_ai` WHERE `sh-i_id` = ".$item['sh-i_id']." AND `is_ro` = 1 ";
+			$sh_i_ai_result = $db->query($sql);
+			$ro_info = array();
+			while($sh_i_ai = $db->fetch_array($sh_i_ai_result)){
+				$sql = "SELECT * FROM `additional_item` WHERE `ai_id` = ".$sh_i_ai['ai_id'];
+				$ro_result = $db->query($sql);
+				$ro = $db->fetch_array($ro_result);
 
-					$outRo = array();
-					$outRo['name'] = $ro['name'];
-					$outRo['price'] = $ro['price'];
+				$outRo = array();
+				$outRo['name'] = $ro['name'];
+				$outRo['price'] = $ro['price'];
 
-					// Counting price
-					$item_price += $ro['price'];
-					$counting_total += $ro['price'];
-					array_push($ro_info, $outRo);
-				}
-				// Additional Option
-				$sql = "SELECT * FROM `sh-i_ai` WHERE `sh-i_id` = ".$item['sh-i_id']." AND `is_ro` = 0 ";
-				$sh_i_ai_result = $db->query($sql);
-				$ai_info = array();
-				while($sh_i_ai = $db->fetch_array($sh_i_ai_result)){
-					$sql = "SELECT * FROM `additional_item` WHERE `ai_id` = ".$sh_i_ai['ai_id'];
-					$ai_result = $db->query($sql);
-					$ai = $db->fetch_array($ai_result);
-
-					$outAi = array();
-					$outAi['name'] = $ai['name'];
-					$outAi['price'] = $ai['price'];
-					// Counting price
-					$counting_total += $ai['price'];
-					$item_price += $ai['price'];
-					array_push($ai_info, $outAi);
-				}
-				$counting_total += $main['price'];
-
-				$counting_total = $counting_total * $item['quantity'];
-
-				$outItem = array();
-				$outItem['s_text'] 		= $series['name'];
-				$outItem['m_text'] 		= 	$main['name'];
-				$outItem['item_price']  = $item_price;
-				//$outItem['main_price'] 	= 	$main['price'];
-				//$outItem['m_id'] 		= 	$main['m_id'];
-				//$outItem['s_id'] 		= 	$main['s_id'];
-
-				$outItem['quantity'] 		= 	$item['quantity'];
-				$outItem['comment'] 		= 	$item['comment'];
-				$outItem['RO_array'] 	= 	$ro_info;
-				$outItem['AI_array'] 		= 	$ai_info;
-
-
-				// Writing into log without merging with makeSummary
-
-				$sql = "INSERT INTO `log` (`log_id`, `o_id`, `time`, `s_text`, `m_text`, `quantity`, `price`)"
-						."VALUES (NULL, '".$o_id."', '".$order['o_time']."', '".$outItem['s_text']."', '".$outItem['m_text']."', '".$outItem['quantity']."', '".$outItem['item_price']."');";
-
-				$db->query($sql);
-
-				//array_push($item_info, $outItem);
+				// Counting price
+				$item_price += $ro['price'];
+				$counting_total += $ro['price'];
+				array_push($ro_info, $outRo);
 			}
-			//$outShare = array();
-			//$outShare['total'] = $counting_total;
-			//$outShare['items_array'] = $item_info;
-			//$order_total +=  $counting_total;
-			//array_push($share_info, $outShare);
+			// Additional Option
+			$sql = "SELECT * FROM `sh-i_ai` WHERE `sh-i_id` = ".$item['sh-i_id']." AND `is_ro` = 0 ";
+			$sh_i_ai_result = $db->query($sql);
+			$ai_info = array();
+			while($sh_i_ai = $db->fetch_array($sh_i_ai_result)){
+				$sql = "SELECT * FROM `additional_item` WHERE `ai_id` = ".$sh_i_ai['ai_id'];
+				$ai_result = $db->query($sql);
+				$ai = $db->fetch_array($ai_result);
+
+				$outAi = array();
+				$outAi['name'] = $ai['name'];
+				$outAi['price'] = $ai['price'];
+				// Counting price
+				$counting_total += $ai['price'];
+				$item_price += $ai['price'];
+				array_push($ai_info, $outAi);
+			}
+			$counting_total += $main['price'];
+
+			$counting_total = $counting_total * $item['quantity'];
+
+			$outItem = array();
+			$outItem['s_text'] 		= $series['name'];
+			$outItem['m_text'] 		= 	$main['name'];
+			$outItem['item_price']  = $item_price;
+			//$outItem['main_price'] 	= 	$main['price'];
+			//$outItem['m_id'] 		= 	$main['m_id'];
+			//$outItem['s_id'] 		= 	$main['s_id'];
+
+			$outItem['quantity'] 		= 	$item['quantity'];
+			$outItem['comment'] 		= 	$item['comment'];
+			$outItem['RO_array'] 	= 	$ro_info;
+			$outItem['AI_array'] 		= 	$ai_info;
+
+			// Writing into log without merging with makeSummary
+
+			$sql = "INSERT INTO `log` (`u_id`, `o_id`, `time`, `s_text`, `m_text`, `quantity`, `price`, `shop_id`) VALUES (".$order['u_id'].", ".$o_id.", '".$order['o_time']."', '".$outItem['s_text']."', '".$outItem['m_text']."', ".$outItem['quantity'].", ".$outItem['item_price'].", ".$_SESSION['GET_shop_id'].");";
+			$db->query($sql);
+			//array_push($item_info, $outItem);
 		}
-		//$outOrder['share_array'] = $share_info;
-		//$outOrder['summary_array'] = makeSummary($share_info);
-		//$outOrder['total'] = $order_total ;
+		//$outShare = array();
+		//$outShare['total'] = $counting_total;
+		//$outShare['items_array'] = $item_info;
+		//$order_total +=  $counting_total;
+		//array_push($share_info, $outShare);
+	}
+	//$outOrder['share_array'] = $share_info;
+	//$outOrder['summary_array'] = makeSummary($share_info);
+	//$outOrder['total'] = $order_total ;
 
 	//return $outOrder;
 }
@@ -564,6 +632,5 @@ function unlog_order($o_id){
 	$sql = "DELETE FROM `log` WHERE `o_id` = '".$o_id."'";
 	$db->query($sql);
 }
-
 
 ?>

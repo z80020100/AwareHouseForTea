@@ -1,29 +1,47 @@
 <?php
 
-// require_once('includes/general.php');
-// header("Content-Type:text/html; charset=utf-8");
-
 $_PAGE_TITLE = '帳號新增';
 require_once('includes/header.php');
-not_admin_redirect();
-// $login_error = false;
-// if(!isset($_SESSION['user_name'])){
-// //  header('location:login.php');
-// }
+
+not_topboss_redirect();
 
 $template = $twig->loadTemplate('top_register.html');
 
-/*
-$sql = "SELECT * FROM `orders` ORDER BY `orders`.`o_time` DESC where `orders`.`status` = WAIT";
-$result = $db->query($sql);
-$num = $db->numrow($result);
-$all_orders = array();
-*/
+if (isset($_POST['employer'])) {
+  $sc_return = shop_create($_POST['shopname'], $_POST['shopaddress'], $_POST['shoptel'], $_POST['ownername']);
+  if ($sc_return == -1) {
+    $message = "店家創立失敗";
+  } else {
+    $userRegInfo = array(
+			'phone' => $_POST['phone'],
+      'advsecurity' => 1,
+      'utype' => IDADMIN
+		);
 
+    $uc_return = user_create($_POST['username'] , $_POST['userpass'], $userRegInfo, $sc_return);
+    if( $uc_return != -1) {
+			$message = "帳號創立成功";
+      shop_update_owner($sc_return, $uc_return);
+    } else {
+      "帳號創立失敗";
+    }
+  }
+}
 
-// echo $template->render(array(
+if (isset($_POST['employee'])) {
+  $userRegInfo = array(
+    'phone' => $_POST['phone'],
+    'advsecurity' => 1,
+    'utype' => IDSTAFF
+  );
 
-// ));
+  $uc_return = user_create($_POST['username'] , $_POST['userpass'], $userRegInfo, -1);
+  if( $uc_return != -1) {
+    $message = "帳號創立成功";
+  } else {
+    "帳號創立失敗";
+  }
+}
 
 $_HTML .= $template->render(array(
 

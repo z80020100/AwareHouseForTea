@@ -1,0 +1,14 @@
+<table>
+  <tr>
+    <th>店家連結</th>
+    <th>地址</th>
+    <th>TEL</th>
+  </tr>
+  {% for shop in allshops %}
+    <tr>
+      <td><a href="index.php?shop_id={{shop.shop_id}}" class="w3-center" >{{shop.shop_name}}</a></td>
+      <td>{{shop.shop_address}}</td>
+      <td>{{shop.shop_tel}}</td>
+    </tr>
+  {% endfor %}
+</table>

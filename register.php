@@ -3,28 +3,21 @@
 $_PAGE_TITLE = '創造帳號';
 require_once('includes/header.php');
 
-
 $page_verify = false;
 $verification_success = false;
 if(isset($_SESSION['u_name'])){
 	if($_SESSION['u_type'] == 0) 	// NOT ACTIVATED
 		$page_verify = true;
 	else if(is_admin()){  			// is the user admin?
-		$_page_verify = false;
+		$page_verify = false;
 	}
 	else{
-		header("location:index.php");
+		header("location:index.php?shop_id=" . $_shopID);
 		die('');
 	}
 }
 
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-if($_shopID == NULL) // not logined and didn't set shop_id
-	header("location:index.php");
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+// to load verification page or register page
 if($page_verify == true){
 	$template = $twig->loadTemplate('register_verification.html');
 	$message = "";
@@ -34,37 +27,34 @@ else{
 	$message = "";
 }
 
-
-//not_admin_redirect();
-
 if(!isset( $_POST['userpass']))
 	 $_POST['userpass'] = '';
 
 if(!isset( $_POST['verification']))
 	 $_POST['verification'] = '';
- 
+
 if(!isset($_POST['phone']))
 	$_POST['phone'] = '';
 
 if(!isset($_POST['occupation']))
 	$_POST['occupation'] = '';
 
-if(isset($_POST['submit'])){	
+if(isset($_POST['submit'])){
 	if($page_verify == false){
-		
+
 		$userRegInfo = array(
 			'phone' => $_POST['phone'],
 		);
-				
+
 		if(is_admin()){
-			$userRegInfo['advsecurity'] = $_POST['enablepass'];
+			$userRegInfo['advsecurity'] = $_POST['enablepass'] == 'on' ? 1 : 0;
 			$userRegInfo['utype'] = $_POST['utype'];
 		}
 		else{
-			$userRegInfo['advsecurity'] = $_POST['enablepass'];
-			$userRegInfo['utype'] = IDGUEST; 
+			$userRegInfo['advsecurity'] = $_POST['enablepass'] == 'on' ? 1 : 0;
+			$userRegInfo['utype'] = IDGUEST;
 		}
-		
+
 		$uc_return = user_create($_POST['username'] , $_POST['userpass'], $userRegInfo, $_shopID);
 		if( $uc_return != -1 && is_admin() ){
 			$message = "帳號創立成功";
@@ -74,16 +64,14 @@ if(isset($_POST['submit'])){
 				$message .= "，傳送驗證碼到".$_POST['phone'];
 				send_sms($_POST['phone'], '你的驗證碼是:'.$vercode['hash'] );
 			}
-			//header("refresh:1;url=register.php");
 		}
 		else if( $uc_return != -1 ){
 			$message = "傳送驗證碼中..";
-			
-			user_login($_POST['username'] , $_POST['userpass'], $_POST['phone']);
+
+			user_login($_POST['username'] , $_POST['userpass'], $_POST['phone'], true);
 			$vercode = user_vercode();
-			//echo $vercode['hash'];
 			send_sms($_POST['phone'], '你的驗證碼是:'.$vercode['hash'] );
-			header("refresh:1;url=register.php");
+			header("refresh:1;url=register.php?shop_id=" . $_shopID);
 		}
 		else
 		{
@@ -99,7 +87,7 @@ if(isset($_POST['submit'])){
 			$verification_success = true;
 			$_SESSION['u_type'] = 1;
 			$_SESSION['u_auth'] = 1 << 1;
-			header("refresh:1;url=index.php");
+			header("refresh:1;url=index.php?shop_id=" . $_shopID);
 		}
 		else{
 			if($vercode['updated'] == true)
@@ -107,11 +95,8 @@ if(isset($_POST['submit'])){
 			else
 				$message = "驗證碼錯誤";
 		}
-		
 	}
 }
-
-
 
 if(is_admin()){
 	$register_title = "創造帳號";
@@ -128,7 +113,7 @@ $_HTML .=  $template->render(array(
 	'REGISTER_TITLE' => $register_title,
 	'REGISTER_MESSAGE' => $message,
 	'REGISTER_ADMIN' => $register_admin,
-	'all_utype' => $_Identity,
+	'all_utype' => array($_Identity[IDCUSTOMER], $_Identity[IDSTAFF]),
 	'VERIFICATION_SUCCESS' => $verification_success,
 ));
 
