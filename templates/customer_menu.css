@@ -37,9 +37,7 @@ button[id^='m']{
 #cart_list{
     z-index:2;
 }
-#firstHeader, #lastFooter{
-  display:none;
-}
+
 header{
     background-color:#ffc952;
     color:#ff7473;
