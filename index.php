@@ -6,6 +6,9 @@ $empty_footer = True;
 require_once('includes/header.php');
 
 not_login_redirect();
+if (is_staff()) {
+	not_staff_redirect();
+}
 
 // List Series by order_num
 $sql = "SELECT * FROM `series` WHERE `shop_id` = '".$_shopID."' ORDER BY `series`.`order_num` ASC ";

@@ -378,6 +378,15 @@ function not_topboss_redirect() {
 	}
 }
 
+function not_top_redirect() {
+	not_login_redirect();
+	global $_shopID;
+	if ( !is_headquarters_staff() ) {
+		header("location:login.php");
+		die('');
+	}
+}
+
 function not_activated_redirect() {
 	not_login_redirect();
 	global $_shopID;
