@@ -1,15 +1,23 @@
-
+    <link href="./templates/login.css" rel="stylesheet">
 	<div id="a0" class="w3-container">
-		<h3>登入／登出</h3>
 		<center>
+        <div><img src="./images/login/title.png"></div>
+        <br><br><br>
+        <div><img src="./images/login/subtitle_1.png"></div>
+        <br><br>
+        <div><img src="./images/login/subtitle_2.png"></div>
+        <br><br>
 		<form action="login.php" method="POST">
 			<p>{{LOGIN_MESSAGE}}</p>
-			<p id="uname"> 帳號：<input type="text" name="username"> </p>
-			<p id="p_uenablepass">使用密碼登入? <input type="checkbox" name="enablepass" id="enablepass" checked></p>
-			<p id="upass"> 密碼：<input type="password" name="password" id="login_key"> </p>
+			<input type="text" name="username" class="login_input" placeholder="手機號碼登入">
+            <br><br><br>
+			<p id="p_uenablepass" style="display:none">使用密碼登入? <input type="checkbox" name="enablepass" id="enablepass" checked></p>
+			<input type="password" name="password" id="login_key" class="login_input" placeholder="PASSWORD">
+            <br><br><br>
 			<p id="uinfo"> 手機：<input type="text" name="phone"> </p>
-			<p> <input type="submit" name="submit"  value="登入"> </p>
-			<p> <a href="register.php">註冊帳號</a></p>
+			<input type="submit" name="submit"  value="SIGN IN">
+			<p class="login_bottom">｜<a href="register.php">註冊</a>｜<a href="javascript:void(0)">忘記密碼</a>｜</p>
+            <p class="login_happyttea"><a href="http://www.happyttea.com">www.happyttea.com</a></p>
 		</form>
 		</center>
 	</div>

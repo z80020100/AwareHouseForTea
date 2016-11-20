@@ -5,7 +5,16 @@ header("Content-Type:text/html; charset=utf-8");
 
 $_HTML = '';
 
-$template = $twig->loadTemplate('header.html');
+if(!isset($empty_header)){
+    $empty_header = False;
+}
+
+if($empty_header == True){
+    $template = $twig->loadTemplate('header_empty.html');
+}
+else{
+    $template = $twig->loadTemplate('header.html');
+}
 
 if(!isset($all_series))
 	$all_series = array();
