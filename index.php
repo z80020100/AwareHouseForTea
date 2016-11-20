@@ -1,6 +1,8 @@
 <?php
 
 $_PAGE_TITLE = '早餐店菜單';
+$empty_header = True;
+$empty_footer = True;
 require_once('includes/header.php');
 
 not_login_redirect();

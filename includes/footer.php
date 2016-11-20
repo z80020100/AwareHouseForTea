@@ -5,7 +5,7 @@ if(!isset($empty_footer)){
 }
 
 if($empty_footer == True){
-    $template = $twig->loadTemplate('footer_empty.html');
+    $template = $twig->loadTemplate('empty_footer.html');
 }
 else{
     $template = $twig->loadTemplate('footer.html');

@@ -10,7 +10,7 @@ if(!isset($empty_header)){
 }
 
 if($empty_header == True){
-    $template = $twig->loadTemplate('header_empty.html');
+    $template = $twig->loadTemplate('empty_header.html');
 }
 else{
     $template = $twig->loadTemplate('header.html');
