@@ -59,8 +59,12 @@ while($series_data = $db->fetch_array($result)){
 if($_AWMode == "ACCOUNTING")
     $template = $twig->loadTemplate('customer_menu_accounting.html');
 
-else if($_AWMode == "BUSINESS")
-    $template = $twig->loadTemplate('customer_menu_business.html');
+else if($_AWMode == "BUSINESS") {
+	if (is_staff())
+		$template = $twig->loadTemplate('staff_menu_business.html');
+	else
+		$template = $twig->loadTemplate('customer_menu_business.html');
+}
 
 
 $_HTML .= $template->render(array(
