@@ -9,12 +9,9 @@ order_info["share_array"][0]=new Object();
 order_info["share_array"][0]["items_array"]=[];
 
 var items_array_length=0;
-
+var amount_result = 0;
 
 $(document).ready(function(){
-
-
-
         $("#open_cart").click(function(){
             $("#cart_list").css({"display":"block"});
             $("button[id^='m']").attr('disabled', 'disabled');
@@ -47,33 +44,16 @@ $(document).ready(function(){
         $("#close_confirm").click(function(){
             // reset all the value
             $("button[id^='m']").removeAttr('disabled');
-            $("#amountButton").val("1");
+            amount_result = 0;
+            document.getElementById('amountResult').innerHTML = 0;
+            //$("#amountButton").val("1");
             $("#materialblock").empty();
             $("#addition_info").val("");
             $("#confirm_item").css({"display":"none"});
         });
 
-
-
         $("#add_cart").click(function(){
-//              alert("name :"+$("#item_name").html()+"\n");
-//              alert("amount :"+$("#amountButton").val()+"\n");
-//              alert("m_id :"+$("#m_id").val()+"\n");
-//              alert("price :"+$("#item_price").val()+"\n");
-
-/*
-
-                $("#materialblock").find("input:checked").each(function(index, value){
-               // alert("name : "+$(this).data("name")+"\n ai_id : "+$(this).data("ai_id")+"\nis_ro : "+$(this).data("is_ro"));
-                });
-*/
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-
-            add_row($("#item_name").html(),$("#amountButton").val(), $("#item_price").val());
-
-
-
+            add_row($("#item_name").html(),amount_result, $("#item_price").val());
 
             $("#add_success").css({"position":"fixed", "width":"100%", "height":"0px", "top":"0px", "left":"0px"});
             $("#add_success").css("visibility","visible");
@@ -92,9 +72,7 @@ $(document).ready(function(){
         });
 
         $("#send_order").click(function(){
-
             if($("#orderList").find("tr").length <= 1){
-
                 alertify.success("你尚未點選任何品項");
                 return;
             }
@@ -102,33 +80,69 @@ $(document).ready(function(){
             if($("#table_num").val()== ""){
                 alertify.success("你尚未填寫桌號");
                 return;
-
             }
 
             if($("#people_num").val()==""){
                 alertify.success("你尚未填寫人數");
                 return;
-
             }
-
 
             $("#orderList").find("tr").each(function(index, value){
                 if(index>=1){
                     order_info["share_array"][0]["items_array"].push($(this).data("item_array"));
                 }
             });
-      order_info["table_num"]=$("#table_num").val();
-      order_info["people_num"]=$("#people_num").val();
+      	    order_info["table_num"]=$("#table_num").val();
+      	    order_info["people_num"]=$("#people_num").val();
 
-      $("#send_order").attr('disabled', 'disabled');
-            send_total_order();
+            $("#check_out_price").val($("#tprice").val());
+            document.getElementById('check_out_amountResult').innerHTML = 0;
+            $("#the_change").val(0);
+            $("#check_out").css({"display":"block"});
 
         });
 
+        $("#check_out_button").click(function(){
+          $("#check_out_button").attr('disabled', 'disabled');
+          send_total_order();
+          // reset all the value
+          $("button[id^='m']").removeAttr('disabled');
+          amount_result = 0;
+          document.getElementById('amountResult').innerHTML = 0;
+          //$("#amountButton").val("1");
+          $("#materialblock").empty();
+          $("#addition_info").val("");
+          $("#confirm_item").css({"display":"none"});
+          $("#check_out").css({"display":"none"});
+        });
 
-});
+        $("#check_out_close_confirm").click(function(){
+            // reset all the value
+            $("button[id^='m']").removeAttr('disabled');
+            amount_result = 0;
+            document.getElementById('amountResult').innerHTML = 0;
+            //$("#amountButton").val("1");
+            $("#materialblock").empty();
+            $("#addition_info").val("");
+            $("#confirm_item").css({"display":"none"});
+            $("#check_out").css({"display":"none"});
+        });
 
+        //hidden menu expect first menu
+        for (i = 1; i < $(".menu").length; i++) {
+           $(".menu")[i].style.display = "none";
+        }
+        $("#cart_list").css({"display":"block"});
 
+    });
+
+function openMenu(menuName) {
+  var i;
+  for (i = 0; i < $(".menu").length; i++) {
+     $(".menu")[i].style.display = "none";
+  }
+  document.getElementById(menuName).style.display = "block";
+}
 
 function cal_price(){
 
@@ -138,16 +152,14 @@ function cal_price(){
         total_price = parseInt(total_price) + parseInt($(this).val());
     });
 
-    $("#item_price").val(parseInt(total_price) * parseInt($("#amountButton").val()) );
+    $("#item_price").val(parseInt(total_price) * parseInt(amount_result) );
 
 }
 
 function add_row( name, amount, price){
-
-
     var item_array= new Object();
     item_array["m_id"] = $("#m_id").val();
-    item_array["quantity"] = $("#amountButton").val();
+    item_array["quantity"] = amount_result;
     item_array["comment"] = $("#addition_info").val();
     item_array["RO_array"] = [];
     item_array["AI_array"] = [];
@@ -184,16 +196,15 @@ function add_row( name, amount, price){
     }
 
     var tr_temp = $('<tr>');
-//    order_info["share_array"][0]["items_array"].push(item_array);
-//    ++items_array_length;
-//    alert(order_info["share_array"]["items_array"][0]);
- //   alert(items_array_length);
- //   alert(item_array["m_id"]);
-//    alert(order_info["share_array"]["items_array"][0]["m_id"]);
+   /* order_info["share_array"][0]["items_array"].push(item_array);
+    ++items_array_length;
+    alert(order_info["share_array"]["items_array"][0]);
+   alert(items_array_length);
+   alert(item_array["m_id"]);
+    alert(order_info["share_array"]["items_array"][0]["m_id"]);*/
 
 
     $('table tbody').append(
-
          tr_temp.append(
                 $('<td>').text(name),
                 $('<td>').text(amount),
@@ -207,6 +218,10 @@ function add_row( name, amount, price){
     tr_temp.on("swipeleft",function(){
         $(this).remove();
         $("#tprice").val( parseInt($("#tprice").val()) -$(this).find("td").eq(2).text());
+    });
+    tr_temp.on("swiperight",function(){
+        $("#tprice").val( parseInt($("#tprice").val()) -$(this).find("td").eq(2).text());
+        $(this).find("td").eq(2).text(0) ;
     });
 
 
@@ -222,9 +237,7 @@ function remove_row(){
     $('table tr:last').remove();
 }
 
-
 function load_ajax(at_id_array){
-
    var at_id = new Object();
    at_id["at_id_array"] = at_id_array;
 
@@ -243,69 +256,74 @@ function load_ajax(at_id_array){
         alert(msg.length);*/
 
         for(var q=0; q<msg.length ; ++q){
+            var input_length = $("#materialblock").find("input").length;
+            //var htmldata=$("#materialblock").html();
+            var htmldata="";
 
-        var input_length = $("#materialblock").find("input").length;
-        //var htmldata=$("#materialblock").html();
-        var htmldata="";
-
-        if(msg[q]['multiple_choice'] == 1){
-
-            for(var i =0; i<msg[q]['ais'].length ;++i){
-
-                htmldata =htmldata + "<label class=\"w3-validate\"><input type=\"checkbox\" class=\"w3-check\" >"+msg[q]['ais'][i].name+"</label>";
-
-            }
-            $("#materialblock").append(htmldata);
-            $("#materialblock").find("input").addClass("addmaterial");
-           // $("#materialblock").find("input").css({"background-color":"#ef5285", "color":"#ff7473"});
-
-
-            var upperbound =  parseInt(msg[q]['ais'].length)+parseInt(input_length);
-            for(var i =parseInt(input_length); i<upperbound ;++i){
-            $("#materialblock").find("input").eq(i).data("name", msg[q]['ais'][i-parseInt(input_length)].name);
-            $("#materialblock").find("input").eq(i).data("ai_id", msg[q]['ais'][i-parseInt(input_length)].ai_id);
-            $("#materialblock").find("input").eq(i).data("is_ro", msg[q]['is_ro']);
-            $("#materialblock").find("input").eq(i).val(msg[q]['ais'][i-parseInt(input_length)].price);
-            }
-
-        }
-        else{
-
-            for(var i = 0; i<msg[q]['ais'].length; ++i){
-                if(i==0){
-                    htmldata = htmldata + "<label class=\"w3-validate\"><input type=\"radio\" name=\"r"+q+"\" checked >"+msg[q]['ais'][i].name+"</label> "
+            if(msg[q]['multiple_choice'] == 1){
+                for(var i =0; i<msg[q]['ais'].length ;++i){
+                    htmldata =htmldata + "<label class=\"w3-validate\"><input type=\"checkbox\" class=\"w3-check\" >"+msg[q]['ais'][i].name+"</label>";
                 }
-                else{
-                    htmldata = htmldata + "<label class=\"w3-validate\"><input type=\"radio\" name=\"r"+q+"\" >"+msg[q]['ais'][i].name+"</label> "
+                $("#materialblock").append(htmldata);
+                $("#materialblock").find("input").addClass("addmaterial");
+               // $("#materialblock").find("input").css({"background-color":"#ef5285", "color":"#ff7473"});
 
-
+                var upperbound =  parseInt(msg[q]['ais'].length)+parseInt(input_length);
+                for(var i =parseInt(input_length); i<upperbound ;++i){
+                    $("#materialblock").find("input").eq(i).data("name", msg[q]['ais'][i-parseInt(input_length)].name);
+                    $("#materialblock").find("input").eq(i).data("ai_id", msg[q]['ais'][i-parseInt(input_length)].ai_id);
+                    $("#materialblock").find("input").eq(i).data("is_ro", msg[q]['is_ro']);
+                    $("#materialblock").find("input").eq(i).val(msg[q]['ais'][i-parseInt(input_length)].price);
                 }
-
             }
-            $("#materialblock").append(htmldata);
-            $("#materialblock").find("input").addClass("addmaterial w3-radio");
+            else{
+                for(var i = 0; i<msg[q]['ais'].length; ++i){
+                    if(i==0){
+                        htmldata = htmldata + "<label class=\"w3-validate\"><input type=\"radio\" name=\"r"+q+"\" checked >"+msg[q]['ais'][i].name+"</label> "
+                    }
+                    else{
+                        htmldata = htmldata + "<label class=\"w3-validate\"><input type=\"radio\" name=\"r"+q+"\" >"+msg[q]['ais'][i].name+"</label> "
+                    }
+                }
+                $("#materialblock").append(htmldata);
+                $("#materialblock").find("input").addClass("addmaterial w3-radio");
 
-            var upperbound =  parseInt(msg[q]['ais'].length)+parseInt(input_length);
-            for(var i =parseInt(input_length); i<upperbound ;++i){
-                $("#materialblock").find("input").eq(i).val(msg[q]['ais'][i-parseInt(input_length)].price);
-                $("#materialblock").find("input").eq(i).data("name", msg[q]['ais'][i-parseInt(input_length)].name);
-                $("#materialblock").find("input").eq(i).data("ai_id", msg[q]['ais'][i-parseInt(input_length)].ai_id);
-                $("#materialblock").find("input").eq(i).data("is_ro", msg[q]['is_ro']);
+                var upperbound =  parseInt(msg[q]['ais'].length)+parseInt(input_length);
+                for(var i =parseInt(input_length); i<upperbound ;++i){
+                    $("#materialblock").find("input").eq(i).val(msg[q]['ais'][i-parseInt(input_length)].price);
+                    $("#materialblock").find("input").eq(i).data("name", msg[q]['ais'][i-parseInt(input_length)].name);
+                    $("#materialblock").find("input").eq(i).data("ai_id", msg[q]['ais'][i-parseInt(input_length)].ai_id);
+                    $("#materialblock").find("input").eq(i).data("is_ro", msg[q]['is_ro']);
+                }
             }
-
         }
-
-        }
-
 
         $("#materialblock").find("input").on("click", function(){
             cal_price();
         });
-        $("#amountButton").on("change", function(){
-            cal_price();
-        });
 
 
+        $('.cal_button').unbind('click').click(function(){
+          switch(this.id){
+            case "C":
+                amount_result = 0;
+                break;
+            case "-1":
+                amount_result = parseInt(amount_result/10,10);
+                break;
+            default:
+                if(amount_result == 0)
+                  amount_result = parseInt(this.id);
+                else
+                  amount_result = amount_result*10 + parseInt(this.id);
+          }
+          //console.log(amount_result);
+          document.getElementById('amountResult').innerHTML = amount_result;
+          document.getElementById('check_out_amountResult').innerHTML = amount_result;
+          $("#the_change").val(amount_result-$("#check_out_price").val());
+          cal_price();
+
+        })
         //$("button[id^='m']").attr('disabled', 'disabled');
 
     })
@@ -315,7 +333,6 @@ function load_ajax(at_id_array){
     .always(function(){
         cal_price();
         $("#confirm_item").css({"display":"block"});
-
     //    alert("complete");
     })
     ;
@@ -323,7 +340,6 @@ function load_ajax(at_id_array){
 }
 
 function send_total_order(){
-
     $.ajax( {
         url:"order_response.php",
         method: "POST",
@@ -338,8 +354,6 @@ function send_total_order(){
         alert("fail2");
     })
     .always(function(){
-
-
         $("#orderList").find("tr").each(function(index, value){
             if(index>=1){
                 $(this).remove();
@@ -351,20 +365,14 @@ function send_total_order(){
         //order_info["table_num"]=$("#table_num").val();
         //order_info["people_num"]=$("#people_num").val();
         order_info["share_array"][0]["items_array"]=[];
-            $("#cart_list").css({"display":"none"});
-            $("button[id^='m']").removeAttr('disabled');
+            //$("#cart_list").css({"display":"none"});
+            //$("button[id^='m']").removeAttr('disabled');
             $("#send_order").removeAttr('disabled');
-    })
-    ;
-
-
+            $("#check_out_button").removeAttr('disabled');
+    });
 }
 
-
-
-
 function merge_order_list(name, amount, price, comment){
-
     var merge = true ;
     $("#orderList").find("tr").each(function(index, value){
 
@@ -396,12 +404,3 @@ function merge_order_list(name, amount, price, comment){
 
     return merge;
 }
-
-
-
-
-
-
-
-
-
