@@ -116,49 +116,44 @@
           </header>
 
           <div class="w3-row w3-container">
-              <div class="w3-col s5  w3-padding-8">
                   <h3>合計</h3>
-                  <div class="w3-col s3 w3-padding-16">
-                      <input id="check_out_price" class="w3-input w3-sand" type="text" value="0" readonly>
-                  </div>
-                  <div class="w3-col s1 w3-padding">
-                      <h4>元</h4>
-                  </div>
-                  <input id="check_out_m_price" type="hidden" value="-1">
+                  <input id="check_out_price" class="w3-input w3-sand" type="text" value="0" readonly>
+                  <h3>元</h3>
               </div>
-
-              <div> <!-- 付款金額 -->
-                  <div class="w3-col s2 w3-padding-16">
-                      <h5>付款金額</h5>
-                  </div>
-                  <div class=" w3-col s3">
-                      <h3 id="check_out_amountResult">0</h3>
-                      <button class="cal_button" id="1">1 </button
-                      ><button class="cal_button" id="2">2</button
-                      ><button class="cal_button" id="3">3</button
-                      ><button class="cal_button" id="4">4 </button
-                      ><button class="cal_button" id="5">5</button
-                      ><button class="cal_button" id="6">6</button
-                      ><button class="cal_button" id="7">7 </button
-                      ><button class="cal_button" id="8">8</button
-                      ><button class="cal_button" id="9">9</button
-                      ><button class="cal_button" id="C">C</button
-                      ><button class="cal_button" id="0">0</button
-                      ><button class="cal_button" id="-1">&larr;</button>
-                  </div>
+              <div class="w3-col s4 w3-padding-16">
+                  <input id="check_out_m_price" type="hidden" value="-1">
+                  <h3>付款金額</h3>
+                  <h3 id="check_out_amountResult">0</h3>
+                  <h3>元</h3>
+              </div>
+              
+              <!-- 付款金額 計算機 -->
+              <div class=" w3-col s3">
+                  <br>
+                  <button class="cal_button" id="1">1 </button
+                  ><button class="cal_button" id="2">2</button
+                  ><button class="cal_button" id="3">3</button
+                  ><button class="cal_button" id="4">4 </button
+                  ><button class="cal_button" id="5">5</button
+                  ><button class="cal_button" id="6">6</button
+                  ><button class="cal_button" id="7">7 </button
+                  ><button class="cal_button" id="8">8</button
+                  ><button class="cal_button" id="9">9</button
+                  ><button class="cal_button" id="C">C</button
+                  ><button class="cal_button" id="0">0</button
+                  ><button class="cal_button" id="-1">&larr;</button>
               </div>
           </div>
 
           <footer class="w3-container">
-            <div class="w3-container w3-col s4 w3-padding-24"> 找零</div>
-              <div class="w3-container w3-col s4 w3-padding">
+              <div class="w3-container w3-col s3 w3-padding-16"> 找零</div>
+              <div class="w3-container w3-col s3 w3-padding">
                   <input id="the_change" class="w3-input w3-sand" type="text" value="0" readonly>
                   <input id="check_out_m_id" type="hidden">
               </div>
-              <div class="w3-container w3-col s4 w3-padding-24"> 元</div>
-
-              <div class="w3-container w3-col s2 w3-right w3-padding-top">
-                  <button id="check_out_button" class="w3-btn w3-right w3-round">結帳</button>
+              <div class="w3-container w3-col s4 w3-padding-24"> 
+                元
+                <button id="check_out_button" class="w3-btn w3-right w3-round">結帳</button>
               </div>
           </footer>
 
