@@ -21,7 +21,7 @@ refresh_order
 
 
 $(document).ready(function(){
-
+        $("#nav_open").remove();
         alertify.log("在單子上左滑右滑會改變他的狀態哦!", "", 4000);
 
 
