@@ -56,8 +56,9 @@
         <h3>報表<p id="yee"></p></h3>
         <div class="dateRangePicker">
           <select class="w3-select w3-border" style="display: inline; width:70px">
-            <option value="1">竹北店</option>
-            <option value="2">高鐵店</option>
+          {% for shop in allshops %}
+            <option value="{{shop.shop_id}}">{{shop.shop_name}}</option>
+          {% endfor %}
           </select>
           <input style="width: 10px" id="datepicker2" name="datepicker2">
           <input type="submit" class="submit" id="submitOrders" value="送出" data-type="orders">
