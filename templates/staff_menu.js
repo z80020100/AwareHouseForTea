@@ -12,6 +12,8 @@ var items_array_length=0;
 var amount_result = 0;
 
 $(document).ready(function(){
+        $("#nav_open").remove()
+
         $("#open_cart").click(function(){
             $("#cart_list").css({"display":"block"});
             $("button[id^='m']").attr('disabled', 'disabled');
