@@ -26,7 +26,7 @@ if(isset($_POST['submit'])){
 		}
 		else if($_SESSION['admin'] == 1){
 			$message = "登入成功, 兩秒後自動進入老闆控制台";
-			header("refresh:2;url=inventory.php?shop_id=" . $_SESSION['shop_id']);
+			header("refresh:2;url=report.php?shop_id=" . $_SESSION['shop_id']);
 		}
 		else if ($_SESSION['staff'] == 1) {
 			$message = "登入成功, 兩秒後自動回到首頁";
