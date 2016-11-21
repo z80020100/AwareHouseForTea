@@ -1,11 +1,12 @@
 <script type="text/javascript" src="./includes/jquery.tablesorter.js"></script>
-<script type="text/javascript" src="./templates/inventory.js"></script>
+<script type="text/javascript" src="./templates/top_inventory.js"></script>
 
 
 <table class="w3-table-all w3-centered">
 <thead>
     <tr>
         <th width="20%">時間</td>
+        <th width="20%">店家</td>
         <th width="20%">補料品項</td>
         <th width="20%">補料數量</td>
         <th width="20%">操作</td>
@@ -18,13 +19,10 @@
 {% for item in data %}
     <tr>
         <td>{{ item.call_time }}</td>
+        <td>{{ item.shop_id }}</td>
         <td>{{ item.ingredient }}</td>
         <td>{{ item.num }} {{ item.unit }}</td>
-        {% if item.handled == 0 %}
-            <td><button type="button" class="w3-small-btn w3-small w3-white w3-border w3-border-black w3-text-black w3-round-xlarge">尚未處理</button></td>
-        {% elseif item.handled == 1 %}
-            <td><button class="w3-small-btn w3-small w3-white w3-border w3-border-black w3-text-black w3-round-xlarge">已處理</button></td>
-        {% endif %}
+        <td><button class="w3-small-btn w3-small w3-white w3-border w3-border-black w3-text-black w3-round-xlarge">已處理</button></td>
     </tr>
 {% endfor %}
 

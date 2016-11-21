@@ -22,7 +22,7 @@ if(isset($_POST['submit'])){
 	if(user_login($_POST['username'] , $_POST['password'], $_POST['phone'], false)){
 		if($_SESSION['shop_id'] == -1 ){
 			$message = "成功登入總店, 兩秒後自動進入總店控制台";
-			header("refresh:2;url=top_inventory.php?shop_id=" . $_SESSION['shop_id']);
+			header("refresh:2;url=inventory.php?shop_id=" . $_SESSION['shop_id']);
 		}
 		else if($_SESSION['admin'] == 1){
 			$message = "登入成功, 兩秒後自動進入老闆控制台";
