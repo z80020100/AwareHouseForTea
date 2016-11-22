@@ -56,7 +56,7 @@ if (isset($_POST['sms_mode'])) {
         // only query shop
         // this part can only be used by headquarters staff
         // query shop owner's phone number
-        $sql = "SELECT `shop`.`shop_id`, `shop`.`shop_name`, `shop`.`shop_owner`, `shop`.`shop_account`, `user_info`.`ui_phone` FROM `shop`, `user_info` WHERE `shop`.`shop_account` = `user_info`.`u_id`";
+        $sql = "SELECT `shop`.`shop_id`, `shop`.`shop_name`, `shop`.`shop_owner`, `shop`.`shop_account`, `user_info`.`ui_phone`, `shop`.`shop_address`, `shop`.`shop_tel` FROM `shop`, `user_info` WHERE `shop`.`shop_account` = `user_info`.`u_id`";
         
         foreach ($db->query($sql) as $shop) {
             $info[] = $shop;

@@ -11,7 +11,7 @@ if (!(is_admin() || is_headquarters_staff())) {
 
 
 
-
+#$sql = "SELECT `user`.`u_id`, `user_info`.`ui_phone` FROM `user`, `user_info` WHERE `user`.`u_id` = `user_info`.`u_id` AND `user`.`u_type` = 1";
 
 $template = $twig->loadTemplate('store_info.html');
 $_HTML .= $template->render(array(

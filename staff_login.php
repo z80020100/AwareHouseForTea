@@ -1,6 +1,6 @@
 <?php
 
-$_PAGE_TITLE = '早餐店點餐系統(後台)';
+$_PAGE_TITLE = '樂台茶管理系統';
 require_once('includes/header.php');
 
 $template = $twig->loadTemplate('staff_login.html');
