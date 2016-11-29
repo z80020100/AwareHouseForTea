@@ -94,12 +94,29 @@ function getOrderInfo($db, $start_time, $end_time) {
     return $order_info;
 }
 
-function getMenu($db) {
-    $sql = "SELECT * FROM `main`";
-    $result = $db->query($sql);
+function getMenu($db, $shop) {
     $menu = array();
-    while ($menu_item = $db->fetch_array($result)) {
-        $menu[$menu_item['name']] = 0;
+
+    if ($shop != -1) {  //我想要看$shop的menu
+		$sql = "SELECT * FROM `series` WHERE shop_id = ".$shop;
+		$s_result = $db->query($sql);
+
+		while ($series = $db->fetch_array($s_result)) {
+			$sql = "SELECT * FROM `main` WHERE s_id = ".$series["s_id"];
+			$m_result = $db->query($sql);
+
+			while ($menu_item = $db->fetch_array($m_result)) {
+				$menu[$menu_item['name']] = 0;
+			}
+		}
+    }
+    else {  //  我是總店 && 我想看總店的menu
+		$sql = "SELECT * FROM `main`";
+		$result = $db->query($sql);
+		$menu = array();
+		while ($menu_item = $db->fetch_array($result)) {
+			$menu[$menu_item['name']] = 0;
+		}
     }
 
     return $menu;
@@ -169,9 +186,13 @@ function getAllLists($db) {
     return $all_series;
 }
 
-function getLogInfo($db, $start_time, $end_time) {
+function getLogInfo($db, $start_time, $end_time, $shop) {
     global $shift_start, $shift_end;
-    $sql = "SELECT * FROM `log` WHERE `time` >= '".$start_time."' AND `time` <= '".$end_time."' AND HOUR(`time`) >= ".$shift_start." AND HOUR(`time`) < ".($shift_end+1);
+
+    if ($shop == -1)
+        $sql = "SELECT * FROM `log` WHERE `time` >= '".$start_time."' AND `time` <= '".$end_time."' AND HOUR(`time`) >= ".$shift_start." AND HOUR(`time`) < ".($shift_end+1);
+    else
+        $sql = "SELECT * FROM `log` WHERE `time` >= '".$start_time."' AND `time` <= '".$end_time."' AND HOUR(`time`) >= ".$shift_start." AND HOUR(`time`) < ".($shift_end+1)." AND shop_id = ".$shop;
     $result = $db->query($sql);
     $ret = array();
     while($order = $db->fetch_array($result)){
@@ -221,6 +242,7 @@ function getAllDataArray($log) {
 $type = $_REQUEST['request']['type'];
 $start_time = $_REQUEST['request']['time'][0];
 $end_time = $_REQUEST['request']['time'][1];
+$shop = $_REQUEST['request']['shop'];
 
 switch ($type) {
   case "sales":
@@ -230,7 +252,10 @@ switch ($type) {
     $order_info = getOrderInfo($db, $start_time, $end_time);
 
     // //GET THE WHOLE menu FROM THE DATABASE
-    $menu = getMenu($db);
+    if ($_shopID == -1)
+        $menu = getMenu($db, $shop);
+    else
+        $menu = getMenu($db, $_shopID);
 
     $sales[0] = $menu;
     $sales[1] = $order_info;
@@ -255,32 +280,42 @@ switch ($type) {
         }
     }
     array_push($ret, $time);
-    $log = getLogInfo($db, $start_time, $end_time);
+    if ($_shopID == -1)
+        $log = getLogInfo($db, $start_time, $end_time, $shop);
+    else
+        $log = getLogInfo($db, $start_time, $end_time, $_shopID);
     $ret[3] = getAllDataArray($log);
 
     /////////////////////////////////
     // Add Menu Report operation here
     /////////////////////////////////
-    $menu = getMenu($db);
+    if ($_shopID == -1)
+        $menu = getMenu($db, $shop);
+    else
+        $menu = getMenu($db, $_shopID);
     // $log = getLogInfo($db, $start_time, $end_time);
     // $AllDataArray = getAllDataArray($log);
     $AllDataArray = $ret[3];
     $log_size = count($log);
     $total = 0;
     $menu_ret = array();
+    $tailor_data_array = array();
     foreach ($AllDataArray as $series => $main_array) {
         foreach ($main_array as $main => $value) {
-            if (!array_key_exists($main, $menu)) unset($main);
+            if (!array_key_exists($main, $menu)) unset($main_array[$main]);
             else $total += intval($value["price"]);
         }
+        if (count($main_array) != 0)
+            $tailor_data_array[$series] = $main_array;
     }
 
     array_push($menu_ret, $total);
-    array_push($menu_ret, $AllDataArray);
+    array_push($menu_ret, $tailor_data_array);
     //////////////////////////////
     // End Menu Report Return Here
     //////////////////////////////
 
+    $ret[3] = $tailor_data_array;
     array_push($ret, $menu_ret);
 
     echo json_encode($ret, JSON_UNESCAPED_UNICODE);

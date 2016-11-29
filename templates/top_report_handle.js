@@ -733,7 +733,7 @@ function getData() {
   }
 
   $.ajax({
-    url: "top_report_process.php",
+    url: "report_process.php",
     method: "POST",
     dataType:"json",
     data:{request:req}
