@@ -1,0 +1,63 @@
+<script type="text/javascript" src="./includes/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="./templates/add_raw.js"></script>
+
+<table class="w3-table-all w3-centered" style="width: 60%; margin: 10px auto">
+<thead>
+    <tr>
+        <th width="40%">新增補料名稱</th>
+        <th width="40%">新增補料單位</th>
+    </tr>
+
+</thead>
+
+<tbody id="form">
+    <tr>
+        <td><input type="text" name="name" style="width: 100px"> </td>
+        <td><input type="text" name="unit" style="width: 100px"> </td>
+    </tr>
+
+    <tr>
+        <td><input type="text" name="name" style="width: 100px"> </td>
+        <td><input type="text" name="unit" style="width: 100px"> </td>
+    </tr>
+
+    <tr>
+        <td><input type="text" name="name" style="width: 100px"> </td>
+        <td><input type="text" name="unit" style="width: 100px"> </td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td><button id="submit" class="w3-small-btn w3-small w3-white w3-border w3-border-blue w3-text-blue w3-round-xlarge">新增物料</button></td>
+    </tr>
+
+</tbody>
+</table>
+
+
+<br>
+
+<table class="w3-table-all w3-centered" style="width: 60%; margin: 10px auto">
+<thead>
+    <tr>
+        <th width="20%">已有物料名稱</td>
+        <th width="20%">已有物料單位</td>
+    </tr>
+
+</thead>
+
+<tbody>
+
+{% for item in data %}
+    <tr>
+        <td>{{ item.raw_name }}</td>
+        <td>{{ item.unit }}</td>
+    </tr>
+{% endfor %}
+
+</tbody>
+</table>
+
+<br>
+
+
