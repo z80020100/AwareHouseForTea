@@ -17,35 +17,13 @@
 
 <!--　品項 : 單位  -->
 <tbody>
+{% for item in data %}
     <tr>
-        <td>綠茶</td>
-        <td><input type="number" style="width: 100px" min="0"> 公升</td>
+        <td>{{ item.raw_name }}</td>
+        <td><input type="number" style="width: 100px" min="0"> {{ item.unit }}</td>
         <td></td>
     </tr>
-
-    <tr>
-        <td>紅茶</td>
-        <td><input type="number" style="width: 100px" min="0"> 公升</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>吸管</td>
-        <td><input type="number" style="width: 100px" min="0"> 支</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>杯蓋</td>
-        <td><input type="number" style="width: 100px" min="0"> 片</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>吐司</td>
-        <td><input type="number" data-name="toast" style="width: 100px" min="0"> 袋</td>
-        <td></td>
-    </tr>
+{% endfor%}
 
     <tr>
         <td></td>
