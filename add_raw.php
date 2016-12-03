@@ -5,7 +5,7 @@ require_once('includes/general.php');
 
 global $db;
 
-$_PAGE_TITLE = '增加物料';
+$_PAGE_TITLE = '新增補料';
 require_once('includes/header.php');
 
 // redirect if it's not top_admin || top_staff
