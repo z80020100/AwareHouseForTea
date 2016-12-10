@@ -9,10 +9,13 @@ order_info["share_array"][0]=new Object();
 order_info["share_array"][0]["items_array"]=[];
 
 var items_array_length=0;
-var amount_result = 0;
+var amount_result = 1;
 var tprice_ori = 0;
+var first_cal_button = false;
+
 $(document).ready(function(){
-        $("#nav_open").remove()
+        $("#nav_open").parent().remove()
+        //$("#nav_open").remove()
 
         $("#open_cart").click(function(){
             $("#cart_list").css({"display":"block"});
@@ -41,20 +44,27 @@ $(document).ready(function(){
             $("#item_price").val(parseInt($(this)[0].value) );
             $("#m_price").val(parseInt($(this)[0].value));
             $("#m_id").val(($(this)[0].id).slice(1));
+            amount_result=1;
+            cal_price();
         });
 
         $("#close_confirm").click(function(){
             // reset all the value
             $("button[id^='m']").removeAttr('disabled');
-            amount_result = 0;
-            document.getElementById('amountResult').innerHTML = 0;
+            amount_result = 1;
+            document.getElementById('amountResult').innerHTML = 1;
             //$("#amountButton").val("1");
             $("#materialblock").empty();
             $("#addition_info").val("");
             $("#confirm_item").css({"display":"none"});
+            first_cal_button = false;
         });
 
         $("#add_cart").click(function(){
+            if(document.getElementById('amountResult').innerHTML ==0){
+                alertify.success("數量不能為0");
+                return;
+            }
             add_row($("#item_name").html(),amount_result, $("#item_price").val());
 
             $("#add_success").css({"position":"fixed", "width":"100%", "height":"0px", "top":"0px", "left":"0px"});
@@ -89,6 +99,7 @@ $(document).ready(function(){
                 return;
             }
 
+
             $("#orderList").find("tr").each(function(index, value){
                 if(index>=1){
                     order_info["share_array"][0]["items_array"].push($(this).data("item_array"));
@@ -101,33 +112,40 @@ $(document).ready(function(){
             document.getElementById('check_out_amountResult').innerHTML = 0;
             $("#the_change").val(0);
             $("#check_out").css({"display":"block"});
-
+            first_cal_button = false;
         });
 
         $("#check_out_button").click(function(){
+          if(amount_result-$("#check_out_price").val() < 0){
+            alertify.success("付款金額不足!!!");
+            return;
+          }
           $("#check_out_button").attr('disabled', 'disabled');
           send_total_order();
           // reset all the value
           $("button[id^='m']").removeAttr('disabled');
-          amount_result = 0;
-          document.getElementById('amountResult').innerHTML = 0;
+          amount_result = 1;
+          document.getElementById('amountResult').innerHTML = 1;
           //$("#amountButton").val("1");
           $("#materialblock").empty();
           $("#addition_info").val("");
           $("#confirm_item").css({"display":"none"});
           $("#check_out").css({"display":"none"});
+          first_cal_button = false;
+
         });
 
         $("#check_out_close_confirm").click(function(){
             // reset all the value
             $("button[id^='m']").removeAttr('disabled');
-            amount_result = 0;
-            document.getElementById('amountResult').innerHTML = 0;
+            amount_result = 1;
+            document.getElementById('amountResult').innerHTML = 1;
             //$("#amountButton").val("1");
             $("#materialblock").empty();
             $("#addition_info").val("");
             $("#confirm_item").css({"display":"none"});
             $("#check_out").css({"display":"none"});
+            first_cal_button = false;
         });
 
         //hidden menu expect first menu
@@ -157,7 +175,7 @@ function cal_price(){
     $("#item_price").val(parseInt(total_price) * parseInt(amount_result) );
 }
 
-function discount( dis){ 
+function discount( dis){
   if(tprice_ori > 0)
     $("#tprice").val( parseInt(tprice_ori * dis /10));
 }
@@ -215,14 +233,15 @@ function add_row( name, amount, price){
         $("#tprice").val( parseInt(tprice_ori) );
         $(this).remove();
         $("#tprice").val( parseInt($("#tprice").val()) -$(this).find("td").eq(2).text());
-        tprice_ori = $("#tprice").val();      
+        tprice_ori = $("#tprice").val();
+        console.log("test");
     });
     // Swipe Right
     tr_temp.on("swiperight",function(){
         if($(this).find("td").eq(2).text() != 0) {
             $("#tprice").val( parseInt(tprice_ori) );
             $("#tprice").val( parseInt($("#tprice").val()) -$(this).find("td").eq(2).text());
-            $(this).find("td").eq(2).text(0);        
+            $(this).find("td").eq(2).text(0);
             custom_comment += "招待";
             $(this).find("td").eq(3).text(custom_comment);
             $(this).find("td").css("color", "red").css("font-weight","bold");
@@ -232,7 +251,7 @@ function add_row( name, amount, price){
 
     tr_temp.data("item_array", item_array);
     tr_temp.data("m_price", $("#m_price").val());
-    
+
     $("#tprice").val( parseInt(tprice_ori) );
     $("#tprice").val( parseInt($("#tprice").val()) + parseInt($("#item_price").val()) );
     tprice_ori = $("#tprice").val();
@@ -264,10 +283,13 @@ function load_ajax(at_id_array){
             //var htmldata=$("#materialblock").html();
             var htmldata="";
 
+            htmldata = "<div class=\"muti_choice\">";
             if(msg[q]['multiple_choice'] == 1){
                 for(var i =0; i<msg[q]['ais'].length ;++i){
-                    htmldata =htmldata + "<label class=\"w3-validate\"><input type=\"checkbox\" class=\"w3-check\" >"+msg[q]['ais'][i].name+"</label>";
+                    htmldata =htmldata + "<input type=\"checkbox\" class=\"w3-check\" id=\"muti"+ q + "\_" + i;
+                    htmldata =htmldata + "\" ><label class=\"w3-validate\" for=\"muti" + q + "\_" + i + "\">" +msg[q]['ais'][i].name+"</label>";
                 }
+                htmldata = htmldata + "</div>";
                 $("#materialblock").append(htmldata);
                 $("#materialblock").find("input").addClass("addmaterial");
                // $("#materialblock").find("input").css({"background-color":"#ef5285", "color":"#ff7473"});
@@ -281,14 +303,17 @@ function load_ajax(at_id_array){
                 }
             }
             else{
+                htmldata = "<div class=\"one_choice\">";
                 for(var i = 0; i<msg[q]['ais'].length; ++i){
                     if(i==0){
-                        htmldata = htmldata + "<label class=\"w3-validate\"><input type=\"radio\" name=\"r"+q+"\" checked >"+msg[q]['ais'][i].name+"</label> "
+                        htmldata = htmldata + "<input type=\"radio\" id=\"one"+ q + "\_" + i + "\" name=\"r"+q+ "\" checked >";
+                        htmldata = htmldata + "<label class=\"w3-validate\" for=\"one" + q + "\_" + i + "\">" +msg[q]['ais'][i].name+"</label> ";
                     }
                     else{
-                        htmldata = htmldata + "<label class=\"w3-validate\"><input type=\"radio\" name=\"r"+q+"\" >"+msg[q]['ais'][i].name+"</label> "
-                    }
+                      htmldata = htmldata + "<input type=\"radio\" id=\"one"+ q + "\_" + i + "\" name=\"r"+q+ "\" >";
+                      htmldata = htmldata + "<label class=\"w3-validate\" for=\"one" + q + "\_" + i + "\">" +msg[q]['ais'][i].name+"</label> ";                    }
                 }
+                htmldata = htmldata + "</div>";
                 $("#materialblock").append(htmldata);
                 $("#materialblock").find("input").addClass("addmaterial w3-radio");
 
@@ -308,6 +333,10 @@ function load_ajax(at_id_array){
 
 
         $('.cal_button').unbind('click').click(function(){
+          if(!first_cal_button){
+            first_cal_button = true;
+            amount_result = 0;
+          }
           switch(this.id){
             case "C":
                 amount_result = 0;

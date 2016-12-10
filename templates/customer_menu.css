@@ -14,10 +14,11 @@ button[id^='m']{
     color:#ff7473;
     height:50px;
     width:125px;
-
+    margin-top:5px;
+    margin-bottom:5px;
 }
-#cart{
-    height:500px;
+#table_cart{
+    height:450px;
     overflow: scroll;
 }
 #series_name_class{
@@ -34,10 +35,12 @@ button[id^='m']{
 #open_cart{
     background-color:#ef5285;
 }
-#cart_list{
-    z-index:2;
+#allMenu{
+  padding-top: 5px;
 }
-
+#nav_other{
+  padding-top: 5px;
+}
 header{
     background-color:#ffc952;
     color:#ff7473;
@@ -56,10 +59,10 @@ footer{
     background-color:#34314c;
 }
 .cal_button {
-  padding: 1px 25px;
-  font-size: 55px;
-  width:90px;
-  height:90px;
+  padding: 0px 20px;
+  font-size: 45px;
+  width:70px;
+  height:70px;
   text-align: justify;;
   cursor: pointer;
   outline: solid;
@@ -73,4 +76,39 @@ footer{
   background-color: #3e8e41;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+
+/* 單選框 */
+.one_choice input[type="radio"] {
+    display: none;
+}
+.one_choice input[type="radio"] + label {
+    display: inline-block;
+    background-color: #ccc;
+    cursor: pointer;
+    padding: 10px 10px;
+}
+.one_choice input[type="radio"]:checked + label {
+    background-color: #ff9900;
+    color: #fff;
+}
+.one_choice {
+  padding: 1px 0px 1px 0px;
+}
+
+/* 複選框 */
+.muti_choice input[type="checkbox"] {
+    display: none;
+}
+.muti_choice input[type="checkbox"] + label {
+    display: inline-block;
+    background-color: #ccc;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+.muti_choice input[type="checkbox"]:checked + label {
+    background-color: #ff99cc;
+}
+.muti_choice {
+  padding: 5px 0px 5px 0px;
 }
