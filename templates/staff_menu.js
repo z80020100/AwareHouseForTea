@@ -166,7 +166,7 @@ function add_row( name, amount, price){
     var item_array= new Object();
     item_array["m_id"] = $("#m_id").val();
     item_array["quantity"] = amount_result;
-    item_array["comment"] = $("#addition_info").val();
+    item_array["comment"] = "";
     item_array["RO_array"] = [];
     item_array["AI_array"] = [];
 
@@ -187,7 +187,7 @@ function add_row( name, amount, price){
             ++AI_array_length;
         }
     });
-    custom_comment = custom_comment + $("#addition_info").val();
+    custom_comment = custom_comment + "";
 
     if(merge_order_list(name, amount, price, custom_comment)==false){
         //alert("merge");
