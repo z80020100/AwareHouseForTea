@@ -22,7 +22,7 @@
 -->
     <!-- 菜單畫面 -->
     <div class="w3-twothird w3-container w3-group " id="allMenu">
-        <ul class="w3-navbar w3-lime "> 
+        <ul class="w3-navbar w3-lime ">
             <div>
               {% for series in all_series %}
               <li><a href="javascript:void(0)" onclick="openMenu('s{{series.s_id}}')"> {{series.name}} </a></li>
@@ -60,9 +60,15 @@
     <div class="w3-third w3-container w3-group" id="cart">
         <div id="cart_list" class="w3-table " >
             <div class="w3-container">
-                <!--<header class="w3-container">
-                      <h3>購物清單</h3>
-                </header>-->
+              <div class="w3-container">
+                <ul class="w3-navbar w3-lime" id="nav_discount">
+                    <div>
+                      <li><a href="javascript:void(0)" onclick="discount(9)"> 九折</a></li>
+                      <li><a href="javascript:void(0)" onclick="discount(8)"> 八折</a></li>
+                      <li><a href="javascript:void(0)" onclick="discount(7)"> 七折</a></li>
+                    </div>
+                </ul>
+              </div>
 
                 <div class="w3-row w3-center">
                     <div>
@@ -115,7 +121,7 @@
               <h3>結帳</h3>
           </header>
 
-          <div class="w3-row w3-container">            
+          <div class="w3-row w3-container">
               <div class="w3-col s3 w3-padding-8">
                   <h3>合計</h3>
                   <input id="check_out_price" class="w3-input w3-sand" type="text" value="0" readonly style="border: none;text-align:center;">
@@ -127,9 +133,9 @@
                   <h3 id="check_out_amountResult">0</h3>
                   <h3>元</h3>
               </div>
-              
+
               <!-- 付款金額 計算機 -->
-              <div class=" w3-col s3">
+              <div class=" w3-col s4">
                   <br>
                   <button class="cal_button" id="1">1 </button
                   ><button class="cal_button" id="2">2</button
@@ -152,7 +158,7 @@
                   <input id="the_change" class="w3-input w3-sand" type="text" value="0" readonly>
                   <input id="check_out_m_id" type="hidden">
               </div>
-              <div class="w3-container w3-col s4 w3-padding-24"> 
+              <div class="w3-container w3-col s4 w3-padding-24">
                 元
                 <button id="check_out_button" class="w3-btn w3-right w3-round">結帳</button>
               </div>
@@ -170,13 +176,13 @@
 
             <div class="w3-row w3-container">
                 <div class="w3-col s5  w3-padding-8">
-                    
+
                       <div class="w3-twothird" >
                         <h3 id="item_name"></h3>
                       </div>
                     <!-- <input id="m_price"  type="hidden" value="-1"> -->
                       <div class="w3-third"><h3><input id="m_price"  value="-1" style="border: none;"></h3></div>
-                    
+
                     <!-- 加料區 -->
                     <div class="w3-row w3-container" id="materialblock">  </div>
                 </div>
@@ -187,7 +193,7 @@
                         <h3 id="amountResult">0</h3>
                     </div>
 
-                    <div class=" w3-col s3">
+                    <div class=" w3-col s4">
                         <br><br>
                         <button class="cal_button" id="1">1 </button
                         ><button class="cal_button" id="2">2</button

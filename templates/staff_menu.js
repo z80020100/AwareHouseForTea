@@ -10,7 +10,7 @@ order_info["share_array"][0]["items_array"]=[];
 
 var items_array_length=0;
 var amount_result = 0;
-
+var tprice_ori = 0;
 $(document).ready(function(){
         $("#nav_open").remove()
 
@@ -155,7 +155,11 @@ function cal_price(){
     });
 
     $("#item_price").val(parseInt(total_price) * parseInt(amount_result) );
+}
 
+function discount( dis){ 
+  if(tprice_ori > 0)
+    $("#tprice").val( parseInt(tprice_ori * dis /10));
 }
 
 function add_row( name, amount, price){
@@ -172,25 +176,18 @@ function add_row( name, amount, price){
 
     custom_comment.concat($("#addition_info").val());
     $("#materialblock").find("input:checked").each(function(index, value){
-
         custom_comment = custom_comment.concat($(this).data("name")+" ");
 
         if($(this).data("is_ro")==1){
-
             item_array["RO_array"][RO_array_length]=$(this).data("ai_id");
             ++RO_array_length;
-
         }
         else{
-
             item_array["AI_array"][AI_array_length]=$(this).data("ai_id");
             ++AI_array_length;
-
         }
-
     });
     custom_comment = custom_comment + $("#addition_info").val();
-
 
     if(merge_order_list(name, amount, price, custom_comment)==false){
         //alert("merge");
@@ -205,7 +202,6 @@ function add_row( name, amount, price){
    alert(item_array["m_id"]);
     alert(order_info["share_array"]["items_array"][0]["m_id"]);*/
 
-
     $('table tbody').append(
          tr_temp.append(
                 $('<td>').text(name),
@@ -214,25 +210,33 @@ function add_row( name, amount, price){
                 $('<td>').text(custom_comment)
          )
     );
-
-
-
+    // Swipe Left
     tr_temp.on("swipeleft",function(){
+        $("#tprice").val( parseInt(tprice_ori) );
         $(this).remove();
         $("#tprice").val( parseInt($("#tprice").val()) -$(this).find("td").eq(2).text());
+        tprice_ori = $("#tprice").val();      
     });
+    // Swipe Right
     tr_temp.on("swiperight",function(){
-        $("#tprice").val( parseInt($("#tprice").val()) -$(this).find("td").eq(2).text());
-        $(this).find("td").eq(2).text(0) ;
+        if($(this).find("td").eq(2).text() != 0) {
+            $("#tprice").val( parseInt(tprice_ori) );
+            $("#tprice").val( parseInt($("#tprice").val()) -$(this).find("td").eq(2).text());
+            $(this).find("td").eq(2).text(0);        
+            custom_comment += "招待";
+            $(this).find("td").eq(3).text(custom_comment);
+            $(this).find("td").css("color", "red").css("font-weight","bold");
+            tprice_ori = $("#tprice").val();
+        }
     });
-
-
 
     tr_temp.data("item_array", item_array);
     tr_temp.data("m_price", $("#m_price").val());
-
-
+    
+    $("#tprice").val( parseInt(tprice_ori) );
     $("#tprice").val( parseInt($("#tprice").val()) + parseInt($("#item_price").val()) );
+    tprice_ori = $("#tprice").val();
+    console.log(tprice_ori);
 }
 
 function remove_row(){
@@ -250,9 +254,7 @@ function load_ajax(at_id_array){
         data: {"at_id":at_id}
     } )
     .done(function(msg){
-
         console.log(msg);
-
        /* alert(msg);
         alert(msg[0]['multiple_choice']);
         alert(msg.length);*/
@@ -377,7 +379,6 @@ function send_total_order(){
 function merge_order_list(name, amount, price, comment){
     var merge = true ;
     $("#orderList").find("tr").each(function(index, value){
-
           var temp_name = $(this).children("td").eq(0).text();
           var temp_amount = $(this).children("td").eq(1).text();
           var temp_price = $(this).children("td").eq(2).text();
@@ -398,10 +399,10 @@ function merge_order_list(name, amount, price, comment){
                 }
             });
             $("#tprice").val(sum);
+            tprice_ori = sum;
             merge = false;
             return merge;
           }
-
     });
 
     return merge;
