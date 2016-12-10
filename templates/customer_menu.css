@@ -18,7 +18,7 @@ button[id^='m']{
     margin-bottom:5px;
 }
 #table_cart{
-    height:450px;
+    height: 70vh;
     overflow: scroll;
 }
 #series_name_class{

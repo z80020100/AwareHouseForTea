@@ -337,7 +337,8 @@ function load_ajax(at_id_array){
             first_cal_button = true;
             amount_result = 0;
           }
-          switch(this.id){
+          switch(this.value){
+            //console.log(this.value());
             case "C":
                 amount_result = 0;
                 break;
@@ -346,9 +347,9 @@ function load_ajax(at_id_array){
                 break;
             default:
                 if(amount_result == 0)
-                  amount_result = parseInt(this.id);
+                  amount_result = parseInt(this.value);
                 else
-                  amount_result = amount_result*10 + parseInt(this.id);
+                  amount_result = amount_result*10 + parseInt(this.value);
           }
           //console.log(amount_result);
           document.getElementById('amountResult').innerHTML = amount_result;
