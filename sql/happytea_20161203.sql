@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `ingredient` (
   `ingredient` varchar(256) CHARACTER SET utf8 NOT NULL,
   `num` float NOT NULL,
   `unit` varchar(256) CHARACTER SET utf8 NOT NULL,
-  `call_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `call_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `handled` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
