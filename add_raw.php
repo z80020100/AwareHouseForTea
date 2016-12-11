@@ -18,7 +18,7 @@ if (!(is_topboss() || is_headquarters_staff())) {
 $shop_id = $_SESSION['shop_id'];
 
 // read data from raw_material table
-$sql = "SELECT `raw_name`, `unit` FROM `raw_material`";
+$sql = "SELECT `raw_id`, `raw_name`, `unit` FROM `raw_material`";
 
 $result = $db->query($sql);
 

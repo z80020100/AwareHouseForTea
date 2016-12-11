@@ -42,6 +42,7 @@
     <tr>
         <th width="20%">已有補料名稱</td>
         <th width="20%">已有補料單位</td>
+        <th width="20%">操作</td>
     </tr>
 
 </thead>
@@ -52,6 +53,7 @@
     <tr>
         <td>{{ item.raw_name }}</td>
         <td>{{ item.unit }}</td>
+        <td><button id="delete_{{ item.raw_id }}" value="{{ item.raw_id }}" class="w3-small-btn w3-small w3-white w3-border w3-border-red w3-text-red w3-round-xlarge">X</button></td>
     </tr>
 {% endfor %}
 

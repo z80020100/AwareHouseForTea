@@ -34,7 +34,7 @@ $(document).ready(function(){
 		url: "add_raw_process.php",
 		method: "POST",
 		dataType: "text",
-		data: {request: req}
+		data: {request: req, op:'add_raw'}
 	} )
 	.done(function(msg){
 		console.log('Submit a call!');
@@ -49,5 +49,28 @@ $(document).ready(function(){
         window.location.reload();
 	});
 
+  });
+
+  $("button[id^='delete_']").on('click', function() {
+        console.log("raw_id = " + $(this).val());
+        var raw_id = $(this).val();
+
+        $.ajax( {
+            url: "add_raw_process.php",
+            method: "POST",
+            dataType: "text",
+            data: {'raw_id': raw_id, op:'del_raw'}
+        } )
+        .done(function(msg){
+            console.log('Submit a call!');
+            alert('刪除成功');
+        })
+        .fail(function(jqXHR, textStatus, errorThrown){
+            console.log(textStatus, errorThrown);
+            alert('刪除失敗！')
+        })
+        .always(function(){
+            window.location.reload();
+        });
   });
 });
