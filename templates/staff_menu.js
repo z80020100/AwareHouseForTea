@@ -99,7 +99,6 @@ $(document).ready(function(){
                 return;
             }
 
-
             $("#orderList").find("tr").each(function(index, value){
                 if(index>=1){
                     order_info["share_array"][0]["items_array"].push($(this).data("item_array"));
@@ -122,6 +121,8 @@ $(document).ready(function(){
           }
           $("#check_out_button").attr('disabled', 'disabled');
           send_total_order();
+
+
           // reset all the value
           $("button[id^='m']").removeAttr('disabled');
           amount_result = 1;
@@ -132,7 +133,6 @@ $(document).ready(function(){
           $("#confirm_item").css({"display":"none"});
           $("#check_out").css({"display":"none"});
           first_cal_button = false;
-
         });
 
         $("#check_out_close_confirm").click(function(){
@@ -383,6 +383,17 @@ function send_total_order(){
     .done(function(msg){
         alertify.success("下單成功!");
 
+        var value = document.getElementById("orderList").innerHTML;
+        var printPage = window.open("", "", "width=200,height=100");
+        //printPage.document.open();
+
+        printPage.resizeTo(0,0);
+        printPage.moveTo(0,window.screen.availHeight+10);
+        printPage.document.write("<HTML><head></head><BODY onload='window.print(); window.close();'><table id='orderList'></table>");
+        printPage.document.write("<PRE>");
+        printPage.document.getElementById('orderList').innerHTML = value;
+        printPage.document.write("</PRE>");
+        printPage.document.close("</BODY></HTML>");
     })
     .fail(function(){
         alert("fail2");

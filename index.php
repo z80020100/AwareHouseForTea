@@ -1,6 +1,6 @@
 <?php
 
-$_PAGE_TITLE = '早餐店菜單';
+$_PAGE_TITLE = '樂台茶POS系統';
 $empty_header = True;
 $empty_footer = True;
 require_once('includes/header.php');
