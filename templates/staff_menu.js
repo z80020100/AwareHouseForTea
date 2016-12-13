@@ -383,17 +383,17 @@ function send_total_order(){
     .done(function(msg){
         alertify.success("下單成功!");
 
-        var value = document.getElementById("orderList").innerHTML;
-        var printPage = window.open("", "", "width=200,height=100");
-        //printPage.document.open();
+     //   var value = document.getElementById("orderList").innerHTML;
+     //   var printPage = window.open("", "", "width=200,height=100");
+     //   printPage.document.open();
 
-        printPage.resizeTo(0,0);
-        printPage.moveTo(0,window.screen.availHeight+10);
-        printPage.document.write("<HTML><head></head><BODY onload='window.print(); window.close();'><table id='orderList'></table>");
-        printPage.document.write("<PRE>");
-        printPage.document.getElementById('orderList').innerHTML = value;
-        printPage.document.write("</PRE>");
-        printPage.document.close("</BODY></HTML>");
+     //   printPage.resizeTo(0,0);
+     //   printPage.moveTo(0,window.screen.availHeight+10);
+     //   printPage.document.write("<HTML><head></head><BODY onload='window.print(); window.close();'><table id='orderList'></table>");
+     //   printPage.document.write("<PRE>");
+     //   printPage.document.getElementById('orderList').innerHTML = value;
+     //   printPage.document.write("</PRE>");
+     //   printPage.document.close("</BODY></HTML>");
     })
     .fail(function(){
         alert("fail2");

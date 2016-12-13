@@ -1,4 +1,10 @@
 $(document).ready(function(){
+
+    $('.dropdate').dropdate({
+        dateFormat:'mm/dd/yyyy'
+    });
+
+
     $("#promote_table").tablesorter();
     $("#promote_table").tablesorter({ sortList: [[0,0], [1,0]] });
     
