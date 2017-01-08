@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <?php
 
 $_PAGE_TITLE = '樂台茶POS系統';
@@ -59,6 +60,40 @@ while($series_data = $db->fetch_array($result)){
 	$all_series[$snum]['main'] = $all_main;
 }
 
+
+// Query all addition item 
+$sql = "SELECT * FROM `additional_type` WHERE `multiple_choice` = 1";
+$result = $db->query($sql);
+$multiple_addition_type = array();
+$multiple_addition_item = array();
+while($series_data = $db->fetch_array($result)){
+	$snum = array_push( $multiple_addition_type, $series_data )-1;
+	$sql = "SELECT DISTINCT name FROM `additional_item` WHERE `at_id` = ".$series_data['at_id'];
+
+	$a_result = $db->query($sql);
+	while($a_data = $db->fetch_array($a_result)){
+		$anum = array_push($multiple_addition_item, $a_data)-1;
+    }
+}
+
+
+$sql = "SELECT * FROM `additional_type` WHERE `multiple_choice` = 0";
+$result = $db->query($sql);
+$single_addition_type = array();
+$single_addition_item = array();
+while($series_data = $db->fetch_array($result)){
+	$snum = array_push( $single_addition_type, $series_data )-1;
+	$sql = "SELECT DISTINCT name FROM `additional_item` WHERE `at_id` = ".$series_data['at_id'];
+
+	$a_result = $db->query($sql);
+	while($b_data = $db->fetch_array($a_result)){
+		$anum = array_push($single_addition_item, $b_data)-1;
+    }
+}
+
+$sql = "SELECT DISTINCT name, price FROM `additional_item`";
+$all_material = $db->query($sql);
+
 if($_AWMode == "ACCOUNTING")
     $template = $twig->loadTemplate('customer_menu_accounting.html');
 
@@ -72,9 +107,14 @@ else if($_AWMode == "BUSINESS") {
 
 $_HTML .= $template->render(array(
 	'all_series' => $all_series,
+	'multiple_addition_item' => $multiple_addition_item,
+	'single_addition_item' => $single_addition_item,
+	'single_addition_type' => $single_addition_type,
+	'all_material' => $all_material,
     //'verification_code' => $Qver['value'],
 ));
 
 require_once('includes/footer.php');
+
 
 ?>
